@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>oweventos — Equipamiento para grandes eventos</title>
+<meta name="description" content="Alquiler de iluminación, ventilación, calefacción y generadores eléctricos para eventos. Cotizá por WhatsApp.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --white:#ffffff;
+    --ink:#14171c;
+    --ink-soft:#565c66;
+    --line:#e7e9ec;
+    --panel:#f6f7f9;
+    --blue:#1e4fd8;
+    --blue-deep:#123aa8;
+    --yellow:#ffc93c;
+    --radius:14px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:'Inter',sans-serif;
+    color:var(--ink);
+    background:var(--white);
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,.display{
+    font-family:'Archivo',sans-serif;
+    letter-spacing:-0.02em;
+  }
+  img{display:block;max-width:100%;}
+  a{color:inherit;text-decoration:none;}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 28px;}
+  section{padding:96px 0;}
+  @media (max-width:720px){ section{padding:64px 0;} }
+
+  /* focus states */
+  a:focus-visible, button:focus-visible{outline:3px solid var(--blue);outline-offset:2px;}
+
+  /* ---------- header ---------- */
+  header{
+    position:sticky;top:0;z-index:50;
+    background:rgba(255,255,255,.92);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:16px 28px;max-width:1180px;margin:0 auto;
+  }
+  .logo{
+    font-family:'Archivo',sans-serif;font-weight:900;font-size:22px;
+    display:flex;align-items:center;gap:2px;
+  }
+  .logo .ow{color:var(--ink);}
+  .logo .dot{color:var(--yellow);}
+  .logo .eventos{color:var(--blue);}
+  .navlinks{display:flex;gap:34px;align-items:center;}
+  .navlinks a{font-size:14.5px;font-weight:600;color:var(--ink-soft);transition:color .15s;}
+  .navlinks a:hover{color:var(--blue);}
+  .nav-cta{
+    background:#fff;color:var(--blue);padding:10px 20px;border-radius:30px;
+    border:1.5px solid var(--blue);
+    font-size:14px;font-weight:700;display:flex;align-items:center;gap:8px;
+    white-space:nowrap;flex-shrink:0;
+    transition:background .15s, color .15s;
+  }
+  .nav-cta:hover, .navlinks .nav-cta:hover{background:var(--blue);color:#fff;}
+  .nav-cta svg{width:16px;height:16px;flex-shrink:0;color:#25D366;}
+  .nav-cta:hover svg{color:#fff;}
+  .burger{display:none;background:none;border:none;cursor:pointer;padding:6px;}
+  .burger svg{width:26px;height:26px;}
+  @media (max-width:860px){
+    .navlinks{position:fixed;top:64px;left:0;right:0;background:#fff;flex-direction:column;
+      padding:24px 28px;border-bottom:1px solid var(--line);gap:20px;
+      transform:translateY(-140%);transition:transform .25s ease;box-shadow:0 12px 24px rgba(0,0,0,.06);}
+    .navlinks.open{transform:translateY(0);}
+    .burger{display:block;}
+  }
+
+  /* ---------- hero ---------- */
+  .hero{
+    padding:64px 0 48px 0;
+  }
+  .hero-grid{
+    display:grid;grid-template-columns:1.05fr .95fr;gap:56px;align-items:center;
+  }
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:8px;
+    font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
+    color:var(--blue-deep);background:#eef2ff;padding:8px 14px;border-radius:30px;
+    margin-bottom:22px;
+  }
+  .eyebrow::before{content:'';width:7px;height:7px;border-radius:50%;background:var(--yellow);}
+  .hero h1{
+    font-size:clamp(38px,5vw,58px);font-weight:900;line-height:1.02;color:var(--ink);
+  }
+  .hero h1 span{color:var(--blue);}
+  .hero p.lead{
+    margin-top:22px;font-size:18px;line-height:1.6;color:var(--ink-soft);max-width:480px;
+  }
+  .hero-actions{display:flex;gap:14px;margin-top:34px;flex-wrap:wrap;}
+  .btn{
+    display:inline-flex;align-items:center;gap:10px;
+    padding:15px 26px;border-radius:30px;font-weight:700;font-size:15px;
+    transition:transform .15s, box-shadow .15s;
+  }
+  .btn-primary{background:var(--blue);color:#fff;box-shadow:0 10px 24px -8px rgba(30,79,216,.55);}
+  .btn-primary:hover{transform:translateY(-2px);box-shadow:0 14px 28px -8px rgba(30,79,216,.6);}
+  .btn-primary svg{width:18px;height:18px;}
+  .btn-ghost{border:1.5px solid var(--line);color:var(--ink);}
+  .btn-ghost:hover{border-color:var(--ink);}
+
+  .hero-stats{display:flex;gap:34px;margin-top:46px;padding-top:30px;border-top:1px solid var(--line);}
+  .hero-stats div b{display:block;font-family:'Archivo',sans-serif;font-size:26px;font-weight:800;color:var(--ink);}
+  .hero-stats div span{font-size:13px;color:var(--ink-soft);}
+
+  .hero-media{position:relative;}
+  .hero-media-main{
+    border-radius:var(--radius);overflow:hidden;aspect-ratio:4/5;
+    box-shadow:0 30px 60px -20px rgba(20,23,28,.25);
+  }
+  .hero-media-main img{width:100%;height:100%;object-fit:cover;}
+  .hero-badge{
+    position:absolute;bottom:-22px;left:-22px;background:var(--ink);color:#fff;
+    padding:18px 20px;border-radius:12px;display:flex;align-items:center;gap:12px;
+    box-shadow:0 20px 30px -10px rgba(0,0,0,.35);
+  }
+  .hero-badge .ico{
+    width:38px;height:38px;border-radius:10px;background:var(--yellow);
+    display:flex;align-items:center;justify-content:center;flex-shrink:0;
+  }
+  .hero-badge .ico svg{width:20px;height:20px;color:var(--ink);}
+  .hero-badge b{display:block;font-size:14px;font-weight:800;}
+  .hero-badge span{font-size:12px;color:#c7cbd4;}
+  @media (max-width:920px){
+    .hero-grid{grid-template-columns:1fr;}
+    .hero-media{order:-1;max-width:360px;margin:0 auto 20px;}
+    .hero-badge{left:8px;bottom:-18px;}
+  }
+
+  /* ---------- feature strip ---------- */
+  .strip{background:var(--panel);border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
+  .strip .wrap{
+    display:grid;grid-template-columns:repeat(4,1fr);gap:0;padding:0 28px;
+  }
+  .strip-item{
+    padding:40px 26px;border-right:1px solid var(--line);
+  }
+  .strip-item:last-child{border-right:none;}
+  .strip-item .ico{
+    width:42px;height:42px;border-radius:10px;background:#fff;border:1px solid var(--line);
+    display:flex;align-items:center;justify-content:center;margin-bottom:16px;
+  }
+  .strip-item .ico svg{width:22px;height:22px;color:var(--blue);}
+  .strip-item h3{font-size:15.5px;font-weight:700;margin-bottom:6px;}
+  .strip-item p{font-size:13.5px;color:var(--ink-soft);line-height:1.55;}
+  @media (max-width:860px){
+    .strip .wrap{grid-template-columns:repeat(2,1fr);}
+    .strip-item{border-bottom:1px solid var(--line);}
+    .strip-item:nth-child(odd){border-right:1px solid var(--line);}
+    .strip-item:nth-child(2){border-right:none;}
+  }
+  @media (max-width:520px){
+    .strip .wrap{grid-template-columns:1fr;}
+    .strip-item{border-right:none !important;}
+  }
+
+  /* ---------- section heads ---------- */
+  .sec-head{max-width:640px;margin-bottom:56px;}
+  .sec-head .tag{
+    font-size:13px;font-weight:700;color:var(--blue-deep);text-transform:uppercase;letter-spacing:.06em;
+    display:flex;align-items:center;gap:8px;margin-bottom:14px;
+  }
+  .sec-head .tag::before{content:'';width:22px;height:3px;background:var(--yellow);border-radius:3px;}
+  .sec-head h2{font-size:clamp(28px,3.4vw,40px);font-weight:800;line-height:1.1;}
+  .sec-head p{margin-top:16px;color:var(--ink-soft);font-size:16px;line-height:1.6;}
+
+  /* ---------- equipment ---------- */
+  .eq-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:24px;}
+  @media (max-width:760px){.eq-grid{grid-template-columns:1fr;}}
+  .eq-card{
+    border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;
+    display:flex;flex-direction:column;background:#fff;
+    transition:box-shadow .2s, transform .2s;
+  }
+  .eq-card:hover{box-shadow:0 20px 40px -16px rgba(20,23,28,.18);transform:translateY(-3px);}
+  .eq-card .imgband{width:100%;height:260px;background:var(--panel);flex-shrink:0;}
+  .eq-card .imgband img{width:100%;height:100%;object-fit:contain;display:block;}
+  .eq-card .imgband.spec{
+    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;
+    background:linear-gradient(135deg,#eef2ff 0%, #f6f7f9 100%);
+  }
+  .eq-card .imgband.spec .spec-ico{
+    width:56px;height:56px;border-radius:14px;background:var(--ink);
+    display:flex;align-items:center;justify-content:center;
+  }
+  .eq-card .imgband.spec .spec-ico svg{width:28px;height:28px;color:var(--yellow);}
+  .eq-card .imgband.spec .spec-badges{display:flex;gap:10px;}
+  .eq-card .imgband.spec .spec-badges span{
+    font-size:13px;font-weight:700;color:var(--blue-deep);background:#fff;
+    border:1px solid var(--line);padding:6px 12px;border-radius:20px;
+  }
+  .eq-body{padding:26px 26px 28px;}
+  .eq-num{font-size:12.5px;font-weight:700;color:var(--blue);letter-spacing:.04em;}
+  .eq-card h3{font-size:20px;font-weight:800;margin:8px 0 10px;}
+  .eq-card p{font-size:14.5px;color:var(--ink-soft);line-height:1.6;}
+
+  /* ---------- gallery ---------- */
+  .gal-grid{
+    columns:4 260px;column-gap:16px;
+  }
+  .gal-grid img{
+    width:100%;border-radius:10px;margin-bottom:16px;break-inside:avoid;
+    box-shadow:0 1px 3px rgba(0,0,0,.06);
+  }
+  @media (max-width:640px){.gal-grid{columns:2 160px;}}
+
+  /* ---------- about strip ---------- */
+  .about{background:var(--ink);color:#fff;}
+  .about .wrap{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;}
+  .about h2{font-size:clamp(26px,3.2vw,36px);font-weight:800;line-height:1.15;}
+  .about h2 .hl{color:var(--yellow);}
+  .about p{margin-top:18px;color:#c4c9d3;font-size:16px;line-height:1.7;}
+  .about-list{margin-top:26px;display:flex;flex-direction:column;gap:14px;}
+  .about-list div{display:flex;gap:12px;align-items:flex-start;font-size:14.5px;color:#e7e9ee;}
+  .about-list svg{width:20px;height:20px;color:var(--yellow);flex-shrink:0;margin-top:1px;}
+  .about-photo{border-radius:var(--radius);overflow:hidden;aspect-ratio:1/1;}
+  .about-photo img{width:100%;height:100%;object-fit:cover;}
+  @media (max-width:860px){.about .wrap{grid-template-columns:1fr;} .about-photo{order:-1;max-width:340px;margin:0 auto;}}
+
+  /* ---------- CTA / contact ---------- */
+  .cta{background:linear-gradient(135deg, var(--blue) 0%, var(--blue-deep) 100%);color:#fff;position:relative;overflow:hidden;}
+  .cta::before{
+    content:'';position:absolute;right:-80px;top:-80px;width:320px;height:320px;
+    border-radius:50%;background:rgba(255,201,60,.16);
+  }
+  .cta-inner{
+    display:flex;align-items:center;justify-content:space-between;gap:40px;flex-wrap:wrap;
+    position:relative;z-index:1;
+  }
+  .cta h2{font-size:clamp(26px,3.4vw,38px);font-weight:800;max-width:520px;line-height:1.15;}
+  .cta p{margin-top:12px;color:#dbe4ff;font-size:16px;max-width:480px;}
+  .cta .btn-primary{background:var(--yellow);color:var(--ink);box-shadow:0 10px 24px -8px rgba(0,0,0,.35);}
+  .cta .btn-primary:hover{background:#ffd968;}
+
+  /* ---------- footer ---------- */
+  footer{padding:56px 0 32px;border-top:1px solid var(--line);}
+  .foot-grid{display:flex;justify-content:space-between;align-items:flex-start;gap:40px;flex-wrap:wrap;}
+  .foot-brand p{margin-top:12px;color:var(--ink-soft);font-size:14px;max-width:280px;line-height:1.6;}
+  .foot-cols{display:flex;gap:60px;flex-wrap:wrap;}
+  .foot-col h4{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--ink-soft);margin-bottom:16px;}
+  .foot-col a{display:block;font-size:14.5px;color:var(--ink);margin-bottom:10px;font-weight:500;}
+  .foot-col a:hover{color:var(--blue);}
+  .foot-bottom{
+    margin-top:48px;padding-top:24px;border-top:1px solid var(--line);
+    display:flex;justify-content:space-between;color:var(--ink-soft);font-size:13px;flex-wrap:wrap;gap:10px;
+  }
+
+  /* whatsapp floating button */
+  .wa-float{
+    position:fixed;bottom:22px;right:22px;z-index:60;
+    background:#25D366;color:#fff;width:58px;height:58px;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    box-shadow:0 10px 24px -6px rgba(0,0,0,.35);
+    transition:transform .2s;
+  }
+  .wa-float:hover{transform:scale(1.08);background:#1fb855;}
+  .wa-float svg{width:28px;height:28px;}
+
+  .reveal{opacity:0;transform:translateY(18px);transition:opacity .6s ease, transform .6s ease;}
+  .reveal.in{opacity:1;transform:translateY(0);}
+  @media (prefers-reduced-motion: reduce){
+    .reveal{opacity:1;transform:none;transition:none;}
+    html{scroll-behavior:auto;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="nav">
+    <a href="#top" class="logo"><span class="ow">ow</span><span class="dot">.</span><span class="eventos">eventos</span></a>
+    <nav class="navlinks" id="navlinks">
+      <a href="#equipamiento">Equipamiento</a>
+      <a href="#eventos">Eventos</a>
+      <a href="#nosotros">Nosotros</a>
+      <a href="#contacto">Contacto</a>
+      <a class="nav-cta" href="https://wa.me/595985100206?text=Hola%20oweventos%2C%20quisiera%20cotizar%20equipamiento%20para%20un%20evento" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2c-5.46 0-9.9 4.44-9.9 9.9 0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.9-4.44 9.9-9.9S17.5 2 12.04 2zm0 18.13h-.01a8.2 8.2 0 0 1-4.18-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.2 8.2 0 0 1-1.26-4.37c0-4.54 3.7-8.24 8.25-8.24 2.2 0 4.27.86 5.83 2.42a8.18 8.18 0 0 1 2.41 5.83c0 4.55-3.7 8.24-8.25 8.24zm4.52-6.17c-.25-.12-1.47-.72-1.7-.81-.23-.08-.39-.12-.56.13-.16.24-.64.8-.78.97-.14.16-.29.18-.53.06-.25-.12-1.05-.39-2-1.23-.74-.66-1.24-1.47-1.39-1.72-.14-.24-.02-.38.11-.5.11-.11.25-.29.37-.43.12-.15.16-.25.24-.41.08-.16.04-.31-.02-.43-.06-.12-.56-1.35-.77-1.85-.2-.48-.41-.42-.56-.43h-.48c-.16 0-.43.06-.66.31-.22.24-.86.85-.86 2.06 0 1.22.89 2.4 1.01 2.56.12.16 1.75 2.67 4.24 3.74.59.26 1.05.41 1.41.52.59.19 1.13.16 1.55.1.47-.07 1.47-.6 1.68-1.18.21-.58.21-1.08.14-1.18-.06-.1-.23-.16-.48-.28z"/></svg>
+        WhatsApp
+      </a>
+    </nav>
+    <button class="burger" id="burger" aria-label="Abrir menú">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <div class="eyebrow">Alquiler de equipamiento para eventos</div>
+        <h1>Todo lo que tu evento necesita para <span>funcionar</span>.</h1>
+        <p class="lead">Ventiladores, iluminación, calefactores y generadores eléctricos para fiestas, festivales y eventos corporativos. Coordinamos todo por WhatsApp, sin vueltas.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="https://wa.me/595985100206?text=Hola%20oweventos%2C%20quisiera%20cotizar%20equipamiento%20para%20un%20evento" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2c-5.46 0-9.9 4.44-9.9 9.9 0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.9-4.44 9.9-9.9S17.5 2 12.04 2zm0 18.13h-.01a8.2 8.2 0 0 1-4.18-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.2 8.2 0 0 1-1.26-4.37c0-4.54 3.7-8.24 8.25-8.24 2.2 0 4.27.86 5.83 2.42a8.18 8.18 0 0 1 2.41 5.83c0 4.55-3.7 8.24-8.25 8.24zm4.52-6.17c-.25-.12-1.47-.72-1.7-.81-.23-.08-.39-.12-.56.13-.16.24-.64.8-.78.97-.14.16-.29.18-.53.06-.25-.12-1.05-.39-2-1.23-.74-.66-1.24-1.47-1.39-1.72-.14-.24-.02-.38.11-.5.11-.11.25-.29.37-.43.12-.15.16-.25.24-.41.08-.16.04-.31-.02-.43-.06-.12-.56-1.35-.77-1.85-.2-.48-.41-.42-.56-.43h-.48c-.16 0-.43.06-.66.31-.22.24-.86.85-.86 2.06 0 1.22.89 2.4 1.01 2.56.12.16 1.75 2.67 4.24 3.74.59.26 1.05.41 1.41.52.59.19 1.13.16 1.55.1.47-.07 1.47-.6 1.68-1.18.21-.58.21-1.08.14-1.18-.06-.1-.23-.16-.48-.28z"/></svg>
+            Cotizar por WhatsApp
+          </a>
+          <a class="btn btn-ghost" href="#equipamiento">Ver equipamiento</a>
+        </div>
+        <div class="hero-stats">
+          <div><b>5</b><span>líneas de equipamiento</span></div>
+          <div><b>+100</b><span>eventos equipados</span></div>
+          <div><b>24/7</b><span>coordinación por WhatsApp</span></div>
+        </div>
+      </div>
+      <div class="hero-media">
+        <div class="hero-media-main"><img src="images/eq3.jpg" alt="Equipamiento oweventos en un evento"></div>
+        <div class="hero-badge">
+          <div class="ico">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2 3 14h7l-1 8 10-12h-7l1-8z"/></svg>
+          </div>
+          <div><b>Energía asegurada</b><span>Generadores de respaldo</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURE STRIP -->
+  <section class="strip" style="padding:0;">
+    <div class="wrap">
+      <div class="strip-item">
+        <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 8v4l3 3"/></svg></div>
+        <h3>Respuesta rápida</h3>
+        <p>Coordinación y presupuesto el mismo día, por WhatsApp.</p>
+      </div>
+      <div class="strip-item">
+        <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 21V9l8-6 8 6v12"/><path d="M9 21v-6h6v6"/></svg></div>
+        <h3>Montaje incluido</h3>
+        <p>Instalamos y retiramos el equipo en el lugar del evento.</p>
+      </div>
+      <div class="strip-item">
+        <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2 3 14h7l-1 8 10-12h-7l1-8z"/></svg></div>
+        <h3>Energía propia</h3>
+        <p>Generadores para eventos sin acceso a la red eléctrica.</p>
+      </div>
+      <div class="strip-item">
+        <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2 2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></div>
+        <h3>Eventos grandes</h3>
+        <p>Capacidad para festivales, corporativos y eventos masivos.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- EQUIPAMIENTO -->
+  <section id="equipamiento">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <div class="tag">Equipamiento</div>
+        <h2>Lo que ponemos a disposición de tu evento</h2>
+        <p>Cinco líneas de equipamiento pensadas para eventos al aire libre y espacios grandes: ventilación, iluminación, climatización, generadores y todo el respaldo eléctrico necesario.</p>
+      </div>
+
+      <div class="eq-grid">
+        <div class="eq-card reveal">
+          <div class="imgband" style="background:#525734;"><img src="images/eq14.jpg" alt="Ventilador industrial para eventos"></div>
+          <div class="eq-body">
+            <div class="eq-num">01 — Ventilación</div>
+            <h3>Ventiladores industriales</h3>
+            <p>Ventiladores de gran caudal para mantener el aire circulando en carpas, salones y espacios con mucho público.</p>
+          </div>
+        </div>
+
+        <div class="eq-card reveal">
+          <div class="imgband" style="background:#0a0603;"><img src="images/eq3.jpg" alt="Iluminación decorativa para eventos"></div>
+          <div class="eq-body">
+            <div class="eq-num">02 — Iluminación</div>
+            <h3>Iluminación decorativa</h3>
+            <p>Arañas y estructuras de luz para escenarios, mesas y espacios abiertos, pensadas para eventos nocturnos.</p>
+          </div>
+        </div>
+
+        <div class="eq-card reveal">
+          <div class="imgband" style="background:#83828a;"><img src="images/eq7.jpg" alt="Calefactor de exterior para eventos"></div>
+          <div class="eq-body">
+            <div class="eq-num">03 — Calefacción</div>
+            <h3>Calefactores de exterior</h3>
+            <p>Equipos de calefacción para las noches frías, pensados para espacios abiertos y semicubiertos.</p>
+          </div>
+        </div>
+
+        <div class="eq-card reveal">
+          <div class="imgband spec">
+            <div class="spec-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2 3 14h7l-1 8 10-12h-7l1-8z"/></svg></div>
+            <div class="spec-badges"><span>65 KVA</span><span>165 KVA</span></div>
+          </div>
+          <div class="eq-body">
+            <div class="eq-num">04 — Energía</div>
+            <h3>Generadores y electricidad</h3>
+            <p>Grupos electrógenos de 65 y 165 KVA, más armado eléctrico completo para eventos sin acceso a red o como respaldo.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- INSTAGRAM CALLOUT -->
+  <section id="eventos" style="background:var(--panel);border-top:1px solid var(--line);border-bottom:1px solid var(--line);">
+    <div class="wrap" style="display:flex;align-items:center;justify-content:space-between;gap:32px;flex-wrap:wrap;">
+      <div class="sec-head reveal" style="margin-bottom:0;">
+        <div class="tag">Eventos</div>
+        <h2>Mirá nuestro equipamiento en acción</h2>
+        <p>Subimos fotos y videos de los eventos que equipamos a nuestro Instagram — @oweventos.</p>
+      </div>
+      <a class="btn btn-primary reveal" href="https://www.instagram.com/oweventos/" target="_blank" rel="noopener" style="flex-shrink:0;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg>
+        Ver en Instagram
+      </a>
+    </div>
+  </section>
+
+  <!-- NOSOTROS -->
+  <section id="nosotros" class="about">
+    <div class="wrap">
+      <div>
+        <h2>No solo alquilamos equipos. <span class="hl">Aseguramos que funcionen</span> toda la noche.</h2>
+        <p>oweventos provee y monta el equipamiento técnico que hace posible un evento grande: ventilación, luz, calor y energía. Nos encargamos de la logística para que vos te ocupes del evento.</p>
+        <div class="about-list">
+          <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg> Instalación y desmontaje incluidos</div>
+          <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg> Coordinación directa por WhatsApp</div>
+          <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg> Equipamiento para eventos de gran escala</div>
+        </div>
+      </div>
+      <div class="about-photo"><img src="images/eq13.jpg" alt="Equipo oweventos trabajando en un evento"></div>
+    </div>
+  </section>
+
+  <!-- CTA / CONTACTO -->
+  <section id="contacto" class="cta">
+    <div class="wrap cta-inner">
+      <div>
+        <h2>Contanos de tu evento y armamos el presupuesto.</h2>
+        <p>Escribinos por WhatsApp al +595 985 100206 con la fecha, el lugar y lo que necesitás — te respondemos con la cotización.</p>
+      </div>
+      <a class="btn btn-primary" href="https://wa.me/595985100206?text=Hola%20oweventos%2C%20quisiera%20cotizar%20equipamiento%20para%20un%20evento" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2c-5.46 0-9.9 4.44-9.9 9.9 0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.9-4.44 9.9-9.9S17.5 2 12.04 2zm0 18.13h-.01a8.2 8.2 0 0 1-4.18-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.2 8.2 0 0 1-1.26-4.37c0-4.54 3.7-8.24 8.25-8.24 2.2 0 4.27.86 5.83 2.42a8.18 8.18 0 0 1 2.41 5.83c0 4.55-3.7 8.24-8.25 8.24zm4.52-6.17c-.25-.12-1.47-.72-1.7-.81-.23-.08-.39-.12-.56.13-.16.24-.64.8-.78.97-.14.16-.29.18-.53.06-.25-.12-1.05-.39-2-1.23-.74-.66-1.24-1.47-1.39-1.72-.14-.24-.02-.38.11-.5.11-.11.25-.29.37-.43.12-.15.16-.25.24-.41.08-.16.04-.31-.02-.43-.06-.12-.56-1.35-.77-1.85-.2-.48-.41-.42-.56-.43h-.48c-.16 0-.43.06-.66.31-.22.24-.86.85-.86 2.06 0 1.22.89 2.4 1.01 2.56.12.16 1.75 2.67 4.24 3.74.59.26 1.05.41 1.41.52.59.19 1.13.16 1.55.1.47-.07 1.47-.6 1.68-1.18.21-.58.21-1.08.14-1.18-.06-.1-.23-.16-.48-.28z"/></svg>
+        Escribir al +595 985 100206
+      </a>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <div class="logo"><span class="ow">ow</span><span class="dot">.</span><span class="eventos">eventos</span></div>
+        <p>Equipamiento técnico para eventos: ventilación, iluminación, calefacción y generadores eléctricos.</p>
+      </div>
+      <div class="foot-cols">
+        <div class="foot-col">
+          <h4>Sitio</h4>
+          <a href="#equipamiento">Equipamiento</a>
+          <a href="#eventos">Eventos</a>
+          <a href="#nosotros">Nosotros</a>
+          <a href="#contacto">Contacto</a>
+        </div>
+        <div class="foot-col">
+          <h4>Contacto</h4>
+          <a href="https://wa.me/595985100206" target="_blank" rel="noopener">WhatsApp</a>
+          <a href="https://www.instagram.com/oweventos/" target="_blank" rel="noopener">Instagram</a>
+        </div>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 oweventos. Todos los derechos reservados.</span>
+      <span>Asunción, Paraguay</span>
+    </div>
+  </div>
+</footer>
+
+<a class="wa-float" href="https://wa.me/595985100206?text=Hola%20oweventos%2C%20quisiera%20cotizar%20equipamiento%20para%20un%20evento" target="_blank" rel="noopener" aria-label="Contactar por WhatsApp">
+  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2c-5.46 0-9.9 4.44-9.9 9.9 0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.9-4.44 9.9-9.9S17.5 2 12.04 2zm0 18.13h-.01a8.2 8.2 0 0 1-4.18-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.2 8.2 0 0 1-1.26-4.37c0-4.54 3.7-8.24 8.25-8.24 2.2 0 4.27.86 5.83 2.42a8.18 8.18 0 0 1 2.41 5.83c0 4.55-3.7 8.24-8.25 8.24zm4.52-6.17c-.25-.12-1.47-.72-1.7-.81-.23-.08-.39-.12-.56.13-.16.24-.64.8-.78.97-.14.16-.29.18-.53.06-.25-.12-1.05-.39-2-1.23-.74-.66-1.24-1.47-1.39-1.72-.14-.24-.02-.38.11-.5.11-.11.25-.29.37-.43.12-.15.16-.25.24-.41.08-.16.04-.31-.02-.43-.06-.12-.56-1.35-.77-1.85-.2-.48-.41-.42-.56-.43h-.48c-.16 0-.43.06-.66.31-.22.24-.86.85-.86 2.06 0 1.22.89 2.4 1.01 2.56.12.16 1.75 2.67 4.24 3.74.59.26 1.05.41 1.41.52.59.19 1.13.16 1.55.1.47-.07 1.47-.6 1.68-1.18.21-.58.21-1.08.14-1.18-.06-.1-.23-.16-.48-.28z"/></svg>
+</a>
+
+<script>
+  const burger = document.getElementById('burger');
+  const navlinks = document.getElementById('navlinks');
+  burger.addEventListener('click', () => navlinks.classList.toggle('open'));
+  navlinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => navlinks.classList.remove('open')));
+
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold: 0.12 });
+  revealEls.forEach(el => io.observe(el));
+</script>
+
+</body>
+</html>
