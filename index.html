@@ -9,6 +9,7 @@
   <meta property="og:description" content="Iluminación y climatización de lujo para tu evento." />
   <meta property="og:image" content="assets/img/products/cristal-con-velas-1.webp" />
   <link rel="icon" type="image/png" href="assets/img/logo.png" />
+  <script>try{if(localStorage.getItem('ow_theme')==='light')document.documentElement.setAttribute('data-theme','light');}catch(e){}</script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet" />
@@ -22,7 +23,8 @@
   <header class="site-header" id="header">
     <div class="container header-inner">
       <a href="#top" class="brand" aria-label="OW Eventos">
-        <img src="assets/img/logo-transparent.png" alt="OW Eventos" class="brand-logo" />
+        <img src="assets/img/logo-transparent.png" alt="OW Eventos" class="brand-logo logo-dark" />
+        <img src="assets/img/logo.png" alt="OW Eventos" class="brand-logo logo-light" />
       </a>
 
       <nav class="main-nav" id="mainNav" aria-label="Principal">
@@ -38,6 +40,10 @@
           <button data-lang="en">EN</button>
           <button data-lang="pt">PT</button>
         </div>
+        <button class="theme-toggle" id="themeToggle" aria-label="Cambiar tema" title="Modo claro / oscuro">
+          <svg class="ico-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M12 2v2.4M12 19.6V22M2 12h2.4M19.6 12H22M4.9 4.9l1.7 1.7M17.4 17.4l1.7 1.7M19.1 4.9l-1.7 1.7M6.6 17.4l-1.7 1.7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+          <svg class="ico-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.8A9 9 0 1111.2 3a7 7 0 009.8 9.8z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
+        </button>
         <a href="#catalog" class="btn btn-gold btn-sm nav-quote" data-i18n="nav.quote">Cotizar</a>
         <button class="menu-toggle" id="menuToggle" aria-label="Menú" aria-expanded="false">
           <span></span><span></span><span></span>
@@ -87,6 +93,7 @@
       </div>
 
       <div class="catalog-reveal" id="catalogReveal">
+        <p class="reveal-hint" id="revealHint"></p>
         <button class="btn btn-gold catalog-toggle" id="catalogToggle" aria-expanded="false" aria-controls="catalogBody">
           <span data-i18n="catalog.show">Ver productos</span>
           <svg viewBox="0 0 24 24" aria-hidden="true" class="chev"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -193,7 +200,8 @@
   <footer class="site-footer">
     <div class="container footer-inner">
       <div class="footer-brand">
-        <img src="assets/img/logo-transparent.png" alt="OW Eventos" />
+        <img src="assets/img/logo-transparent.png" alt="OW Eventos" class="logo-dark" />
+        <img src="assets/img/logo.png" alt="OW Eventos" class="logo-light" />
         <p data-i18n="footer.tagline">Alquiler de iluminación y climatización para eventos.</p>
         <div class="footer-social">
           <a id="footWa" target="_blank" rel="noopener" aria-label="WhatsApp"><svg viewBox="0 0 24 24"><use href="#waIcon"></use></svg></a>

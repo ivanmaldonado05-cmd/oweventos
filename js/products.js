@@ -152,7 +152,7 @@ const PRODUCTS = [
   },
   {
     id: "cristal-grande", cat: "iluminacion", sub: "cristal",
-    imgs: ["assets/img/products/cristal-grande-1.webp", "assets/img/products/cristal-grande-2.webp"], price: 880000, montaje: 150000, stock: 2,
+    imgs: ["assets/img/products/cristal-grande-1.webp"], price: 880000, montaje: 150000, stock: 2,
     dims: "1,25 × 1,15 m · 40 kg",
     name: { es: "Cristal Grande", en: "Crystal Large", pt: "Cristal Grande" },
     desc: {
@@ -163,7 +163,7 @@ const PRODUCTS = [
   },
   {
     id: "piramide-cromada", cat: "iluminacion", sub: "cristal",
-    imgs: ["assets/img/products/piramide-cromada-1.webp", "assets/img/products/piramide-cromada-2.webp"], price: 500000, montaje: 150000, stock: 4,
+    imgs: ["assets/img/products/piramide-cromada-1.webp"], price: 500000, montaje: 150000, stock: 4,
     dims: "0,80 × 0,60 m · 12 focos",
     name: { es: "Pirámide Cromada", en: "Chrome Pyramid", pt: "Pirâmide Cromada" },
     desc: {
@@ -174,7 +174,7 @@ const PRODUCTS = [
   },
   {
     id: "piramide-dorada", cat: "iluminacion", sub: "cristal",
-    imgs: ["assets/img/products/piramide-dorada-1.webp", "assets/img/products/piramide-dorada-2.webp"], price: 500000, montaje: 150000, stock: 4,
+    imgs: ["assets/img/products/piramide-dorada-1.webp"], price: 500000, montaje: 150000, stock: 4,
     dims: "0,80 × 0,60 m · 12 focos",
     name: { es: "Pirámide Dorada", en: "Gold Pyramid", pt: "Pirâmide Dourada" },
     desc: {
@@ -398,7 +398,7 @@ const PRODUCTS = [
   },
   {
     id: "jaula-grande", cat: "iluminacion", sub: "rusticas",
-    imgs: ["assets/img/products/jaula-grande-1.webp", "assets/img/products/jaula-grande-2.webp"], price: 330000, montaje: 50000, stock: 10,
+    imgs: ["assets/img/products/jaula-grande-1.webp"], price: 330000, montaje: 50000, stock: 10,
     dims: "1,20 × 0,47 m · 10 kg",
     name: { es: "Jaula Grande", en: "Large Cage", pt: "Gaiola Grande" },
     desc: {
@@ -444,7 +444,7 @@ const PRODUCTS = [
   },
   {
     id: "cadenas-con-molde", cat: "iluminacion", sub: "cadenas",
-    imgs: ["assets/img/products/cadenas-con-molde-1.webp", "assets/img/products/cadenas-con-molde-2.webp"], price: 440000, montaje: 50000, stock: 14,
+    imgs: ["assets/img/products/cadenas-con-molde-1.webp"], price: 440000, montaje: 50000, stock: 14,
     dims: "12 focos · 10 kg",
     name: { es: "Cadenas con Molde", en: "Molded Chains", pt: "Correntes com Molde" },
     desc: {

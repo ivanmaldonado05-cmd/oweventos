@@ -40,6 +40,7 @@
     updateSelectBar();
     const ct = $("#catalogToggle");
     if (ct) ct.querySelector("span").textContent = $("#catalogBody").hidden ? t("catalog.show") : t("catalog.hide");
+    updateRevealHint();
     if (!$("#quoteModal").hidden) renderQuoteItems();
   }
 
@@ -357,6 +358,18 @@
     }
   }
 
+  function updateRevealHint() {
+    const el = $("#revealHint");
+    if (el) el.textContent = PRODUCTS.length + " · " + t("filter.aranas") + " · " + t("filter.climatizacion") + " · " + t("filter.ventiladores");
+  }
+
+  /* ---------------- Theme ---------------- */
+  function applyTheme(th) {
+    if (th === "light") document.documentElement.setAttribute("data-theme", "light");
+    else document.documentElement.removeAttribute("data-theme");
+    try { localStorage.setItem("ow_theme", th); } catch (e) {}
+  }
+
   /* ---------------- Init ---------------- */
   function init() {
     applyI18n();
@@ -399,7 +412,14 @@
     // contact form
     $("#contactForm").addEventListener("submit", contactSubmit);
 
+    // theme toggle
+    $("#themeToggle").addEventListener("click", () => {
+      const cur = document.documentElement.getAttribute("data-theme") === "light" ? "light" : "dark";
+      applyTheme(cur === "light" ? "dark" : "light");
+    });
+
     // catalog collapse
+    updateRevealHint();
     $("#catalogToggle").addEventListener("click", toggleCatalog);
     $$('a[href="#catalog"]').forEach(a => a.addEventListener("click", openCatalog));
 
