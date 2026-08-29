@@ -42,15 +42,15 @@
   /* ---------------- Filter chips ---------------- */
   function renderChips() {
     const chips = $("#filterChips");
-    const subs = [];
-    Object.entries(CATEGORIES).forEach(([catKey, cat]) => {
-      Object.entries(cat.subs).forEach(([subKey, label]) => {
-        subs.push({ key: subKey, label: label[lang] });
-      });
-    });
-    chips.innerHTML =
-      `<button class="chip ${activeFilter === "all" ? "active" : ""}" data-filter="all">${t("catalog.all")}</button>` +
-      subs.map(s => `<button class="chip ${activeFilter === s.key ? "active" : ""}" data-filter="${s.key}">${s.label}</button>`).join("");
+    const filters = [
+      { key: "all", label: t("catalog.all") },
+      { key: "aranas", label: t("filter.aranas") },
+      { key: "climatizacion", label: t("filter.climatizacion") },
+      { key: "ventiladores", label: t("filter.ventiladores") }
+    ];
+    chips.innerHTML = filters.map(f =>
+      `<button class="chip ${activeFilter === f.key ? "active" : ""}" data-filter="${f.key}">${f.label}</button>`
+    ).join("");
     $$(".chip", chips).forEach(c => c.addEventListener("click", () => {
       activeFilter = c.dataset.filter;
       renderChips(); renderCatalog();
@@ -59,7 +59,9 @@
 
   /* ---------------- Catalog ---------------- */
   function matches(p) {
-    if (activeFilter !== "all" && p.sub !== activeFilter) return false;
+    if (activeFilter === "aranas" && p.cat !== "iluminacion") return false;
+    if (activeFilter === "ventiladores" && p.sub !== "ventiladores") return false;
+    if (activeFilter === "climatizacion" && !(p.sub === "climatizadores" || p.sub === "estufas")) return false;
     if (searchTerm) {
       const hay = (p.name[lang] + " " + p.desc[lang] + " " + (p.dims || "")).toLowerCase();
       if (!hay.includes(searchTerm)) return false;
@@ -73,12 +75,21 @@
     const montaje = p.montaje > 0
       ? `<span class="montaje">+ ${fmtGs(p.montaje)} ${t("catalog.montaje")}</span>`
       : `<span class="montaje">${t("catalog.assembly_free")}</span>`;
+    const imgs = p.imgs || [p.img];
+    const multi = imgs.length > 1;
+    const slides = imgs.map((src, i) =>
+      `<img src="${src}" alt="${p.name[lang]}" loading="lazy" class="slide${i === 0 ? " active" : ""}" />`
+    ).join("");
+    const nav = multi ? `
+          <button class="slide-btn prev" data-dir="-1" aria-label="anterior">‹</button>
+          <button class="slide-btn next" data-dir="1" aria-label="siguiente">›</button>
+          <div class="slide-dots">${imgs.map((_, i) => `<span class="dot${i === 0 ? " active" : ""}"></span>`).join("")}</div>` : "";
     return `
       <article class="card ${isSel ? "selected" : ""}" data-id="${p.id}">
-        <div class="card-media ${p.light ? "is-light" : ""}" data-zoom="${p.img}">
+        <div class="card-media ${p.light ? "is-light" : ""}">
           <span class="card-badge">${subLabel}</span>
           <span class="card-check"><svg viewBox="0 0 24 24"><path d="M5 12l4 4L19 6" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-          <img src="${p.img}" alt="${p.name[lang]}" loading="lazy" />
+          <div class="slides">${slides}</div>${nav}
         </div>
         <div class="card-body">
           <h3 class="card-name">${p.name[lang]}</h3>
@@ -108,7 +119,21 @@
     $$(".card-add", grid).forEach(b => b.addEventListener("click", (e) => {
       e.stopPropagation(); toggleSelect(b.dataset.add);
     }));
-    $$(".card-media", grid).forEach(m => m.addEventListener("click", () => openLightbox(m.dataset.zoom)));
+    $$(".card-media", grid).forEach(media => {
+      const slides = $$(".slide", media);
+      const dots = $$(".dot", media);
+      let idx = 0;
+      const go = (n) => {
+        idx = (n + slides.length) % slides.length;
+        slides.forEach((s, i) => s.classList.toggle("active", i === idx));
+        dots.forEach((d, i) => d.classList.toggle("active", i === idx));
+      };
+      $$(".slide-btn", media).forEach(b => b.addEventListener("click", (e) => {
+        e.stopPropagation(); go(idx + parseInt(b.dataset.dir, 10));
+      }));
+      dots.forEach((d, i) => d.addEventListener("click", (e) => { e.stopPropagation(); go(i); }));
+      media.addEventListener("click", () => openLightbox(slides[idx].getAttribute("src")));
+    });
     observeReveal(grid);
   }
 
@@ -163,7 +188,7 @@
       const qty = selected.get(id);
       return `
         <div class="quote-item" data-id="${id}">
-          <img src="${p.img}" alt="" />
+          <img src="${(p.imgs && p.imgs[0]) || p.img}" alt="" />
           <div class="quote-item-info">
             <b>${p.name[lang]}</b>
             <span>${fmtGs(p.price)} ${t("wa.unit")}${p.montaje > 0 ? " · " + fmtGs(p.montaje) + " " + t("catalog.montaje") : ""}</span>
@@ -356,6 +381,9 @@
     $("#waLink").href = waHref; $("#waFloat").href = waHref;
     $("#waNumber").textContent = CONTACT.whatsappDisplay;
     $("#igLink").href = CONTACT.instagramUrl;
+    const footWa = $("#footWa"), footWaText = $("#footWaText");
+    if (footWa) footWa.href = waHref;
+    if (footWaText) { footWaText.href = waHref; footWaText.textContent = "WhatsApp · " + CONTACT.whatsappDisplay; }
     $("#year").textContent = new Date().getFullYear();
   }
 

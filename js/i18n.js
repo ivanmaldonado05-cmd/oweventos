@@ -87,6 +87,12 @@ const I18N = {
     "footer.contact": "Contacto",
     "footer.rights": "Todos los derechos reservados.",
     "footer.made": "Climatización · Iluminación · Eventos",
+    "footer.explore": "Explorar",
+    "footer.dev": "desarrollado por",
+
+    "filter.aranas": "Arañas",
+    "filter.climatizacion": "Climatización",
+    "filter.ventiladores": "Ventiladores",
 
     "wa.greeting": "¡Hola OW Eventos! 👋 Quiero solicitar una cotización:",
     "wa.event": "Evento",
@@ -186,6 +192,12 @@ const I18N = {
     "footer.contact": "Contact",
     "footer.rights": "All rights reserved.",
     "footer.made": "Climate · Lighting · Events",
+    "footer.explore": "Explore",
+    "footer.dev": "developed by",
+
+    "filter.aranas": "Chandeliers",
+    "filter.climatizacion": "Climate control",
+    "filter.ventiladores": "Fans",
 
     "wa.greeting": "Hi OW Eventos! 👋 I'd like to request a quote:",
     "wa.event": "Event",
@@ -285,6 +297,12 @@ const I18N = {
     "footer.contact": "Contato",
     "footer.rights": "Todos os direitos reservados.",
     "footer.made": "Climatização · Iluminação · Eventos",
+    "footer.explore": "Explorar",
+    "footer.dev": "desenvolvido por",
+
+    "filter.aranas": "Lustres",
+    "filter.climatizacion": "Climatização",
+    "filter.ventiladores": "Ventiladores",
 
     "wa.greeting": "Olá OW Eventos! 👋 Gostaria de solicitar um orçamento:",
     "wa.event": "Evento",

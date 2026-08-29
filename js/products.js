@@ -27,7 +27,7 @@ const PRODUCTS = [
   /* ------------------------ CLIMATIZACIÓN · Ventiladores ------------------ */
   {
     id: "ventilador-de-pie", cat: "climatizacion", sub: "ventiladores", light: true,
-    img: "assets/img/products/ventilador-de-pie.webp", price: 220000, montaje: 0, stock: 40,
+    imgs: ["assets/img/products/ventilador-de-pie.webp"], price: 220000, montaje: 0, stock: 40,
     dims: "30\" · 3 vel.",
     name: { es: "Ventilador de Pie", en: "Standing Fan", pt: "Ventilador de Pé" },
     desc: {
@@ -38,7 +38,7 @@ const PRODUCTS = [
   },
   {
     id: "ventilador-apilable", cat: "climatizacion", sub: "ventiladores",
-    img: "assets/img/products/ventilador-apilable.webp", price: 310000, montaje: 0, stock: 50,
+    imgs: ["assets/img/products/ventilador-apilable.webp"], price: 310000, montaje: 0, stock: 50,
     dims: "Ø 50 cm",
     name: { es: "Ventilador Apilable", en: "Stackable Fan", pt: "Ventilador Empilhável" },
     desc: {
@@ -49,7 +49,7 @@ const PRODUCTS = [
   },
   {
     id: "ventilador-industrial", cat: "climatizacion", sub: "ventiladores",
-    img: "assets/img/products/ventilador-industrial.webp", price: 440000, montaje: 0, stock: 18,
+    imgs: ["assets/img/products/ventilador-industrial.webp"], price: 440000, montaje: 0, stock: 18,
     dims: "Ø 1 m",
     name: { es: "Ventilador Industrial", en: "Industrial Fan", pt: "Ventilador Industrial" },
     desc: {
@@ -60,7 +60,7 @@ const PRODUCTS = [
   },
   {
     id: "ventilador-humidificador", cat: "climatizacion", sub: "ventiladores",
-    img: "assets/img/products/ventilador-humidificador.webp", price: 330000, montaje: 0, stock: 2,
+    imgs: ["assets/img/products/ventilador-humidificador.webp"], price: 330000, montaje: 0, stock: 2,
     dims: "Tanque 36 L · 25 m²",
     name: { es: "Ventilador con Humidificador", en: "Misting Fan", pt: "Ventilador com Umidificador" },
     desc: {
@@ -72,7 +72,7 @@ const PRODUCTS = [
   /* ------------------------ CLIMATIZACIÓN · Climatizadores ---------------- */
   {
     id: "climatizador-de-piso", cat: "climatizacion", sub: "climatizadores", light: true,
-    img: "assets/img/products/climatizador-de-piso.webp", price: 660000, montaje: 0, stock: 10,
+    imgs: ["assets/img/products/climatizador-de-piso.webp"], price: 660000, montaje: 0, stock: 10,
     dims: "50 m · evaporativo",
     name: { es: "Climatizador de Piso", en: "Floor Air Cooler", pt: "Climatizador de Piso" },
     desc: {
@@ -83,7 +83,7 @@ const PRODUCTS = [
   },
   {
     id: "climatizador-cabezal-mediano", cat: "climatizacion", sub: "climatizadores",
-    img: "assets/img/products/climatizador-cabezal-mediano.webp", price: 770000, montaje: 0, stock: 10,
+    imgs: ["assets/img/products/climatizador-cabezal-mediano.webp"], price: 770000, montaje: 0, stock: 10,
     dims: "2 m de alto",
     name: { es: "Climatizador Cabezal Mediano", en: "Medium Column Cooler", pt: "Climatizador Cabeçal Médio" },
     desc: {
@@ -94,7 +94,7 @@ const PRODUCTS = [
   },
   {
     id: "climatizador-cabezal-grande", cat: "climatizacion", sub: "climatizadores",
-    img: "assets/img/products/climatizador-cabezal-grande.webp", price: 880000, montaje: 0, stock: 10,
+    imgs: ["assets/img/products/climatizador-cabezal-grande.webp"], price: 880000, montaje: 0, stock: 10,
     dims: "2 m de alto",
     name: { es: "Climatizador Cabezal Grande", en: "Large Column Cooler", pt: "Climatizador Cabeçal Grande" },
     desc: {
@@ -106,7 +106,7 @@ const PRODUCTS = [
   /* ------------------------ CLIMATIZACIÓN · Estufas ---------------------- */
   {
     id: "estufa-hongo", cat: "climatizacion", sub: "estufas",
-    img: "assets/img/products/estufa-hongo.webp", price: 550000, montaje: 0, stock: 22,
+    imgs: ["assets/img/products/estufa-hongo.webp"], price: 550000, montaje: 0, stock: 22,
     dims: "Gas · regulable",
     name: { es: "Estufa Hongo", en: "Mushroom Heater", pt: "Aquecedor Cogumelo" },
     desc: {
@@ -117,7 +117,7 @@ const PRODUCTS = [
   },
   {
     id: "estufa-piramide", cat: "climatizacion", sub: "estufas",
-    img: "assets/img/products/estufa-piramide.webp", price: 660000, montaje: 0, stock: 50,
+    imgs: ["assets/img/products/estufa-piramide.webp"], price: 660000, montaje: 0, stock: 50,
     dims: "Gas · llama visible",
     name: { es: "Estufa Pirámide", en: "Pyramid Heater", pt: "Aquecedor Pirâmide" },
     desc: {
@@ -130,7 +130,7 @@ const PRODUCTS = [
   /* ------------------------ ILUMINACIÓN · Cristal ----------------------- */
   {
     id: "cristal-con-velas", cat: "iluminacion", sub: "cristal",
-    img: "assets/img/products/cristal-con-velas.webp", price: 880000, montaje: 150000, stock: 4,
+    imgs: ["assets/img/products/cristal-con-velas-1.webp"], price: 880000, montaje: 150000, stock: 4,
     dims: "1,10 × 1 m · 30 kg",
     name: { es: "Cristal con Velas", en: "Crystal with Candles", pt: "Cristal com Velas" },
     desc: {
@@ -141,7 +141,7 @@ const PRODUCTS = [
   },
   {
     id: "cristal-mediana", cat: "iluminacion", sub: "cristal",
-    img: "assets/img/products/cristal-mediana.webp", price: 880000, montaje: 150000, stock: 2,
+    imgs: ["assets/img/products/cristal-mediana-1.webp"], price: 880000, montaje: 150000, stock: 2,
     dims: "1,05 × 1,20 m · 35 kg",
     name: { es: "Cristal Mediana", en: "Crystal Medium", pt: "Cristal Média" },
     desc: {
@@ -152,7 +152,7 @@ const PRODUCTS = [
   },
   {
     id: "cristal-grande", cat: "iluminacion", sub: "cristal",
-    img: "assets/img/products/cristal-grande.webp", price: 880000, montaje: 150000, stock: 2,
+    imgs: ["assets/img/products/cristal-grande-1.webp", "assets/img/products/cristal-grande-2.webp"], price: 880000, montaje: 150000, stock: 2,
     dims: "1,25 × 1,15 m · 40 kg",
     name: { es: "Cristal Grande", en: "Crystal Large", pt: "Cristal Grande" },
     desc: {
@@ -163,7 +163,7 @@ const PRODUCTS = [
   },
   {
     id: "piramide-cromada", cat: "iluminacion", sub: "cristal",
-    img: "assets/img/products/piramide-cromada.webp", price: 500000, montaje: 150000, stock: 4,
+    imgs: ["assets/img/products/piramide-cromada-1.webp", "assets/img/products/piramide-cromada-2.webp"], price: 500000, montaje: 150000, stock: 4,
     dims: "0,80 × 0,60 m · 12 focos",
     name: { es: "Pirámide Cromada", en: "Chrome Pyramid", pt: "Pirâmide Cromada" },
     desc: {
@@ -174,7 +174,7 @@ const PRODUCTS = [
   },
   {
     id: "piramide-dorada", cat: "iluminacion", sub: "cristal",
-    img: "assets/img/products/piramide-dorada.webp", price: 500000, montaje: 150000, stock: 4,
+    imgs: ["assets/img/products/piramide-dorada-1.webp", "assets/img/products/piramide-dorada-2.webp"], price: 500000, montaje: 150000, stock: 4,
     dims: "0,80 × 0,60 m · 12 focos",
     name: { es: "Pirámide Dorada", en: "Gold Pyramid", pt: "Pirâmide Dourada" },
     desc: {
@@ -185,7 +185,7 @@ const PRODUCTS = [
   },
   {
     id: "crystal-black", cat: "iluminacion", sub: "cristal",
-    img: "assets/img/products/crystal-black.webp", price: 880000, montaje: 150000, stock: 6,
+    imgs: ["assets/img/products/crystal-black-1.webp", "assets/img/products/crystal-black-2.webp"], price: 880000, montaje: 150000, stock: 6,
     dims: "1,10 × 0,90 m",
     name: { es: "Crystal Black", en: "Crystal Black", pt: "Crystal Black" },
     desc: {
@@ -196,7 +196,7 @@ const PRODUCTS = [
   },
   {
     id: "cristal-y-plata", cat: "iluminacion", sub: "cristal",
-    img: "assets/img/products/cristal-y-plata.webp", price: 1500000, montaje: 250000, stock: 2,
+    imgs: ["assets/img/products/cristal-y-plata-1.webp", "assets/img/products/cristal-y-plata-2.webp"], price: 1500000, montaje: 250000, stock: 2,
     dims: "1,60 × 1,50 m · 40 kg",
     name: { es: "Cristal y Plata", en: "Crystal & Silver", pt: "Cristal e Prata" },
     desc: {
@@ -207,7 +207,7 @@ const PRODUCTS = [
   },
   {
     id: "cristal-cromada", cat: "iluminacion", sub: "cristal",
-    img: "assets/img/products/cristal-cromada.webp", price: 1500000, montaje: 250000, stock: 2,
+    imgs: ["assets/img/products/cristal-cromada-1.webp"], price: 1500000, montaje: 250000, stock: 2,
     dims: "2 × 1,20 m · 40 kg",
     name: { es: "Cristal Cromada", en: "Chrome Crystal", pt: "Cristal Cromada" },
     desc: {
@@ -218,7 +218,7 @@ const PRODUCTS = [
   },
   {
     id: "candelabro-de-cristal", cat: "iluminacion", sub: "cristal",
-    img: "assets/img/products/candelabro-de-cristal.webp", price: 250000, montaje: 0, stock: 6,
+    imgs: ["assets/img/products/candelabro-de-cristal-1.webp"], price: 250000, montaje: 0, stock: 6,
     dims: "1,30 × 0,60 m · 5 brazos",
     name: { es: "Candelabro de Cristal", en: "Crystal Candelabra", pt: "Candelabro de Cristal" },
     desc: {
@@ -231,7 +231,7 @@ const PRODUCTS = [
   /* ------------------------ ILUMINACIÓN · Bronce & Doradas -------------- */
   {
     id: "gotas-medianas", cat: "iluminacion", sub: "bronce",
-    img: "assets/img/products/gotas-medianas.webp", price: 385000, montaje: 50000, stock: 20,
+    imgs: ["assets/img/products/gotas-medianas-1.webp"], price: 385000, montaje: 50000, stock: 20,
     dims: "0,80 × 0,40 m",
     name: { es: "Gotas Medianas", en: "Medium Teardrop", pt: "Gotas Médias" },
     desc: {
@@ -242,7 +242,7 @@ const PRODUCTS = [
   },
   {
     id: "gotas-grandes", cat: "iluminacion", sub: "bronce",
-    img: "assets/img/products/gotas-grandes.webp", price: 440000, montaje: 50000, stock: 20,
+    imgs: ["assets/img/products/gotas-grandes-1.webp"], price: 440000, montaje: 50000, stock: 20,
     dims: "1,10 × 0,60 m",
     name: { es: "Gotas Grandes", en: "Large Teardrop", pt: "Gotas Grandes" },
     desc: {
@@ -253,7 +253,7 @@ const PRODUCTS = [
   },
   {
     id: "redondas-medianas", cat: "iluminacion", sub: "bronce",
-    img: "assets/img/products/redondas-medianas.webp", price: 385000, montaje: 50000, stock: 20,
+    imgs: ["assets/img/products/redondas-medianas-1.webp"], price: 385000, montaje: 50000, stock: 20,
     dims: "Ø 40 cm",
     name: { es: "Redonda Mediana", en: "Medium Round", pt: "Redonda Média" },
     desc: {
@@ -264,7 +264,7 @@ const PRODUCTS = [
   },
   {
     id: "redondas-grandes", cat: "iluminacion", sub: "bronce",
-    img: "assets/img/products/redondas-grandes.webp", price: 440000, montaje: 50000, stock: 20,
+    imgs: ["assets/img/products/redondas-grandes-1.webp"], price: 440000, montaje: 50000, stock: 20,
     dims: "Ø 50 cm",
     name: { es: "Redonda Grande", en: "Large Round", pt: "Redonda Grande" },
     desc: {
@@ -275,7 +275,7 @@ const PRODUCTS = [
   },
   {
     id: "imperial", cat: "iluminacion", sub: "bronce",
-    img: "assets/img/products/imperial.webp", price: 1100000, montaje: 200000, stock: 6,
+    imgs: ["assets/img/products/imperial-1.webp", "assets/img/products/imperial-2.webp"], price: 1100000, montaje: 200000, stock: 6,
     dims: "2,10 m alto · 70 kg",
     name: { es: "Imperial", en: "Imperial", pt: "Imperial" },
     desc: {
@@ -286,7 +286,7 @@ const PRODUCTS = [
   },
   {
     id: "isabel", cat: "iluminacion", sub: "bronce",
-    img: "assets/img/products/isabel.webp", price: 1400000, montaje: 250000, stock: 2,
+    imgs: ["assets/img/products/isabel-1.webp"], price: 1400000, montaje: 250000, stock: 2,
     dims: "2,15 × 1,50 m · 40 kg",
     name: { es: "Isabel", en: "Isabel", pt: "Isabel" },
     desc: {
@@ -297,7 +297,7 @@ const PRODUCTS = [
   },
   {
     id: "hexagonal", cat: "iluminacion", sub: "bronce",
-    img: "assets/img/products/hexagonal.webp", price: 660000, montaje: 50000, stock: 20,
+    imgs: ["assets/img/products/hexagonal-1.webp"], price: 660000, montaje: 50000, stock: 20,
     dims: "1,10 × 0,60 m",
     name: { es: "Araña Hexagonal", en: "Hexagonal", pt: "Hexagonal" },
     desc: {
@@ -308,7 +308,7 @@ const PRODUCTS = [
   },
   {
     id: "angeles-cupula-transparente", cat: "iluminacion", sub: "bronce",
-    img: "assets/img/products/angeles-cupula-transparente.webp", price: 440000, montaje: 50000, stock: 2,
+    imgs: ["assets/img/products/angeles-cupula-transparente-1.webp"], price: 440000, montaje: 50000, stock: 2,
     dims: "1 × 0,75 m",
     name: { es: "Ángeles · Cúpula Transparente", en: "Angels · Clear Dome", pt: "Anjos · Cúpula Transparente" },
     desc: {
@@ -319,7 +319,7 @@ const PRODUCTS = [
   },
   {
     id: "angeles-cupula-marron", cat: "iluminacion", sub: "bronce",
-    img: "assets/img/products/angeles-cupula-marron.webp", price: 440000, montaje: 100000, stock: 4,
+    imgs: ["assets/img/products/angeles-cupula-marron-1.webp"], price: 440000, montaje: 100000, stock: 4,
     dims: "1 × 0,70 m · 8 brazos",
     name: { es: "Ángeles · Cúpula Marrón", en: "Angels · Brown Dome", pt: "Anjos · Cúpula Marrom" },
     desc: {
@@ -330,7 +330,7 @@ const PRODUCTS = [
   },
   {
     id: "bronce-pajaros", cat: "iluminacion", sub: "bronce",
-    img: "assets/img/products/bronce-pajaros.webp", price: 550000, montaje: 100000, stock: 1,
+    imgs: ["assets/img/products/bronce-pajaros-1.webp"], price: 550000, montaje: 100000, stock: 1,
     dims: "0,75 × 1 m · 18 brazos",
     name: { es: "Bronce con Pájaros", en: "Bronze with Birds", pt: "Bronze com Pássaros" },
     desc: {
@@ -341,7 +341,7 @@ const PRODUCTS = [
   },
   {
     id: "clementina", cat: "iluminacion", sub: "bronce",
-    img: "assets/img/products/clementina.webp", price: 1100000, montaje: 150000, stock: 4,
+    imgs: ["assets/img/products/clementina-1.webp", "assets/img/products/clementina-2.webp"], price: 1100000, montaje: 150000, stock: 4,
     dims: "1,30 × 1,30 m · 5 pisos",
     name: { es: "Clementina", en: "Clementina", pt: "Clementina" },
     desc: {
@@ -352,7 +352,7 @@ const PRODUCTS = [
   },
   {
     id: "bronce-16-brazos", cat: "iluminacion", sub: "bronce",
-    img: "assets/img/products/bronce-16-brazos.webp", price: 900000, montaje: 100000, stock: 4,
+    imgs: ["assets/img/products/bronce-16-brazos-1.webp"], price: 900000, montaje: 100000, stock: 4,
     dims: "1,10 × 0,80 m · 20 kg",
     name: { es: "Bronce 16 Brazos", en: "Bronze 16 Arms", pt: "Bronze 16 Braços" },
     desc: {
@@ -363,7 +363,7 @@ const PRODUCTS = [
   },
   {
     id: "bronce-24-brazos", cat: "iluminacion", sub: "bronce",
-    img: "assets/img/products/bronce-24-brazos.webp", price: 1000000, montaje: 200000, stock: 8,
+    imgs: ["assets/img/products/bronce-24-brazos-1.webp"], price: 1000000, montaje: 200000, stock: 8,
     dims: "1,60 × 0,80 m · 30 kg",
     name: { es: "Bronce 24 Brazos", en: "Bronze 24 Arms", pt: "Bronze 24 Braços" },
     desc: {
@@ -374,7 +374,7 @@ const PRODUCTS = [
   },
   {
     id: "candelabro-de-pie", cat: "iluminacion", sub: "bronce",
-    img: "assets/img/products/candelabro-de-pie.webp", price: 700000, montaje: 100000, stock: 2,
+    imgs: ["assets/img/products/candelabro-de-pie-1.webp"], price: 700000, montaje: 100000, stock: 2,
     dims: "1,70 × 0,80 m · 15 brazos",
     name: { es: "Candelabro de Pie", en: "Floor Candelabra", pt: "Candelabro de Pé" },
     desc: {
@@ -387,7 +387,7 @@ const PRODUCTS = [
   /* ------------------------ ILUMINACIÓN · Rústicas & Industriales ------- */
   {
     id: "jaula-mediana", cat: "iluminacion", sub: "rusticas",
-    img: "assets/img/products/jaula-mediana.webp", price: 220000, montaje: 50000, stock: 10,
+    imgs: ["assets/img/products/jaula-mediana-1.webp"], price: 220000, montaje: 50000, stock: 10,
     dims: "0,80 × 0,32 m",
     name: { es: "Jaula Mediana", en: "Medium Cage", pt: "Gaiola Média" },
     desc: {
@@ -398,7 +398,7 @@ const PRODUCTS = [
   },
   {
     id: "jaula-grande", cat: "iluminacion", sub: "rusticas",
-    img: "assets/img/products/jaula-grande.webp", price: 330000, montaje: 50000, stock: 10,
+    imgs: ["assets/img/products/jaula-grande-1.webp", "assets/img/products/jaula-grande-2.webp"], price: 330000, montaje: 50000, stock: 10,
     dims: "1,20 × 0,47 m · 10 kg",
     name: { es: "Jaula Grande", en: "Large Cage", pt: "Gaiola Grande" },
     desc: {
@@ -409,7 +409,7 @@ const PRODUCTS = [
   },
   {
     id: "nautica-beige", cat: "iluminacion", sub: "rusticas",
-    img: "assets/img/products/nautica-beige.webp", price: 250000, montaje: 50000, stock: 10,
+    imgs: ["assets/img/products/nautica-beige-1.webp", "assets/img/products/nautica-beige-2.webp"], price: 250000, montaje: 50000, stock: 10,
     dims: "Cuerda náutica",
     name: { es: "Náutica Beige", en: "Nautical Beige", pt: "Náutica Bege" },
     desc: {
@@ -420,7 +420,7 @@ const PRODUCTS = [
   },
   {
     id: "nautica-verde", cat: "iluminacion", sub: "rusticas",
-    img: "assets/img/products/nautica-verde.webp", price: 250000, montaje: 50000, stock: 10,
+    imgs: ["assets/img/products/nautica-verde-1.webp"], price: 250000, montaje: 50000, stock: 10,
     dims: "Cuerda náutica",
     name: { es: "Náutica Verde", en: "Nautical Green", pt: "Náutica Verde" },
     desc: {
@@ -433,7 +433,7 @@ const PRODUCTS = [
   /* ------------------------ ILUMINACIÓN · Cadenas ---------------------- */
   {
     id: "cadenas-cruzadas", cat: "iluminacion", sub: "cadenas",
-    img: "assets/img/products/cadenas-cruzadas.webp", price: 660000, montaje: 50000, stock: 80,
+    imgs: ["assets/img/products/cadenas-cruzadas-1.webp"], price: 660000, montaje: 50000, stock: 80,
     dims: "1,10 × 0,80 m · 12 focos",
     name: { es: "Cadenas Cruzadas", en: "Crossed Chains", pt: "Correntes Cruzadas" },
     desc: {
@@ -444,7 +444,7 @@ const PRODUCTS = [
   },
   {
     id: "cadenas-con-molde", cat: "iluminacion", sub: "cadenas",
-    img: "assets/img/products/cadenas-con-molde.webp", price: 440000, montaje: 50000, stock: 14,
+    imgs: ["assets/img/products/cadenas-con-molde-1.webp", "assets/img/products/cadenas-con-molde-2.webp"], price: 440000, montaje: 50000, stock: 14,
     dims: "12 focos · 10 kg",
     name: { es: "Cadenas con Molde", en: "Molded Chains", pt: "Correntes com Molde" },
     desc: {
@@ -455,7 +455,7 @@ const PRODUCTS = [
   },
   {
     id: "cadenas-con-fleco", cat: "iluminacion", sub: "cadenas",
-    img: "assets/img/products/cadenas-con-fleco.webp", price: 550000, montaje: 50000, stock: 11,
+    imgs: ["assets/img/products/cadenas-con-fleco-1.webp"], price: 550000, montaje: 50000, stock: 11,
     dims: "1,30 × 0,45 m · 7 kg",
     name: { es: "Cadenas con Fleco", en: "Fringe Chains", pt: "Correntes com Franja" },
     desc: {
