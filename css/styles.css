@@ -176,10 +176,10 @@ input, textarea, select { font-family: inherit; }
 
 .hero-art { position: relative; display: grid; place-items: center; min-height: 540px; }
 .hero-chandelier {
-  width: 460px; max-width: 100%; height: auto; display: block; object-fit: contain;
+  width: 500px; max-width: 100%; height: auto; display: block; object-fit: contain;
   mix-blend-mode: screen;
-  -webkit-mask-image: radial-gradient(ellipse 70% 78% at 52% 48%, #000 46%, transparent 92%);
-  mask-image: radial-gradient(ellipse 70% 78% at 52% 48%, #000 46%, transparent 92%);
+  -webkit-mask-image: radial-gradient(ellipse 64% 70% at 50% 49%, #000 38%, transparent 80%);
+  mask-image: radial-gradient(ellipse 64% 70% at 50% 49%, #000 38%, transparent 80%);
   position: relative; z-index: 2;
   animation: heroFade 1.8s var(--ease) both, float 8s ease-in-out 1.8s infinite;
 }
@@ -301,6 +301,13 @@ input, textarea, select { font-family: inherit; }
 .card.selected .card-add { background: var(--gold); color: #17130a; border-color: transparent; }
 
 .catalog-empty { text-align: center; color: var(--muted); padding: 60px 0; font-size: 1.05rem; }
+
+.catalog-reveal { display: flex; justify-content: center; padding: 4px 0; }
+.catalog-toggle { gap: 10px; }
+.catalog-toggle .chev { width: 18px; height: 18px; transition: transform 0.35s var(--ease); }
+.catalog-reveal.open .chev { transform: rotate(180deg); }
+#catalogBody { animation: fadeDown 0.5s var(--ease); }
+@keyframes fadeDown { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: none; } }
 
 /* ==========================================================================
    GALLERY
@@ -436,6 +443,16 @@ input, textarea, select { font-family: inherit; }
   padding: 12px 14px; color: var(--text); font-size: 0.95rem; outline: none; transition: border-color 0.3s; width: 100%;
 }
 .field input:focus { border-color: var(--gold); }
+
+/* map picker */
+.map-block { margin-top: 4px; }
+.map-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+.map-btn { display: inline-flex; align-items: center; gap: 8px; padding: 10px 14px; border: 1px solid var(--line-soft); border-radius: var(--radius-sm); color: var(--muted); font-size: 0.85rem; transition: all 0.3s var(--ease); }
+.map-btn svg { width: 17px; height: 17px; color: var(--gold-bright); }
+.map-btn:hover { border-color: var(--gold); color: var(--text); }
+#mapWrap { margin-top: 12px; }
+#pickMap { height: 240px; border-radius: var(--radius-sm); overflow: hidden; border: 1px solid var(--line-soft); z-index: 1; }
+.map-picked { margin-top: 8px; font-size: 0.85rem; color: var(--gold-bright); }
 
 .quote-items { display: flex; flex-direction: column; gap: 10px; }
 .quote-item { display: flex; align-items: center; gap: 14px; background: var(--surface); border: 1px solid var(--line-soft); border-radius: var(--radius-sm); padding: 10px 12px; }

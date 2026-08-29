@@ -26,8 +26,8 @@ const CATEGORIES = {
 const PRODUCTS = [
   /* ------------------------ CLIMATIZACIÓN · Ventiladores ------------------ */
   {
-    id: "ventilador-de-pie", cat: "climatizacion", sub: "ventiladores", light: true,
-    imgs: ["assets/img/products/ventilador-de-pie.webp"], price: 220000, montaje: 0, stock: 40,
+    id: "ventilador-de-pie", cat: "climatizacion", sub: "ventiladores",
+    imgs: ["assets/img/products/placeholder-fan.webp"], price: 220000, montaje: 0, stock: 40,
     dims: "30\" · 3 vel.",
     name: { es: "Ventilador de Pie", en: "Standing Fan", pt: "Ventilador de Pé" },
     desc: {
@@ -38,7 +38,7 @@ const PRODUCTS = [
   },
   {
     id: "ventilador-apilable", cat: "climatizacion", sub: "ventiladores",
-    imgs: ["assets/img/products/ventilador-apilable.webp"], price: 310000, montaje: 0, stock: 50,
+    imgs: ["assets/img/products/placeholder-fan.webp"], price: 310000, montaje: 0, stock: 50,
     dims: "Ø 50 cm",
     name: { es: "Ventilador Apilable", en: "Stackable Fan", pt: "Ventilador Empilhável" },
     desc: {
@@ -60,7 +60,7 @@ const PRODUCTS = [
   },
   {
     id: "ventilador-humidificador", cat: "climatizacion", sub: "ventiladores",
-    imgs: ["assets/img/products/ventilador-humidificador.webp"], price: 330000, montaje: 0, stock: 2,
+    imgs: ["assets/img/products/placeholder-fan.webp"], price: 330000, montaje: 0, stock: 2,
     dims: "Tanque 36 L · 25 m²",
     name: { es: "Ventilador con Humidificador", en: "Misting Fan", pt: "Ventilador com Umidificador" },
     desc: {
@@ -71,7 +71,7 @@ const PRODUCTS = [
   },
   /* ------------------------ CLIMATIZACIÓN · Climatizadores ---------------- */
   {
-    id: "climatizador-de-piso", cat: "climatizacion", sub: "climatizadores", light: true,
+    id: "climatizador-de-piso", cat: "climatizacion", sub: "climatizadores",
     imgs: ["assets/img/products/climatizador-de-piso.webp"], price: 660000, montaje: 0, stock: 10,
     dims: "50 m · evaporativo",
     name: { es: "Climatizador de Piso", en: "Floor Air Cooler", pt: "Climatizador de Piso" },
@@ -185,7 +185,7 @@ const PRODUCTS = [
   },
   {
     id: "crystal-black", cat: "iluminacion", sub: "cristal",
-    imgs: ["assets/img/products/crystal-black-1.webp", "assets/img/products/crystal-black-2.webp"], price: 880000, montaje: 150000, stock: 6,
+    imgs: ["assets/img/products/crystal-black-1.webp"], price: 880000, montaje: 150000, stock: 6,
     dims: "1,10 × 0,90 m",
     name: { es: "Crystal Black", en: "Crystal Black", pt: "Crystal Black" },
     desc: {

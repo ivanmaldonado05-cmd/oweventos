@@ -13,6 +13,8 @@
   const selected = new Map();        // id -> qty
   let activeFilter = "all";
   let searchTerm = "";
+  let quoteCoords = null;            // {lat, lng} from map picker
+  let pickMap = null, pickMarker = null;
 
   const $ = (s, c = document) => c.querySelector(s);
   const $$ = (s, c = document) => Array.from(c.querySelectorAll(s));
@@ -36,6 +38,8 @@
     renderChips();
     renderCatalog();
     updateSelectBar();
+    const ct = $("#catalogToggle");
+    if (ct) ct.querySelector("span").textContent = $("#catalogBody").hidden ? t("catalog.show") : t("catalog.hide");
     if (!$("#quoteModal").hidden) renderQuoteItems();
   }
 
@@ -250,6 +254,7 @@
     msg += "*" + t("wa.event") + "*\n";
     if (name) msg += "• " + t("modal.name") + ": " + name + "\n";
     if (loc) msg += "• " + t("wa.location") + ": " + loc + "\n";
+    if (quoteCoords) msg += "• " + t("wa.map") + ": https://www.google.com/maps?q=" + quoteCoords.lat.toFixed(6) + "," + quoteCoords.lng.toFixed(6) + "\n";
     msg += "• " + t("wa.days") + ": " + days + " " + dayWord + "\n";
     if (date) msg += "• " + t("wa.date") + ": " + date + "\n";
 
@@ -316,6 +321,42 @@
     window.open(waUrl(msg), "_blank");
   }
 
+  /* ---------------- Map picker ---------------- */
+  function setPicked(lat, lng) {
+    quoteCoords = { lat, lng };
+    const el = $("#mapPicked");
+    if (el) { el.hidden = false; el.textContent = t("modal.map_picked"); }
+    if (pickMap && window.L) {
+      if (!pickMarker) pickMarker = L.marker([lat, lng]).addTo(pickMap);
+      else pickMarker.setLatLng([lat, lng]);
+    }
+  }
+  function initPickMap() {
+    if (pickMap || !window.L) return;
+    pickMap = L.map("pickMap", { scrollWheelZoom: false }).setView([-25.2967, -57.6359], 12);
+    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", { maxZoom: 19, attribution: "© OpenStreetMap" }).addTo(pickMap);
+    pickMap.on("click", (e) => setPicked(e.latlng.lat, e.latlng.lng));
+  }
+
+  /* ---------------- Catalog collapse ---------------- */
+  function openCatalog() {
+    const body = $("#catalogBody"), tog = $("#catalogToggle");
+    if (body.hidden) {
+      body.hidden = false; tog.setAttribute("aria-expanded", "true");
+      tog.querySelector("span").textContent = t("catalog.hide");
+      $("#catalogReveal").classList.add("open");
+    }
+  }
+  function toggleCatalog() {
+    const body = $("#catalogBody"), tog = $("#catalogToggle");
+    if (body.hidden) { openCatalog(); }
+    else {
+      body.hidden = true; tog.setAttribute("aria-expanded", "false");
+      tog.querySelector("span").textContent = t("catalog.show");
+      $("#catalogReveal").classList.remove("open");
+    }
+  }
+
   /* ---------------- Init ---------------- */
   function init() {
     applyI18n();
@@ -357,6 +398,25 @@
 
     // contact form
     $("#contactForm").addEventListener("submit", contactSubmit);
+
+    // catalog collapse
+    $("#catalogToggle").addEventListener("click", toggleCatalog);
+    $$('a[href="#catalog"]').forEach(a => a.addEventListener("click", openCatalog));
+
+    // map picker
+    $("#mapToggle").addEventListener("click", () => {
+      const wrap = $("#mapWrap");
+      wrap.hidden = !wrap.hidden;
+      if (!wrap.hidden) { initPickMap(); setTimeout(() => { if (pickMap) pickMap.invalidateSize(); }, 220); }
+    });
+    $("#mapGeo").addEventListener("click", () => {
+      if (!navigator.geolocation) return;
+      $("#mapWrap").hidden = false; initPickMap();
+      navigator.geolocation.getCurrentPosition((pos) => {
+        const { latitude, longitude } = pos.coords;
+        setTimeout(() => { if (pickMap) { pickMap.setView([latitude, longitude], 15); pickMap.invalidateSize(); } setPicked(latitude, longitude); }, 220);
+      });
+    });
 
     // header scroll
     const header = $("#header");

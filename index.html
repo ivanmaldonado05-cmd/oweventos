@@ -12,6 +12,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+  <script defer src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
   <link rel="stylesheet" href="css/styles.css" />
 </head>
 <body>
@@ -49,10 +51,6 @@
   <!-- ===================== HERO ===================== -->
   <section class="hero" id="hero">
     <div class="hero-glow"></div>
-    <!-- decorative spinning fan -->
-    <svg class="deco-fan deco-fan--hero" viewBox="0 0 100 100" aria-hidden="true">
-      <use href="#fanIcon"></use>
-    </svg>
     <div class="container hero-inner">
       <div class="hero-copy">
         <p class="eyebrow" data-i18n="hero.tag">Alquiler premium para eventos</p>
@@ -88,16 +86,25 @@
         <p class="section-sub" data-i18n="catalog.subtitle">Explorá y seleccioná todo lo que te interese.</p>
       </div>
 
-      <div class="catalog-controls">
-        <div class="search-box">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 21l-4.3-4.3M11 19a8 8 0 100-16 8 8 0 000 16z" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-          <input type="search" id="searchInput" data-i18n-ph="catalog.search" placeholder="Buscar producto…" autocomplete="off" />
-        </div>
-        <div class="chips" id="filterChips"></div>
+      <div class="catalog-reveal" id="catalogReveal">
+        <button class="btn btn-gold catalog-toggle" id="catalogToggle" aria-expanded="false" aria-controls="catalogBody">
+          <span data-i18n="catalog.show">Ver productos</span>
+          <svg viewBox="0 0 24 24" aria-hidden="true" class="chev"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
       </div>
 
-      <div class="product-grid" id="productGrid"></div>
-      <p class="catalog-empty" id="catalogEmpty" hidden data-i18n="catalog.empty">No encontramos productos con ese filtro.</p>
+      <div id="catalogBody" hidden>
+        <div class="catalog-controls">
+          <div class="search-box">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 21l-4.3-4.3M11 19a8 8 0 100-16 8 8 0 000 16z" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+            <input type="search" id="searchInput" data-i18n-ph="catalog.search" placeholder="Buscar producto…" autocomplete="off" />
+          </div>
+          <div class="chips" id="filterChips"></div>
+        </div>
+
+        <div class="product-grid" id="productGrid"></div>
+        <p class="catalog-empty" id="catalogEmpty" hidden data-i18n="catalog.empty">No encontramos productos con ese filtro.</p>
+      </div>
     </div>
   </section>
 
@@ -255,6 +262,22 @@
               <span data-i18n="modal.date">Fecha del evento (opcional)</span>
               <input type="date" id="qDate" />
             </label>
+          </div>
+          <div class="map-block">
+            <div class="map-actions">
+              <button type="button" class="map-btn" id="mapToggle">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-5.5-7-11a7 7 0 0114 0c0 5.5-7 11-7 11z" fill="none" stroke="currentColor" stroke-width="1.7"/><circle cx="12" cy="10" r="2.4" fill="none" stroke="currentColor" stroke-width="1.7"/></svg>
+                <span data-i18n="modal.map_pick">Marcar en el mapa</span>
+              </button>
+              <button type="button" class="map-btn" id="mapGeo">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2v3M12 19v3M2 12h3M19 12h3" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><circle cx="12" cy="12" r="6" fill="none" stroke="currentColor" stroke-width="1.7"/></svg>
+                <span data-i18n="modal.map_geo">Usar mi ubicación</span>
+              </button>
+            </div>
+            <div id="mapWrap" hidden>
+              <div id="pickMap"></div>
+              <p class="map-picked" id="mapPicked" hidden></p>
+            </div>
           </div>
         </div>
 
