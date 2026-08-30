@@ -295,48 +295,18 @@
     window.open(waUrl(buildQuoteMessage()), "_blank");
   }
 
-  /* ---------------- Gallery carousel ---------------- */
+  /* ---------------- Gallery marquee (movimiento continuo) ---------------- */
   function renderGallery() {
-    const wrap = $("#galleryCarousel");
-    if (!wrap) return;
+    const track = $("#gmTrack");
+    if (!track) return;
     const imgs = ["evento-1", "evento-2", "evento-3", "evento-4", "evento-5", "evento-6"];
-    const track = $("#gcTrack", wrap), dotsWrap = $("#gcDots", wrap);
-    track.innerHTML = imgs.map((n, i) => {
+    // se duplica la lista para que el desplazamiento vertical sea un loop sin saltos
+    const seq = imgs.concat(imgs);
+    track.innerHTML = seq.map((n, i) => {
       const src = `assets/img/gallery/${n}.webp`;
-      return `<div class="gc-slide${i === 0 ? " active" : ""}" data-zoom="${src}"><img src="${src}" alt="OW Eventos" loading="lazy" /></div>`;
+      return `<img src="${src}" alt="OW Eventos" loading="lazy" data-zoom="${src}"${i >= imgs.length ? ' aria-hidden="true"' : ""} />`;
     }).join("");
-    dotsWrap.innerHTML = imgs.map((_, i) =>
-      `<button class="gc-dot${i === 0 ? " active" : ""}" type="button" data-i="${i}" aria-label="Imagen ${i + 1}"></button>`).join("");
-
-    const slides = $$(".gc-slide", track), dots = $$(".gc-dot", dotsWrap);
-    let idx = 0, timer = null;
-    const go = (n) => {
-      idx = (n + slides.length) % slides.length;
-      track.style.transform = `translateX(-${idx * 100}%)`;
-      slides.forEach((s, i) => s.classList.toggle("active", i === idx));
-      dots.forEach((d, i) => d.classList.toggle("active", i === idx));
-    };
-    const stop = () => { if (timer) { clearInterval(timer); timer = null; } };
-    const start = () => { stop(); timer = setInterval(() => go(idx + 1), 4200); };
-
-    dots.forEach(d => d.addEventListener("click", () => { go(parseInt(d.dataset.i, 10)); start(); }));
-    slides.forEach(s => s.addEventListener("click", () => openLightbox(s.dataset.zoom)));
-    // pausar al pasar el mouse SOLO en equipos con puntero real (en móvil rompía el auto-play)
-    if (window.matchMedia && window.matchMedia("(hover: hover)").matches) {
-      wrap.addEventListener("mouseenter", stop);
-      wrap.addEventListener("mouseleave", start);
-    }
-
-    // swipe táctil
-    let sx = 0;
-    wrap.addEventListener("touchstart", (e) => { sx = e.touches[0].clientX; stop(); }, { passive: true });
-    wrap.addEventListener("touchend", (e) => {
-      const dx = e.changedTouches[0].clientX - sx;
-      if (Math.abs(dx) > 40) go(idx + (dx < 0 ? 1 : -1));
-      start();
-    }, { passive: true });
-
-    go(0); start();
+    $$("img", track).forEach(im => im.addEventListener("click", () => openLightbox(im.dataset.zoom)));
   }
 
   /* ---------------- Lightbox ---------------- */
