@@ -299,13 +299,19 @@
   function closeLightbox() { $("#lightbox").hidden = true; if ($("#quoteModal").hidden) document.body.style.overflow = ""; }
 
   /* ---------------- Reveal on scroll ---------------- */
-  let io;
+  let ioOnce, ioRepeat;
   function observeReveal(scope) {
     if (!("IntersectionObserver" in window)) { $$(".reveal, .card, .gallery-item", scope).forEach(e => e.classList.add("in")); return; }
-    if (!io) io = new IntersectionObserver((entries) => {
-      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } });
+    // cards & gallery: animate once
+    if (!ioOnce) ioOnce = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add("in"); ioOnce.unobserve(e.target); } });
     }, { threshold: 0.12 });
-    $$(".reveal, .card, .gallery-item", scope).forEach((el, i) => { el.style.transitionDelay = (i % 8) * 45 + "ms"; io.observe(el); });
+    $$(".card, .gallery-item", scope).forEach((el, i) => { el.style.transitionDelay = (i % 8) * 45 + "ms"; ioOnce.observe(el); });
+    // section blocks: re-animate every time they enter the viewport
+    if (!ioRepeat) ioRepeat = new IntersectionObserver((entries) => {
+      entries.forEach(e => e.target.classList.toggle("in", e.isIntersecting));
+    }, { threshold: 0.16 });
+    $$(".reveal", scope).forEach(el => ioRepeat.observe(el));
   }
 
   /* ---------------- Contact form ---------------- */
@@ -363,13 +369,6 @@
     if (el) el.textContent = PRODUCTS.length + " · " + t("filter.aranas") + " · " + t("filter.climatizacion") + " · " + t("filter.ventiladores");
   }
 
-  /* ---------------- Theme ---------------- */
-  function applyTheme(th) {
-    if (th === "light") document.documentElement.setAttribute("data-theme", "light");
-    else document.documentElement.removeAttribute("data-theme");
-    try { localStorage.setItem("ow_theme", th); } catch (e) {}
-  }
-
   /* ---------------- Init ---------------- */
   function init() {
     applyI18n();
@@ -406,17 +405,15 @@
 
     // esc key
     document.addEventListener("keydown", (e) => {
-      if (e.key === "Escape") { if (!$("#lightbox").hidden) closeLightbox(); else if (!$("#quoteModal").hidden) closeModal(); }
+      if (e.key === "Escape") {
+        if (!$("#lightbox").hidden) closeLightbox();
+        else if (!$("#quoteModal").hidden) closeModal();
+        else if (!$("#menuOverlay").hidden && window.__closeMenu) window.__closeMenu();
+      }
     });
 
     // contact form
     $("#contactForm").addEventListener("submit", contactSubmit);
-
-    // theme toggle
-    $("#themeToggle").addEventListener("click", () => {
-      const cur = document.documentElement.getAttribute("data-theme") === "light" ? "light" : "dark";
-      applyTheme(cur === "light" ? "dark" : "light");
-    });
 
     // catalog collapse
     updateRevealHint();
@@ -443,15 +440,26 @@
     const onScroll = () => header.classList.toggle("scrolled", window.scrollY > 20);
     onScroll(); window.addEventListener("scroll", onScroll, { passive: true });
 
-    // mobile menu
-    const toggle = $("#menuToggle"), nav = $("#mainNav");
-    toggle.addEventListener("click", () => {
-      const open = nav.classList.toggle("open");
-      toggle.setAttribute("aria-expanded", open);
-    });
-    $$("#mainNav a").forEach(a => a.addEventListener("click", () => {
-      nav.classList.remove("open"); toggle.setAttribute("aria-expanded", "false");
-    }));
+    // menu overlay
+    const menuOverlay = $("#menuOverlay"), menuBtn = $("#menuBtn");
+    let menuTimer;
+    function openMenu() {
+      clearTimeout(menuTimer);
+      menuOverlay.hidden = false;
+      requestAnimationFrame(() => menuOverlay.classList.add("open"));
+      menuBtn.setAttribute("aria-expanded", "true");
+      document.body.style.overflow = "hidden";
+    }
+    function closeMenu() {
+      menuOverlay.classList.remove("open");
+      menuBtn.setAttribute("aria-expanded", "false");
+      document.body.style.overflow = "";
+      menuTimer = setTimeout(() => { menuOverlay.hidden = true; }, 500);
+    }
+    menuBtn.addEventListener("click", openMenu);
+    $("#menuClose").addEventListener("click", closeMenu);
+    $$(".menu-nav a").forEach(a => a.addEventListener("click", closeMenu));
+    window.__closeMenu = closeMenu;
 
     // reveal for static sections
     observeReveal(document);
@@ -464,6 +472,9 @@
     const footWa = $("#footWa"), footWaText = $("#footWaText");
     if (footWa) footWa.href = waHref;
     if (footWaText) { footWaText.href = waHref; footWaText.textContent = "WhatsApp · " + CONTACT.whatsappDisplay; }
+    const menuWa = $("#menuWa"), menuWaIcon = $("#menuWaIcon");
+    if (menuWa) { menuWa.href = waHref; menuWa.textContent = "WhatsApp · " + CONTACT.whatsappDisplay; }
+    if (menuWaIcon) menuWaIcon.href = waHref;
     $("#year").textContent = new Date().getFullYear();
   }
 

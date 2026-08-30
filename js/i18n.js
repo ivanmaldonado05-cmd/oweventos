@@ -10,6 +10,9 @@ const I18N = {
     "nav.about": "Nosotros",
     "nav.contact": "Contacto",
     "nav.quote": "Cotizar",
+    "nav.menu": "Menú",
+    "nav.close": "Cerrar",
+    "header.tagline": "Alquiler de equipos premium para eventos",
 
     "hero.tag": "Alquiler premium para eventos",
     "hero.title": "Iluminamos y climatizamos tu evento",
@@ -123,6 +126,9 @@ const I18N = {
     "nav.about": "About",
     "nav.contact": "Contact",
     "nav.quote": "Get a quote",
+    "nav.menu": "Menu",
+    "nav.close": "Close",
+    "header.tagline": "Premium event equipment rental",
 
     "hero.tag": "Premium event rentals",
     "hero.title": "We light up and cool down your event",
@@ -236,6 +242,9 @@ const I18N = {
     "nav.about": "Sobre",
     "nav.contact": "Contato",
     "nav.quote": "Orçamento",
+    "nav.menu": "Menu",
+    "nav.close": "Fechar",
+    "header.tagline": "Aluguel de equipamentos premium para eventos",
 
     "hero.tag": "Aluguel premium para eventos",
     "hero.title": "Iluminamos e climatizamos o seu evento",

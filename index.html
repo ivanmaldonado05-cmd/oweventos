@@ -9,7 +9,6 @@
   <meta property="og:description" content="Iluminación y climatización de lujo para tu evento." />
   <meta property="og:image" content="assets/img/products/cristal-con-velas-1.webp" />
   <link rel="icon" type="image/png" href="assets/img/logo.png" />
-  <script>try{if(localStorage.getItem('ow_theme')==='light')document.documentElement.setAttribute('data-theme','light');}catch(e){}</script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet" />
@@ -23,34 +22,53 @@
   <header class="site-header" id="header">
     <div class="container header-inner">
       <a href="#top" class="brand" aria-label="OW Eventos">
-        <img src="assets/img/logo-transparent.png" alt="OW Eventos" class="brand-logo logo-dark" />
-        <img src="assets/img/logo.png" alt="OW Eventos" class="brand-logo logo-light" />
+        <img src="assets/img/logo-transparent.png" alt="OW Eventos" class="brand-logo" />
       </a>
-
-      <nav class="main-nav" id="mainNav" aria-label="Principal">
-        <a href="#catalog" data-i18n="nav.catalog">Catálogo</a>
-        <a href="#gallery" data-i18n="nav.gallery">Eventos</a>
-        <a href="#about" data-i18n="nav.about">Nosotros</a>
-        <a href="#contact" data-i18n="nav.contact">Contacto</a>
-      </nav>
-
-      <div class="header-actions">
-        <div class="lang-switch" role="group" aria-label="Idioma">
-          <button data-lang="es" class="active">ES</button>
-          <button data-lang="en">EN</button>
-          <button data-lang="pt">PT</button>
-        </div>
-        <button class="theme-toggle" id="themeToggle" aria-label="Cambiar tema" title="Modo claro / oscuro">
-          <svg class="ico-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M12 2v2.4M12 19.6V22M2 12h2.4M19.6 12H22M4.9 4.9l1.7 1.7M17.4 17.4l1.7 1.7M19.1 4.9l-1.7 1.7M6.6 17.4l-1.7 1.7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
-          <svg class="ico-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.8A9 9 0 1111.2 3a7 7 0 009.8 9.8z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
-        </button>
-        <a href="#catalog" class="btn btn-gold btn-sm nav-quote" data-i18n="nav.quote">Cotizar</a>
-        <button class="menu-toggle" id="menuToggle" aria-label="Menú" aria-expanded="false">
-          <span></span><span></span><span></span>
-        </button>
-      </div>
+      <p class="header-tagline" data-i18n="header.tagline">Alquiler de equipos premium para eventos</p>
+      <button class="menu-btn" id="menuBtn" aria-label="Abrir menú" aria-expanded="false" aria-controls="menuOverlay">
+        <span class="menu-btn-label" data-i18n="nav.menu">Menú</span>
+        <span class="menu-lines"><span></span><span></span></span>
+      </button>
     </div>
   </header>
+
+  <!-- ===================== MENU OVERLAY ===================== -->
+  <div class="menu-overlay" id="menuOverlay" hidden>
+    <div class="menu-panel">
+      <div class="container menu-top">
+        <img src="assets/img/logo-transparent.png" alt="OW Eventos" class="menu-logo" />
+        <button class="menu-close" id="menuClose" aria-label="Cerrar menú">
+          <span data-i18n="nav.close">Cerrar</span>
+          <span class="x" aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="container menu-body">
+        <div class="menu-info">
+          <p class="menu-tagline" data-i18n="header.tagline">Alquiler de equipos premium para eventos</p>
+          <div class="menu-contact">
+            <a id="menuWa" target="_blank" rel="noopener">WhatsApp · 0985 100 206</a>
+            <a href="https://instagram.com/oweventos" target="_blank" rel="noopener">Instagram · @oweventos</a>
+          </div>
+          <div class="menu-social">
+            <a id="menuWaIcon" target="_blank" rel="noopener" aria-label="WhatsApp"><svg viewBox="0 0 24 24"><use href="#waIcon"></use></svg></a>
+            <a href="https://instagram.com/oweventos" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="1.7"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.7"/><circle cx="17.6" cy="6.4" r="1.1" fill="currentColor"/></svg></a>
+          </div>
+          <div class="lang-switch menu-lang" role="group" aria-label="Idioma">
+            <button data-lang="es" class="active">ES</button>
+            <button data-lang="en">EN</button>
+            <button data-lang="pt">PT</button>
+          </div>
+        </div>
+        <nav class="menu-nav" aria-label="Principal">
+          <a href="#catalog" data-i18n="nav.catalog">Catálogo</a>
+          <a href="#gallery" data-i18n="nav.gallery">Eventos</a>
+          <a href="#about" data-i18n="nav.about">Nosotros</a>
+          <a href="#contact" data-i18n="nav.contact">Contacto</a>
+          <a href="#catalog" class="menu-cta" data-i18n="nav.quote">Cotizar</a>
+        </nav>
+      </div>
+    </div>
+  </div>
 
   <span id="top"></span>
 
@@ -74,7 +92,8 @@
       </div>
       <div class="hero-art">
         <video class="hero-chandelier" autoplay loop muted playsinline preload="auto"
-               poster="assets/video/hero-arana-poster.webp" aria-hidden="true">
+               disablepictureinpicture disableremoteplayback controlslist="nodownload noplaybackrate noremoteplayback"
+               poster="assets/video/hero-arana-poster.webp" aria-hidden="true" tabindex="-1">
           <source src="assets/video/hero-arana.mp4" type="video/mp4" />
           <source src="assets/video/hero-arana.webm" type="video/webm" />
         </video>
@@ -86,7 +105,7 @@
   <!-- ===================== CATALOG ===================== -->
   <section class="section catalog" id="catalog">
     <div class="container">
-      <div class="section-head">
+      <div class="section-head reveal">
         <p class="eyebrow" data-i18n="hero.tag">Alquiler premium para eventos</p>
         <h2 class="section-title" data-i18n="catalog.title">Nuestro catálogo</h2>
         <p class="section-sub" data-i18n="catalog.subtitle">Explorá y seleccioná todo lo que te interese.</p>
@@ -119,7 +138,7 @@
   <section class="section gallery" id="gallery">
     <svg class="deco-fan deco-fan--gallery" viewBox="0 0 100 100" aria-hidden="true"><use href="#fanIcon"></use></svg>
     <div class="container">
-      <div class="section-head">
+      <div class="section-head reveal">
         <h2 class="section-title" data-i18n="gallery.title">Eventos que iluminamos</h2>
         <p class="section-sub" data-i18n="gallery.subtitle">Una muestra de nuestras piezas en acción.</p>
       </div>
@@ -130,7 +149,7 @@
   <!-- ===================== ABOUT ===================== -->
   <section class="section about" id="about">
     <div class="container">
-      <div class="section-head">
+      <div class="section-head reveal">
         <h2 class="section-title" data-i18n="about.title">Por qué OW Eventos</h2>
         <p class="section-sub" data-i18n="about.subtitle">Detrás de cada evento hay logística, cuidado y detalle.</p>
       </div>
@@ -162,7 +181,7 @@
   <!-- ===================== CONTACT ===================== -->
   <section class="section contact" id="contact">
     <div class="container contact-inner">
-      <div class="contact-copy">
+      <div class="contact-copy reveal">
         <h2 class="section-title" data-i18n="contact.title">Hablemos de tu evento</h2>
         <p class="section-sub" data-i18n="contact.subtitle">Escribinos por WhatsApp o dejanos tus datos.</p>
         <p class="contact-note" data-i18n="contact.note"></p>
@@ -178,7 +197,7 @@
         </div>
       </div>
 
-      <form class="contact-form" id="contactForm">
+      <form class="contact-form reveal" id="contactForm">
         <label>
           <span data-i18n="contact.name">Nombre</span>
           <input type="text" name="name" required data-i18n-ph="contact.name_ph" />
@@ -200,8 +219,7 @@
   <footer class="site-footer">
     <div class="container footer-inner">
       <div class="footer-brand">
-        <img src="assets/img/logo-transparent.png" alt="OW Eventos" class="logo-dark" />
-        <img src="assets/img/logo.png" alt="OW Eventos" class="logo-light" />
+        <img src="assets/img/logo-transparent.png" alt="OW Eventos" />
         <p data-i18n="footer.tagline">Alquiler de iluminación y climatización para eventos.</p>
         <div class="footer-social">
           <a id="footWa" target="_blank" rel="noopener" aria-label="WhatsApp"><svg viewBox="0 0 24 24"><use href="#waIcon"></use></svg></a>
