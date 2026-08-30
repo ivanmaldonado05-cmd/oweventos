@@ -284,7 +284,7 @@ input, textarea, select { font-family: inherit; }
 .card.selected::after { content: ""; position: absolute; inset: 0; border: 1px solid var(--gold); border-radius: var(--radius); pointer-events: none; z-index: 5; }
 
 .card-media {
-  position: relative; aspect-ratio: 4 / 5; background: #0b0a12;
+  position: relative; aspect-ratio: 4 / 5; background: var(--surface);
   overflow: hidden; cursor: zoom-in;
 }
 .card-media.is-light { background: radial-gradient(circle at 50% 38%, #ffffff, #d7d3e4 82%); }
