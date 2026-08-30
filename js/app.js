@@ -50,8 +50,7 @@
     const filters = [
       { key: "all", label: t("catalog.all") },
       { key: "aranas", label: t("filter.aranas") },
-      { key: "climatizacion", label: t("filter.climatizacion") },
-      { key: "ventiladores", label: t("filter.ventiladores") }
+      { key: "climatizacion", label: t("filter.climatizacion") }
     ];
     chips.innerHTML = filters.map(f =>
       `<button class="chip ${activeFilter === f.key ? "active" : ""}" data-filter="${f.key}">${f.label}</button>`
@@ -65,8 +64,7 @@
   /* ---------------- Catalog ---------------- */
   function matches(p) {
     if (activeFilter === "aranas" && p.cat !== "iluminacion") return false;
-    if (activeFilter === "ventiladores" && p.sub !== "ventiladores") return false;
-    if (activeFilter === "climatizacion" && !(p.sub === "climatizadores" || p.sub === "estufas")) return false;
+    if (activeFilter === "climatizacion" && p.cat !== "climatizacion") return false;
     if (searchTerm) {
       const hay = (p.name[lang] + " " + p.desc[lang] + " " + (p.dims || "")).toLowerCase();
       if (!hay.includes(searchTerm)) return false;
