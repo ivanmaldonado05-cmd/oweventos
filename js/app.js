@@ -321,8 +321,11 @@
 
     dots.forEach(d => d.addEventListener("click", () => { go(parseInt(d.dataset.i, 10)); start(); }));
     slides.forEach(s => s.addEventListener("click", () => openLightbox(s.dataset.zoom)));
-    wrap.addEventListener("mouseenter", stop);
-    wrap.addEventListener("mouseleave", start);
+    // pausar al pasar el mouse SOLO en equipos con puntero real (en móvil rompía el auto-play)
+    if (window.matchMedia && window.matchMedia("(hover: hover)").matches) {
+      wrap.addEventListener("mouseenter", stop);
+      wrap.addEventListener("mouseleave", start);
+    }
 
     // swipe táctil
     let sx = 0;
@@ -530,7 +533,7 @@
     $("#prodClose").addEventListener("click", closeProductModal);
     $("#prodModal").addEventListener("click", (e) => { if (e.target.id === "prodModal") closeProductModal(); });
     $("#prodSelect").addEventListener("click", () => {
-      if (prodModalId) { toggleSelect(prodModalId); syncProdSelect(); }
+      if (prodModalId) { toggleSelect(prodModalId); closeProductModal(); }
     });
 
     // esc key
