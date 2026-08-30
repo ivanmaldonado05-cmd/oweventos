@@ -26,28 +26,6 @@ const CATEGORIES = {
 const PRODUCTS = [
   /* ------------------------ CLIMATIZACIÓN · Ventiladores ------------------ */
   {
-    id: "ventilador-de-pie", cat: "climatizacion", sub: "ventiladores",
-    imgs: ["assets/img/products/placeholder-fan.webp"], price: 220000, montaje: 0, stock: 40,
-    dims: "30\" · 3 vel.",
-    name: { es: "Ventilador de Pie", en: "Standing Fan", pt: "Ventilador de Pé" },
-    desc: {
-      es: "Cuatro aspas de 30 pulgadas, tres velocidades, función oscilante y altura regulable.",
-      en: "Four 30-inch blades, three speeds, oscillating function and adjustable height.",
-      pt: "Quatro pás de 30 polegadas, três velocidades, função oscilante e altura regulável."
-    }
-  },
-  {
-    id: "ventilador-apilable", cat: "climatizacion", sub: "ventiladores",
-    imgs: ["assets/img/products/placeholder-fan.webp"], price: 310000, montaje: 0, stock: 50,
-    dims: "Ø 50 cm",
-    name: { es: "Ventilador Apilable", en: "Stackable Fan", pt: "Ventilador Empilhável" },
-    desc: {
-      es: "Ventilador de pista de dos velocidades, apilable y direccional. 50 cm de diámetro.",
-      en: "Two-speed track fan, stackable and directional. 50 cm diameter.",
-      pt: "Ventilador de pista de duas velocidades, empilhável e direcional. 50 cm de diâmetro."
-    }
-  },
-  {
     id: "ventilador-industrial", cat: "climatizacion", sub: "ventiladores",
     imgs: ["assets/img/products/ventilador-industrial.webp"], price: 440000, montaje: 0, stock: 18,
     dims: "Ø 1 m",
@@ -56,17 +34,6 @@ const PRODUCTS = [
       es: "Ventilador de piso de dos velocidades que ventila y remueve el aire. 1 m de diámetro.",
       en: "Two-speed floor fan that ventilates and moves the air. 1 m diameter.",
       pt: "Ventilador de piso de duas velocidades que ventila e remove o ar. 1 m de diâmetro."
-    }
-  },
-  {
-    id: "ventilador-humidificador", cat: "climatizacion", sub: "ventiladores",
-    imgs: ["assets/img/products/placeholder-fan.webp"], price: 330000, montaje: 0, stock: 2,
-    dims: "Tanque 36 L · 25 m²",
-    name: { es: "Ventilador con Humidificador", en: "Misting Fan", pt: "Ventilador com Umidificador" },
-    desc: {
-      es: "Pedestal con humidificador de tres velocidades. Tanque de 36 L y alcance de 25 m².",
-      en: "Pedestal with three-speed humidifier. 36 L tank and 25 m² reach.",
-      pt: "Pedestal com umidificador de três velocidades. Tanque de 36 L e alcance de 25 m²."
     }
   },
   /* ------------------------ CLIMATIZACIÓN · Climatizadores ---------------- */
@@ -163,24 +130,13 @@ const PRODUCTS = [
   },
   {
     id: "piramide-cromada", cat: "iluminacion", sub: "cristal",
-    imgs: ["assets/img/products/piramide-cromada-1.webp"], price: 500000, montaje: 150000, stock: 4,
+    imgs: ["assets/img/products/piramide-cromada-1.webp", "assets/img/products/piramide-cromada-2.webp"], price: 500000, montaje: 150000, stock: 4,
     dims: "0,80 × 0,60 m · 12 focos",
     name: { es: "Pirámide Cromada", en: "Chrome Pyramid", pt: "Pirâmide Cromada" },
     desc: {
       es: "Pirámide de cristal con estructura cromada y cristales transparentes. 12 focos.",
       en: "Crystal pyramid with chrome structure and clear crystals. 12 lights.",
       pt: "Pirâmide de cristal com estrutura cromada e cristais transparentes. 12 focos."
-    }
-  },
-  {
-    id: "piramide-dorada", cat: "iluminacion", sub: "cristal",
-    imgs: ["assets/img/products/piramide-dorada-1.webp"], price: 500000, montaje: 150000, stock: 4,
-    dims: "0,80 × 0,60 m · 12 focos",
-    name: { es: "Pirámide Dorada", en: "Gold Pyramid", pt: "Pirâmide Dourada" },
-    desc: {
-      es: "Pirámide de cristal con estructura dorada clara y cristales transparentes. 12 focos.",
-      en: "Crystal pyramid with light-gold structure and clear crystals. 12 lights.",
-      pt: "Pirâmide de cristal com estrutura dourada clara e cristais transparentes. 12 focos."
     }
   },
   {
@@ -192,39 +148,6 @@ const PRODUCTS = [
       es: "Araña grande en negro. Puede utilizarse con o sin tulipas de tela según el ambiente.",
       en: "Large black chandelier. Can be used with or without fabric shades to match the setting.",
       pt: "Lustre grande em preto. Pode ser usado com ou sem cúpulas de tecido conforme o ambiente."
-    }
-  },
-  {
-    id: "cristal-y-plata", cat: "iluminacion", sub: "cristal",
-    imgs: ["assets/img/products/cristal-y-plata-1.webp", "assets/img/products/cristal-y-plata-2.webp"], price: 1500000, montaje: 250000, stock: 2,
-    dims: "1,60 × 1,50 m · 40 kg",
-    name: { es: "Cristal y Plata", en: "Crystal & Silver", pt: "Cristal e Prata" },
-    desc: {
-      es: "Imponente araña de cristal y plata para eventos de gran escala.",
-      en: "Striking crystal-and-silver chandelier for large-scale events.",
-      pt: "Imponente lustre de cristal e prata para eventos de grande porte."
-    }
-  },
-  {
-    id: "cristal-cromada", cat: "iluminacion", sub: "cristal",
-    imgs: ["assets/img/products/cristal-cromada-1.webp"], price: 1500000, montaje: 250000, stock: 2,
-    dims: "2 × 1,20 m · 40 kg",
-    name: { es: "Cristal Cromada", en: "Chrome Crystal", pt: "Cristal Cromada" },
-    desc: {
-      es: "Araña de cristal grande con estructura cromada. Presencia monumental.",
-      en: "Large crystal chandelier with chrome structure. Monumental presence.",
-      pt: "Lustre de cristal grande com estrutura cromada. Presença monumental."
-    }
-  },
-  {
-    id: "candelabro-de-cristal", cat: "iluminacion", sub: "cristal",
-    imgs: ["assets/img/products/candelabro-de-cristal-1.webp"], price: 250000, montaje: 0, stock: 6,
-    dims: "1,30 × 0,60 m · 5 brazos",
-    name: { es: "Candelabro de Cristal", en: "Crystal Candelabra", pt: "Candelabro de Cristal" },
-    desc: {
-      es: "Candelabro de mesa con velas y 5 brazos con tulipas de cristal. Sin costo de montaje.",
-      en: "Table candelabra with candles and 5 arms with crystal cups. No assembly fee.",
-      pt: "Candelabro de mesa com velas e 5 braços com cúpulas de cristal. Sem custo de montagem."
     }
   },
 
@@ -252,17 +175,6 @@ const PRODUCTS = [
     }
   },
   {
-    id: "redondas-medianas", cat: "iluminacion", sub: "bronce",
-    imgs: ["assets/img/products/redondas-medianas-1.webp"], price: 385000, montaje: 50000, stock: 20,
-    dims: "Ø 40 cm",
-    name: { es: "Redonda Mediana", en: "Medium Round", pt: "Redonda Média" },
-    desc: {
-      es: "Araña mediana redonda color bronce con caireles transparentes.",
-      en: "Medium round bronze chandelier with clear crystal drops.",
-      pt: "Lustre médio redondo cor bronze com pingentes transparentes."
-    }
-  },
-  {
     id: "redondas-grandes", cat: "iluminacion", sub: "bronce",
     imgs: ["assets/img/products/redondas-grandes-1.webp"], price: 440000, montaje: 50000, stock: 20,
     dims: "Ø 50 cm",
@@ -275,7 +187,7 @@ const PRODUCTS = [
   },
   {
     id: "imperial", cat: "iluminacion", sub: "bronce",
-    imgs: ["assets/img/products/imperial-1.webp", "assets/img/products/imperial-2.webp"], price: 1100000, montaje: 200000, stock: 6,
+    imgs: ["assets/img/products/imperial-1.webp"], price: 1100000, montaje: 200000, stock: 6,
     dims: "2,10 m alto · 70 kg",
     name: { es: "Imperial", en: "Imperial", pt: "Imperial" },
     desc: {
@@ -341,7 +253,7 @@ const PRODUCTS = [
   },
   {
     id: "clementina", cat: "iluminacion", sub: "bronce",
-    imgs: ["assets/img/products/clementina-1.webp", "assets/img/products/clementina-2.webp"], price: 1100000, montaje: 150000, stock: 4,
+    imgs: ["assets/img/products/clementina-1.webp"], price: 1100000, montaje: 150000, stock: 4,
     dims: "1,30 × 1,30 m · 5 pisos",
     name: { es: "Clementina", en: "Clementina", pt: "Clementina" },
     desc: {
@@ -386,30 +298,8 @@ const PRODUCTS = [
 
   /* ------------------------ ILUMINACIÓN · Rústicas & Industriales ------- */
   {
-    id: "jaula-mediana", cat: "iluminacion", sub: "rusticas",
-    imgs: ["assets/img/products/jaula-mediana-1.webp"], price: 220000, montaje: 50000, stock: 10,
-    dims: "0,80 × 0,32 m",
-    name: { es: "Jaula Mediana", en: "Medium Cage", pt: "Gaiola Média" },
-    desc: {
-      es: "Araña tipo jaula mediana de metal color champagne.",
-      en: "Medium cage-style chandelier in champagne-tone metal.",
-      pt: "Lustre tipo gaiola médio de metal cor champagne."
-    }
-  },
-  {
-    id: "jaula-grande", cat: "iluminacion", sub: "rusticas",
-    imgs: ["assets/img/products/jaula-grande-1.webp"], price: 330000, montaje: 50000, stock: 10,
-    dims: "1,20 × 0,47 m · 10 kg",
-    name: { es: "Jaula Grande", en: "Large Cage", pt: "Gaiola Grande" },
-    desc: {
-      es: "Araña tipo jaula grande de metal color champagne.",
-      en: "Large cage-style chandelier in champagne-tone metal.",
-      pt: "Lustre tipo gaiola grande de metal cor champagne."
-    }
-  },
-  {
     id: "nautica-beige", cat: "iluminacion", sub: "rusticas",
-    imgs: ["assets/img/products/nautica-beige-1.webp", "assets/img/products/nautica-beige-2.webp"], price: 250000, montaje: 50000, stock: 10,
+    imgs: ["assets/img/products/nautica-beige-1.webp"], price: 250000, montaje: 50000, stock: 10,
     dims: "Cuerda náutica",
     name: { es: "Náutica Beige", en: "Nautical Beige", pt: "Náutica Bege" },
     desc: {
