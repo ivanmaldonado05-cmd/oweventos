@@ -351,6 +351,7 @@
       body.hidden = false; tog.setAttribute("aria-expanded", "true");
       tog.querySelector("span").textContent = t("catalog.hide");
       $("#catalogReveal").classList.add("open");
+      const f = $("#featuredGrid"); if (f) f.hidden = true;
     }
   }
   function toggleCatalog() {
@@ -360,6 +361,7 @@
       body.hidden = true; tog.setAttribute("aria-expanded", "false");
       tog.querySelector("span").textContent = t("catalog.show");
       $("#catalogReveal").classList.remove("open");
+      const f = $("#featuredGrid"); if (f) f.hidden = false;
     }
   }
 
