@@ -619,10 +619,10 @@ body.bar-visible .wa-float { bottom: 92px; }
   .hero-stats { display: none; }
   .deco-fan--hero { display: none; }
   .contact-inner { grid-template-columns: 1fr; gap: 30px; }
-  /* About en mobile: misma estructura que desktop (texto izq · video der) */
-  .about-grid { grid-template-columns: 1.4fr 0.9fr; gap: 22px; align-items: center; }
-  .about-grid .feature-grid { grid-template-columns: 1fr; gap: 14px; }
-  .about-video { height: auto; min-height: 0; aspect-ratio: 9 / 16; }
+  /* About en mobile: características (2×2, como desktop) y video completo debajo */
+  .about-grid { grid-template-columns: 1fr; gap: 26px; align-items: stretch; }
+  .about-grid .feature-grid { grid-template-columns: repeat(2, 1fr); gap: 14px; }
+  .about-video { width: min(300px, 78%); margin: 0 auto; height: auto; min-height: 0; aspect-ratio: 9 / 16; }
   /* Galería en mobile: texto izq · carrusel continuo der */
   .gallery-inner { grid-template-columns: 1fr 1fr; gap: 22px; }
   .gallery-marquee { height: 460px; }
