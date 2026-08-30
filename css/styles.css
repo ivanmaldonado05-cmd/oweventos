@@ -393,10 +393,10 @@ input, textarea, select { font-family: inherit; }
 .about-grid .feature-grid { grid-template-columns: repeat(2, 1fr); }
 .about-video {
   position: relative; border-radius: var(--radius-lg); overflow: hidden;
-  background: #020309; aspect-ratio: 3 / 4; box-shadow: var(--shadow);
-  border: 1px solid var(--line-soft);
+  background: #020309; aspect-ratio: 9 / 16; box-shadow: var(--shadow);
+  border: 1px solid var(--line-soft); max-height: 78vh; margin: 0 auto;
 }
-.about-vid { width: 100%; height: 100%; display: block; object-fit: contain; pointer-events: none; }
+.about-vid { width: 100%; height: 100%; display: block; object-fit: cover; pointer-events: none; }
 .feature-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 24px; }
 .feature {
   background: transparent; border: 1px solid var(--line-soft); border-radius: var(--radius);
