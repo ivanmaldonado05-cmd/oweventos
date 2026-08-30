@@ -110,7 +110,7 @@
         <p class="section-sub" data-i18n="catalog.subtitle">Explorá y seleccioná todo lo que te interese.</p>
       </div>
 
-      <div class="featured-grid" id="featuredGrid"></div>
+      <div class="product-grid featured-grid" id="featuredGrid"></div>
 
       <div class="catalog-reveal" id="catalogReveal">
         <button class="btn btn-gold catalog-toggle" id="catalogToggle" aria-expanded="false" aria-controls="catalogBody">
@@ -184,7 +184,12 @@
         <h2 class="section-title" data-i18n="gallery.title">Eventos que iluminamos</h2>
         <p class="section-sub" data-i18n="gallery.subtitle">Una muestra de nuestras piezas en acción.</p>
       </div>
-      <div class="gallery-grid" id="galleryGrid"></div>
+      <div class="gallery-carousel reveal" id="galleryCarousel">
+        <div class="gc-viewport"><div class="gc-track" id="gcTrack"></div></div>
+        <button class="gc-arrow gc-prev" type="button" aria-label="Anterior">‹</button>
+        <button class="gc-arrow gc-next" type="button" aria-label="Siguiente">›</button>
+        <div class="gc-dots" id="gcDots"></div>
+      </div>
     </div>
   </section>
 

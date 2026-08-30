@@ -41,7 +41,6 @@
     const ct = $("#catalogToggle");
     if (ct) ct.querySelector("span").textContent = $("#catalogBody").hidden ? t("catalog.show") : t("catalog.hide");
     updateRevealHint();
-    renderFeatured();
     if (!$("#quoteModal").hidden) renderQuoteItems();
   }
 
@@ -114,12 +113,8 @@
       </article>`;
   }
 
-  function renderCatalog() {
-    const grid = $("#productGrid");
-    const list = PRODUCTS.filter(matches);
-    $("#catalogEmpty").hidden = list.length > 0;
-    grid.innerHTML = list.map(cardHtml).join("");
-    // wire
+  // wire add-buttons + sliders + lightbox for any card grid
+  function wireCards(grid) {
     $$(".card-add", grid).forEach(b => b.addEventListener("click", (e) => {
       e.stopPropagation(); toggleSelect(b.dataset.add);
     }));
@@ -138,7 +133,22 @@
       dots.forEach((d, i) => d.addEventListener("click", (e) => { e.stopPropagation(); go(i); }));
       media.addEventListener("click", () => openLightbox(slides[idx].getAttribute("src")));
     });
+  }
+
+  // "Todos": arañas (iluminación) primero, climatización debajo
+  const catRank = (c) => (c === "iluminacion" ? 0 : 1);
+  function featuredVisible() { return activeFilter === "all" && !searchTerm; }
+
+  function renderCatalog() {
+    const grid = $("#productGrid");
+    let list = PRODUCTS.filter(matches).sort((a, b) => catRank(a.cat) - catRank(b.cat));
+    // los productos que ya se ven arriba (destacados) no se repiten en la grilla
+    if (featuredVisible()) list = list.filter(p => !FEATURED.includes(p.id));
+    $("#catalogEmpty").hidden = list.length > 0;
+    grid.innerHTML = list.map(cardHtml).join("");
+    wireCards(grid);
     observeReveal(grid);
+    renderFeatured();
   }
 
   function toggleSelect(id) {
@@ -278,16 +288,47 @@
     window.open(waUrl(buildQuoteMessage()), "_blank");
   }
 
-  /* ---------------- Gallery ---------------- */
+  /* ---------------- Gallery carousel ---------------- */
   function renderGallery() {
-    const grid = $("#galleryGrid");
+    const wrap = $("#galleryCarousel");
+    if (!wrap) return;
     const imgs = ["evento-1", "evento-2", "evento-3", "evento-4", "evento-5", "evento-6"];
-    grid.innerHTML = imgs.map(n => {
+    const track = $("#gcTrack", wrap), dotsWrap = $("#gcDots", wrap);
+    track.innerHTML = imgs.map((n, i) => {
       const src = `assets/img/gallery/${n}.webp`;
-      return `<div class="gallery-item" data-zoom="${src}"><img src="${src}" alt="OW Eventos" loading="lazy" /></div>`;
+      return `<div class="gc-slide${i === 0 ? " active" : ""}" data-zoom="${src}"><img src="${src}" alt="OW Eventos" loading="lazy" /></div>`;
     }).join("");
-    $$(".gallery-item", grid).forEach(g => g.addEventListener("click", () => openLightbox(g.dataset.zoom)));
-    observeReveal(grid);
+    dotsWrap.innerHTML = imgs.map((_, i) =>
+      `<button class="gc-dot${i === 0 ? " active" : ""}" type="button" data-i="${i}" aria-label="Imagen ${i + 1}"></button>`).join("");
+
+    const slides = $$(".gc-slide", track), dots = $$(".gc-dot", dotsWrap);
+    let idx = 0, timer = null;
+    const go = (n) => {
+      idx = (n + slides.length) % slides.length;
+      track.style.transform = `translateX(-${idx * 100}%)`;
+      slides.forEach((s, i) => s.classList.toggle("active", i === idx));
+      dots.forEach((d, i) => d.classList.toggle("active", i === idx));
+    };
+    const stop = () => { if (timer) { clearInterval(timer); timer = null; } };
+    const start = () => { stop(); timer = setInterval(() => go(idx + 1), 4800); };
+
+    $(".gc-next", wrap).addEventListener("click", () => { go(idx + 1); start(); });
+    $(".gc-prev", wrap).addEventListener("click", () => { go(idx - 1); start(); });
+    dots.forEach(d => d.addEventListener("click", () => { go(parseInt(d.dataset.i, 10)); start(); }));
+    slides.forEach(s => s.addEventListener("click", () => openLightbox(s.dataset.zoom)));
+    wrap.addEventListener("mouseenter", stop);
+    wrap.addEventListener("mouseleave", start);
+
+    // swipe táctil
+    let sx = 0;
+    wrap.addEventListener("touchstart", (e) => { sx = e.touches[0].clientX; stop(); }, { passive: true });
+    wrap.addEventListener("touchend", (e) => {
+      const dx = e.changedTouches[0].clientX - sx;
+      if (Math.abs(dx) > 40) go(idx + (dx < 0 ? 1 : -1));
+      start();
+    }, { passive: true });
+
+    go(0); start();
   }
 
   /* ---------------- Lightbox ---------------- */
@@ -345,24 +386,42 @@
   }
 
   /* ---------------- Catalog collapse ---------------- */
+  const ACC_MS = 640;
   function openCatalog() {
     const body = $("#catalogBody"), tog = $("#catalogToggle");
-    if (body.hidden) {
-      body.hidden = false; tog.setAttribute("aria-expanded", "true");
-      tog.querySelector("span").textContent = t("catalog.hide");
-      $("#catalogReveal").classList.add("open");
-      const f = $("#featuredGrid"); if (f) f.hidden = true;
-    }
+    if (!body.hidden) return;
+    body.hidden = false;
+    tog.setAttribute("aria-expanded", "true");
+    tog.querySelector("span").textContent = t("catalog.hide");
+    $("#catalogReveal").classList.add("open");
+    // acordeón suave (0 -> alto real) sin depender de rAF
+    body.style.maxHeight = "0px"; body.style.opacity = "0";
+    void body.offsetHeight;                       // fuerza reflow del estado 0
+    body.classList.add("animating");
+    body.style.maxHeight = body.scrollHeight + "px";
+    body.style.opacity = "1";
+    clearTimeout(body._accT);
+    body._accT = setTimeout(() => {
+      body.classList.remove("animating");
+      body.style.maxHeight = "none"; body.style.opacity = "";
+    }, ACC_MS);
   }
   function toggleCatalog() {
     const body = $("#catalogBody"), tog = $("#catalogToggle");
-    if (body.hidden) { openCatalog(); }
-    else {
-      body.hidden = true; tog.setAttribute("aria-expanded", "false");
-      tog.querySelector("span").textContent = t("catalog.show");
-      $("#catalogReveal").classList.remove("open");
-      const f = $("#featuredGrid"); if (f) f.hidden = false;
-    }
+    if (body.hidden) { openCatalog(); return; }
+    // colapso suave
+    body.style.maxHeight = body.scrollHeight + "px";
+    void body.offsetHeight;
+    body.classList.add("animating");
+    body.style.maxHeight = "0px"; body.style.opacity = "0";
+    clearTimeout(body._accT);
+    body._accT = setTimeout(() => {
+      body.hidden = true; body.classList.remove("animating");
+      body.style.maxHeight = ""; body.style.opacity = "";
+    }, ACC_MS);
+    tog.setAttribute("aria-expanded", "false");
+    tog.querySelector("span").textContent = t("catalog.show");
+    $("#catalogReveal").classList.remove("open");
   }
 
   function updateRevealHint() {
@@ -370,24 +429,20 @@
     if (el) el.textContent = PRODUCTS.length + " · " + t("filter.aranas") + " · " + t("filter.climatizacion") + " · " + t("filter.ventiladores");
   }
 
-  /* ---------------- Featured teaser (collapsed catalog) ---------------- */
-  const FEATURED = ["cristal-con-velas", "cadenas-cruzadas", "crystal-black"];
+  /* ---------------- Featured (4 arañas destacadas) ---------------- */
+  const FEATURED = ["cristal-con-velas", "isabel", "crystal-black", "clementina"];
   function renderFeatured() {
     const grid = $("#featuredGrid");
     if (!grid) return;
+    const show = featuredVisible();
+    grid.hidden = !show;
+    if (!show) { grid.innerHTML = ""; return; }
     grid.innerHTML = FEATURED.map(id => {
       const p = PRODUCTS.find(x => x.id === id);
-      if (!p) return "";
-      return `
-        <button class="feat-card" type="button" aria-label="${p.name[lang]}">
-          <div class="feat-media"><img src="${p.imgs[0]}" alt="${p.name[lang]}" loading="lazy" /></div>
-          <div class="feat-info">
-            <span class="feat-name">${p.name[lang]}</span>
-            <span class="feat-price">${t("catalog.from")} ${fmtGs(p.price)}</span>
-          </div>
-        </button>`;
+      return p ? cardHtml(p) : "";
     }).join("");
-    $$(".feat-card", grid).forEach(c => c.addEventListener("click", openCatalog));
+    wireCards(grid);
+    observeReveal(grid);
   }
 
   /* ---------------- Init ---------------- */
@@ -396,7 +451,6 @@
     renderChips();
     renderCatalog();
     renderGallery();
-    renderFeatured();
     updateSelectBar();
 
     // language buttons
