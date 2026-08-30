@@ -41,6 +41,7 @@
     const ct = $("#catalogToggle");
     if (ct) ct.querySelector("span").textContent = $("#catalogBody").hidden ? t("catalog.show") : t("catalog.hide");
     updateRevealHint();
+    renderFeatured();
     if (!$("#quoteModal").hidden) renderQuoteItems();
   }
 
@@ -367,12 +368,33 @@
     if (el) el.textContent = PRODUCTS.length + " · " + t("filter.aranas") + " · " + t("filter.climatizacion") + " · " + t("filter.ventiladores");
   }
 
+  /* ---------------- Featured teaser (collapsed catalog) ---------------- */
+  const FEATURED = ["cristal-con-velas", "cadenas-cruzadas", "crystal-black"];
+  function renderFeatured() {
+    const grid = $("#featuredGrid");
+    if (!grid) return;
+    grid.innerHTML = FEATURED.map(id => {
+      const p = PRODUCTS.find(x => x.id === id);
+      if (!p) return "";
+      return `
+        <button class="feat-card" type="button" aria-label="${p.name[lang]}">
+          <div class="feat-media"><img src="${p.imgs[0]}" alt="${p.name[lang]}" loading="lazy" /></div>
+          <div class="feat-info">
+            <span class="feat-name">${p.name[lang]}</span>
+            <span class="feat-price">${t("catalog.from")} ${fmtGs(p.price)}</span>
+          </div>
+        </button>`;
+    }).join("");
+    $$(".feat-card", grid).forEach(c => c.addEventListener("click", openCatalog));
+  }
+
   /* ---------------- Init ---------------- */
   function init() {
     applyI18n();
     renderChips();
     renderCatalog();
     renderGallery();
+    renderFeatured();
     updateSelectBar();
 
     // language buttons

@@ -364,6 +364,21 @@ input, textarea, select { font-family: inherit; }
 #catalogBody { animation: fadeDown 0.5s var(--ease); }
 @keyframes fadeDown { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: none; } }
 
+/* featured teaser (collapsed catalog) */
+.featured-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin: 6px 0 8px; }
+.feat-card {
+  text-align: left; background: #060614; border: 1px solid var(--line-soft);
+  border-radius: var(--radius); overflow: hidden; cursor: pointer; display: flex; flex-direction: column;
+  transition: transform 0.4s var(--ease), border-color 0.4s, box-shadow 0.4s;
+}
+.feat-card:hover { transform: translateY(-5px); border-color: var(--line); box-shadow: var(--shadow); }
+.feat-media { aspect-ratio: 4 / 5; background: #020309; overflow: hidden; }
+.feat-media img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s var(--ease); }
+.feat-card:hover .feat-media img { transform: scale(1.05); }
+.feat-info { padding: 16px 18px 20px; display: flex; flex-direction: column; gap: 5px; }
+.feat-name { font-family: "Cormorant Garamond", serif; font-size: 1.35rem; color: var(--text); line-height: 1.1; }
+.feat-price { font-size: 0.72rem; color: var(--gold-bright); letter-spacing: 0.08em; text-transform: uppercase; }
+
 /* ==========================================================================
    GALLERY
    ========================================================================== */
@@ -389,14 +404,14 @@ input, textarea, select { font-family: inherit; }
    ABOUT
    ========================================================================== */
 .about { border-top: 1px solid var(--line-soft); border-bottom: 1px solid var(--line-soft); }
-.about-grid { display: grid; grid-template-columns: 1.4fr 0.7fr; gap: 48px; align-items: center; }
+.about-grid { display: grid; grid-template-columns: 1.4fr 0.7fr; gap: 48px; align-items: stretch; }
 .about-grid .feature-grid { grid-template-columns: repeat(2, 1fr); }
 .about-video {
   position: relative; border-radius: var(--radius-lg); overflow: hidden;
-  background: #020309; aspect-ratio: 9 / 16; box-shadow: var(--shadow);
-  border: 1px solid var(--line-soft); max-height: 78vh; margin: 0 auto;
+  background: #020309; height: 100%; min-height: 100%; box-shadow: var(--shadow);
+  border: 1px solid var(--line-soft);
 }
-.about-vid { width: 100%; height: 100%; display: block; object-fit: cover; pointer-events: none; }
+.about-vid { width: 100%; height: 100%; display: block; object-fit: contain; pointer-events: none; }
 .feature-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 24px; }
 .feature {
   background: transparent; border: 1px solid var(--line-soft); border-radius: var(--radius);
@@ -593,7 +608,7 @@ body.bar-visible .wa-float { bottom: 92px; }
   .contact-inner { grid-template-columns: 1fr; gap: 30px; }
   .about-grid { grid-template-columns: 1fr; gap: 30px; }
   .about-grid .feature-grid { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
-  .about-video { order: -1; width: min(320px, 80%); margin: 0 auto; }
+  .about-video { order: -1; width: min(300px, 78%); margin: 0 auto; height: auto; min-height: 0; aspect-ratio: 9 / 16; }
   .gallery-grid { grid-auto-rows: 150px; }
   .menu-body { grid-template-columns: 1fr; gap: 34px; align-content: center; }
   .menu-info { order: 2; }
@@ -619,6 +634,7 @@ body.bar-visible .wa-float { bottom: 92px; }
 @media (max-width: 560px) {
   .card-foot { flex-direction: column; align-items: stretch; gap: 12px; }
   .card-add { width: 100%; justify-content: center; padding: 11px 16px; }
+  .featured-grid { grid-template-columns: 1fr; gap: 16px; }
 }
 @media (max-width: 420px) {
   .hero-stats strong { font-size: 1.7rem; }
