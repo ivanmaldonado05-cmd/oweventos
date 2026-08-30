@@ -39,7 +39,7 @@
     renderCatalog();
     updateSelectBar();
     const ct = $("#catalogToggle");
-    if (ct) ct.querySelector("span").textContent = $("#catalogBody").hidden ? t("catalog.show") : t("catalog.hide");
+    if (ct) ct.querySelector("span").textContent = catalogOpen() ? t("catalog.hide") : t("catalog.show");
     updateRevealHint();
     if (!$("#quoteModal").hidden) renderQuoteItems();
   }
@@ -96,6 +96,10 @@
         </div>
         <div class="card-body">
           <h3 class="card-name">${p.name[lang]}</h3>
+          <button class="card-more" data-more="${p.id}">
+            <span>${t("catalog.more")}</span>
+            <svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
           <span class="card-dims">${p.dims || ""}</span>
           <p class="card-desc">${p.desc[lang]}</p>
           <div class="card-foot">
@@ -117,6 +121,9 @@
   function wireCards(grid) {
     $$(".card-add", grid).forEach(b => b.addEventListener("click", (e) => {
       e.stopPropagation(); toggleSelect(b.dataset.add);
+    }));
+    $$(".card-more", grid).forEach(b => b.addEventListener("click", (e) => {
+      e.stopPropagation(); openProductModal(b.dataset.more);
     }));
     $$(".card-media", grid).forEach(media => {
       const slides = $$(".slide", media);
@@ -310,10 +317,8 @@
       dots.forEach((d, i) => d.classList.toggle("active", i === idx));
     };
     const stop = () => { if (timer) { clearInterval(timer); timer = null; } };
-    const start = () => { stop(); timer = setInterval(() => go(idx + 1), 4800); };
+    const start = () => { stop(); timer = setInterval(() => go(idx + 1), 4200); };
 
-    $(".gc-next", wrap).addEventListener("click", () => { go(idx + 1); start(); });
-    $(".gc-prev", wrap).addEventListener("click", () => { go(idx - 1); start(); });
     dots.forEach(d => d.addEventListener("click", () => { go(parseInt(d.dataset.i, 10)); start(); }));
     slides.forEach(s => s.addEventListener("click", () => openLightbox(s.dataset.zoom)));
     wrap.addEventListener("mouseenter", stop);
@@ -336,7 +341,42 @@
     const lb = $("#lightbox"); $("#lightboxImg").src = src; lb.hidden = false;
     document.body.style.overflow = "hidden";
   }
-  function closeLightbox() { $("#lightbox").hidden = true; if ($("#quoteModal").hidden) document.body.style.overflow = ""; }
+  function closeLightbox() { $("#lightbox").hidden = true; if ($("#quoteModal").hidden && $("#prodModal").hidden) document.body.style.overflow = ""; }
+
+  /* ---------------- Product modal (más info · mobile) ---------------- */
+  let prodModalId = null;
+  function openProductModal(id) {
+    const p = PRODUCTS.find(x => x.id === id);
+    if (!p) return;
+    prodModalId = id;
+    const imgs = p.imgs || [p.img];
+    $("#prodImg").src = imgs[0];
+    $("#prodImg").alt = p.name[lang];
+    $("#prodBadge").textContent = (CATEGORIES[p.cat].subs[p.sub] || {})[lang] || "";
+    $("#prodName").textContent = p.name[lang];
+    $("#prodDims").textContent = p.dims || "";
+    $("#prodDesc").textContent = p.desc[lang];
+    $("#prodFrom").textContent = t("catalog.from");
+    $("#prodPrice").textContent = fmtGs(p.price);
+    $("#prodMontaje").textContent = p.montaje > 0
+      ? "+ " + fmtGs(p.montaje) + " " + t("catalog.montaje") : t("catalog.assembly_free");
+    syncProdSelect();
+    $("#prodModal").hidden = false;
+    document.body.style.overflow = "hidden";
+  }
+  function syncProdSelect() {
+    const btn = $("#prodSelect");
+    if (!btn || !prodModalId) return;
+    const isSel = selected.has(prodModalId);
+    btn.dataset.add = prodModalId;
+    btn.classList.toggle("is-sel", isSel);
+    btn.innerHTML = `<svg viewBox="0 0 24 24"><path d="${isSel ? "M5 12l4 4L19 6" : "M12 5v14M5 12h14"}" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>${isSel ? t("catalog.added") : t("catalog.add")}</span>`;
+  }
+  function closeProductModal() {
+    $("#prodModal").hidden = true;
+    prodModalId = null;
+    if ($("#quoteModal").hidden && $("#lightbox").hidden) document.body.style.overflow = "";
+  }
 
   /* ---------------- Reveal on scroll ---------------- */
   let ioOnce, ioRepeat;
@@ -387,37 +427,44 @@
 
   /* ---------------- Catalog collapse ---------------- */
   const ACC_MS = 640;
+  function catalogOpen() { return !$("#productGrid").hidden; }
   function openCatalog() {
-    const body = $("#catalogBody"), tog = $("#catalogToggle");
-    if (!body.hidden) return;
-    body.hidden = false;
+    const grid = $("#productGrid"), ctrls = $("#catalogControls"), tog = $("#catalogToggle");
+    if (!grid.hidden) return;
+    // controles (buscador + filtros) aparecen arriba de las destacadas
+    ctrls.hidden = false;
+    void ctrls.offsetHeight;
+    ctrls.classList.add("cc-in");
+    // resto de productos: acordeón suave (0 -> alto real) sin depender de rAF
+    grid.hidden = false;
+    grid.style.maxHeight = "0px"; grid.style.opacity = "0";
+    void grid.offsetHeight;
+    grid.classList.add("animating");
+    grid.style.maxHeight = grid.scrollHeight + "px";
+    grid.style.opacity = "1";
+    clearTimeout(grid._accT);
+    grid._accT = setTimeout(() => {
+      grid.classList.remove("animating");
+      grid.style.maxHeight = "none"; grid.style.opacity = "";
+    }, ACC_MS);
     tog.setAttribute("aria-expanded", "true");
     tog.querySelector("span").textContent = t("catalog.hide");
     $("#catalogReveal").classList.add("open");
-    // acordeón suave (0 -> alto real) sin depender de rAF
-    body.style.maxHeight = "0px"; body.style.opacity = "0";
-    void body.offsetHeight;                       // fuerza reflow del estado 0
-    body.classList.add("animating");
-    body.style.maxHeight = body.scrollHeight + "px";
-    body.style.opacity = "1";
-    clearTimeout(body._accT);
-    body._accT = setTimeout(() => {
-      body.classList.remove("animating");
-      body.style.maxHeight = "none"; body.style.opacity = "";
-    }, ACC_MS);
   }
   function toggleCatalog() {
-    const body = $("#catalogBody"), tog = $("#catalogToggle");
-    if (body.hidden) { openCatalog(); return; }
+    const grid = $("#productGrid"), ctrls = $("#catalogControls"), tog = $("#catalogToggle");
+    if (grid.hidden) { openCatalog(); return; }
     // colapso suave
-    body.style.maxHeight = body.scrollHeight + "px";
-    void body.offsetHeight;
-    body.classList.add("animating");
-    body.style.maxHeight = "0px"; body.style.opacity = "0";
-    clearTimeout(body._accT);
-    body._accT = setTimeout(() => {
-      body.hidden = true; body.classList.remove("animating");
-      body.style.maxHeight = ""; body.style.opacity = "";
+    ctrls.classList.remove("cc-in");
+    grid.style.maxHeight = grid.scrollHeight + "px";
+    void grid.offsetHeight;
+    grid.classList.add("animating");
+    grid.style.maxHeight = "0px"; grid.style.opacity = "0";
+    clearTimeout(grid._accT);
+    grid._accT = setTimeout(() => {
+      grid.hidden = true; grid.classList.remove("animating");
+      grid.style.maxHeight = ""; grid.style.opacity = "";
+      ctrls.hidden = true;
     }, ACC_MS);
     tog.setAttribute("aria-expanded", "false");
     tog.querySelector("span").textContent = t("catalog.show");
@@ -479,10 +526,18 @@
     $(".lightbox-close").addEventListener("click", closeLightbox);
     $("#lightbox").addEventListener("click", (e) => { if (e.target.id === "lightbox") closeLightbox(); });
 
+    // product modal (más info · mobile)
+    $("#prodClose").addEventListener("click", closeProductModal);
+    $("#prodModal").addEventListener("click", (e) => { if (e.target.id === "prodModal") closeProductModal(); });
+    $("#prodSelect").addEventListener("click", () => {
+      if (prodModalId) { toggleSelect(prodModalId); syncProdSelect(); }
+    });
+
     // esc key
     document.addEventListener("keydown", (e) => {
       if (e.key === "Escape") {
         if (!$("#lightbox").hidden) closeLightbox();
+        else if (!$("#prodModal").hidden) closeProductModal();
         else if (!$("#quoteModal").hidden) closeModal();
         else if (!$("#menuOverlay").hidden && window.__closeMenu) window.__closeMenu();
       }
