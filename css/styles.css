@@ -348,6 +348,10 @@ input, textarea, select { font-family: inherit; }
 .card-add svg { width: 15px; height: 15px; transition: transform 0.3s; }
 .card-add:hover { border-color: var(--gold); background: rgba(205,172,106,0.08); }
 .card.selected .card-add { background: var(--gold); color: #17130a; border-color: transparent; }
+/* sin precios: el botón Seleccionar ocupa todo el ancho */
+.card-foot--noprice { justify-content: stretch; }
+.card-foot--noprice .card-add { width: 100%; justify-content: center; padding: 11px 16px; }
+.prod-modal-foot--noprice .card-add { width: 100%; justify-content: center; padding: 12px 16px; }
 
 /* botón "Más info" — solo visible en mobile */
 .card-more {

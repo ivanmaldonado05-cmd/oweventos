@@ -54,6 +54,7 @@ const I18N = {
     "modal.empty": "Todavía no seleccionaste productos. Cerrá esta ventana y elegí del catálogo.",
     "modal.estimate": "Estimado de referencia",
     "modal.estimate_note": "No incluye traslado. El monto final depende de la zona del evento.",
+    "modal.quote_note": "Un representante te enviará la cotización por WhatsApp.",
     "modal.send": "Enviar por WhatsApp",
     "modal.close": "Cerrar",
     "modal.remove": "Quitar",
@@ -115,7 +116,8 @@ const I18N = {
     "wa.unit": "c/u",
     "wa.assembly": "montaje",
     "wa.estimate": "Estimado (sin traslado)",
-    "wa.thanks": "¡Gracias! Quedo atento/a al presupuesto final.",
+    "wa.quote_request": "Me gustaría recibir la cotización de un representante. 🙌",
+    "wa.thanks": "¡Gracias! Quedo atento/a al presupuesto.",
     "wa.day": "día",
     "wa.days_plural": "días"
   },
@@ -171,6 +173,7 @@ const I18N = {
     "modal.empty": "You haven't selected products yet. Close this window and pick from the catalog.",
     "modal.estimate": "Reference estimate",
     "modal.estimate_note": "Delivery not included. The final amount depends on the event's location.",
+    "modal.quote_note": "A representative will send you the quote via WhatsApp.",
     "modal.send": "Send via WhatsApp",
     "modal.close": "Close",
     "modal.remove": "Remove",
@@ -232,7 +235,8 @@ const I18N = {
     "wa.unit": "each",
     "wa.assembly": "setup",
     "wa.estimate": "Estimate (no delivery)",
-    "wa.thanks": "Thanks! Looking forward to the final quote.",
+    "wa.quote_request": "I'd like to receive a quote from a representative. 🙌",
+    "wa.thanks": "Thanks! Looking forward to the quote.",
     "wa.day": "day",
     "wa.days_plural": "days"
   },
@@ -288,6 +292,7 @@ const I18N = {
     "modal.empty": "Você ainda não selecionou produtos. Feche esta janela e escolha no catálogo.",
     "modal.estimate": "Estimativa de referência",
     "modal.estimate_note": "Não inclui transporte. O valor final depende da região do evento.",
+    "modal.quote_note": "Um representante enviará o orçamento pelo WhatsApp.",
     "modal.send": "Enviar pelo WhatsApp",
     "modal.close": "Fechar",
     "modal.remove": "Remover",
@@ -349,7 +354,8 @@ const I18N = {
     "wa.unit": "cada",
     "wa.assembly": "montagem",
     "wa.estimate": "Estimativa (sem transporte)",
-    "wa.thanks": "Obrigado! Aguardo o orçamento final.",
+    "wa.quote_request": "Gostaria de receber o orçamento de um representante. 🙌",
+    "wa.thanks": "Obrigado! Aguardo o orçamento.",
     "wa.day": "dia",
     "wa.days_plural": "dias"
   }

@@ -75,9 +75,6 @@
   function cardHtml(p) {
     const isSel = selected.has(p.id);
     const subLabel = (CATEGORIES[p.cat].subs[p.sub] || {})[lang] || "";
-    const montaje = p.montaje > 0
-      ? `<span class="montaje">+ ${fmtGs(p.montaje)} ${t("catalog.montaje")}</span>`
-      : `<span class="montaje">${t("catalog.assembly_free")}</span>`;
     const imgs = p.imgs || [p.img];
     const multi = imgs.length > 1;
     const slides = imgs.map((src, i) =>
@@ -102,12 +99,7 @@
           </button>
           <span class="card-dims">${p.dims || ""}</span>
           <p class="card-desc">${p.desc[lang]}</p>
-          <div class="card-foot">
-            <div class="card-price">
-              <span class="from">${t("catalog.from")}</span>
-              <span class="amount">${fmtGs(p.price)}</span>
-              ${montaje}
-            </div>
+          <div class="card-foot card-foot--noprice">
             <button class="card-add" data-add="${p.id}">
               <svg viewBox="0 0 24 24"><path d="${isSel ? "M5 12l4 4L19 6" : "M12 5v14M5 12h14"}" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
               <span>${isSel ? t("catalog.added") : t("catalog.add")}</span>
@@ -212,7 +204,7 @@
           <img src="${(p.imgs && p.imgs[0]) || p.img}" alt="" />
           <div class="quote-item-info">
             <b>${p.name[lang]}</b>
-            <span>${fmtGs(p.price)} ${t("wa.unit")}${p.montaje > 0 ? " · " + fmtGs(p.montaje) + " " + t("catalog.montaje") : ""}</span>
+            <span>${p.dims || ""}</span>
           </div>
           <div class="stepper">
             <button data-step="-1" aria-label="-">&minus;</button>
@@ -229,11 +221,11 @@
       const input = $("input", row);
       $$("[data-step]", row).forEach(btn => btn.addEventListener("click", () => {
         let v = Math.max(1, (parseInt(input.value, 10) || 1) + parseInt(btn.dataset.step, 10));
-        input.value = v; selected.set(id, v); computeEstimate();
+        input.value = v; selected.set(id, v);
       }));
       input.addEventListener("input", () => {
         let v = Math.max(1, parseInt(input.value, 10) || 1);
-        selected.set(id, v); computeEstimate();
+        selected.set(id, v);
       });
       $("[data-remove]", row).addEventListener("click", () => {
         selected.delete(id); renderQuoteItems(); updateSelectBar();
@@ -243,16 +235,6 @@
           b.querySelector("path").setAttribute("d", "M12 5v14M5 12h14"); }
       });
     });
-    computeEstimate();
-  }
-
-  function computeEstimate() {
-    let total = 0;
-    selected.forEach((qty, id) => {
-      const p = PRODUCTS.find(x => x.id === id);
-      total += (p.price + (p.montaje || 0)) * qty;
-    });
-    $("#estimateTotal").textContent = fmtGs(total);
   }
 
   /* ---------------- WhatsApp ---------------- */
@@ -276,16 +258,11 @@
     if (date) msg += "• " + t("wa.date") + ": " + date + "\n";
 
     msg += "\n*" + t("wa.items") + "*\n";
-    let total = 0;
     selected.forEach((qty, id) => {
       const p = PRODUCTS.find(x => x.id === id);
-      const line = (p.price + (p.montaje || 0)) * qty;
-      total += line;
-      msg += "• " + qty + "× " + p.name[lang] + " — " + fmtGs(p.price) + " " + t("wa.unit");
-      if (p.montaje > 0) msg += " (+ " + fmtGs(p.montaje) + " " + t("wa.assembly") + ")";
-      msg += "\n";
+      msg += "• " + qty + "× " + p.name[lang] + "\n";
     });
-    msg += "\n*" + t("wa.estimate") + ":* " + fmtGs(total) + "\n\n";
+    msg += "\n" + t("wa.quote_request") + "\n\n";
     msg += t("wa.thanks");
     return msg;
   }
@@ -329,10 +306,6 @@
     $("#prodName").textContent = p.name[lang];
     $("#prodDims").textContent = p.dims || "";
     $("#prodDesc").textContent = p.desc[lang];
-    $("#prodFrom").textContent = t("catalog.from");
-    $("#prodPrice").textContent = fmtGs(p.price);
-    $("#prodMontaje").textContent = p.montaje > 0
-      ? "+ " + fmtGs(p.montaje) + " " + t("catalog.montaje") : t("catalog.assembly_free");
     syncProdSelect();
     $("#prodModal").hidden = false;
     document.body.style.overflow = "hidden";
