@@ -251,6 +251,20 @@ h1, h2, h3 { font-family: var(--serif); font-weight: 600; line-height: 1.08; let
 .media-reveal.in img, .media-reveal.in video { transform: scale(1); }
 .hero-bg { animation: heroZoom 20s ease-out forwards; }
 @keyframes heroZoom { from { transform: scale(1.12); } to { transform: scale(1); } }
+
+/* equipos — 3 tarjetas flotantes */
+.equip-head { text-align: center; max-width: 720px; margin: 0 auto 8px; }
+.equip-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 26px; margin-top: 44px; }
+.equip-card { display: flex; flex-direction: column; background: var(--cream-card); border: 1px solid var(--line-cream); border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-cream); transition: transform 0.45s var(--ease), box-shadow 0.45s; }
+.equip-card:hover { transform: translateY(-8px); box-shadow: 0 28px 54px rgba(30,20,10,0.16); }
+.equip-media { aspect-ratio: 4 / 3; background: #ffffff; overflow: hidden; }
+.equip-media img { width: 100%; height: 100%; object-fit: cover; }
+.equip-media--contain img { object-fit: contain; padding: 7%; }
+.equip-body { display: flex; flex-direction: column; align-items: flex-start; gap: 10px; padding: 26px 26px 30px; flex: 1; }
+.equip-body .story-num { color: var(--gold); }
+.equip-body h3 { font-size: 1.5rem; line-height: 1.12; color: var(--on-cream); }
+.equip-body p { color: var(--on-cream-muted); font-size: 0.95rem; line-height: 1.6; flex: 1; }
+.equip-body .link-arrow { margin-top: 8px; }
 .spotlight-body .eyebrow { color: #9c7d1e; }
 .spotlight-body h2 { font-size: clamp(2rem, 4.2vw, 3rem); margin: 14px 0 10px; color: var(--on-cream); }
 .spotlight-tag { font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; color: #9c7d1e; }
@@ -485,6 +499,8 @@ h1, h2, h3 { font-family: var(--serif); font-weight: 600; line-height: 1.08; let
   .story--reverse .story-media { order: 0; }
   .story-media { aspect-ratio: 16 / 11; height: auto; }
   .story-media.contain { aspect-ratio: 4 / 3; }
+  .equip-grid { grid-template-columns: 1fr; gap: 20px; }
+  .equip-media { aspect-ratio: 16 / 10; }
   .highlights { grid-template-columns: repeat(2, 1fr); gap: 30px 20px; }
   .contact-inner { grid-template-columns: 1fr; gap: 30px; }
   .spaces-grid { grid-template-columns: repeat(2, 1fr); grid-auto-rows: 160px; }
