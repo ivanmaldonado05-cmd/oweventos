@@ -288,10 +288,10 @@
   /* ---------------- Reveal ---------------- */
   let io;
   function observeReveal(scope) {
-    if (!("IntersectionObserver" in window)) { $$(".reveal, .media-reveal", scope).forEach(e => e.classList.add("in")); return; }
+    if (!("IntersectionObserver" in window)) { $$(".reveal, .media-reveal, .deco-sparkle", scope).forEach(e => e.classList.add("in")); return; }
     if (!io) io = new IntersectionObserver((ents) => ents.forEach(e => { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } }), { threshold: 0.12 });
     $$(".reveal", scope).forEach((el, i) => { el.style.transitionDelay = (i % 6) * 60 + "ms"; io.observe(el); });
-    $$(".media-reveal", scope).forEach(el => io.observe(el));
+    $$(".media-reveal, .deco-sparkle", scope).forEach(el => io.observe(el));
   }
 
   /* ---------------- Contact form ---------------- */
