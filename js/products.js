@@ -361,6 +361,107 @@ const PRODUCTS = [
     }
   },
 
+  /* ------------------------ ILUMINACIÓN · Últimos ingresos -------------- */
+  {
+    id: "arana-4-pisos", cat: "iluminacion", sub: "cristal",
+    imgs: ["assets/img/products/arana-4-pisos.webp"], price: 0, montaje: 0, stock: 2,
+    dims: "4 pisos",
+    name: { es: "Araña 4 Pisos", en: "4-Tier Chandelier", pt: "Lustre 4 Andares" },
+    desc: {
+      es: "Araña de cristal en cascada de 4 pisos, imponente y muy luminosa.",
+      en: "Four-tier cascading crystal chandelier, striking and luminous.",
+      pt: "Lustre de cristal em cascata de 4 andares, imponente e luminoso."
+    }
+  },
+  {
+    id: "imperio-mostacillas", cat: "iluminacion", sub: "cristal",
+    imgs: ["assets/img/products/imperio-mostacillas.webp"], price: 0, montaje: 0, stock: 2,
+    dims: "Estilo imperio",
+    name: { es: "Imperio de Mostacillas", en: "Beaded Empire", pt: "Império de Miçangas" },
+    desc: {
+      es: "Araña estilo imperio con mostacillas de cristal y brazos con velas.",
+      en: "Empire-style chandelier with crystal beading and candle arms.",
+      pt: "Lustre estilo império com miçangas de cristal e braços com velas."
+    }
+  },
+  {
+    id: "veneciana-fundas", cat: "iluminacion", sub: "cristal",
+    imgs: ["assets/img/products/veneciana-fundas.webp"], price: 0, montaje: 0, stock: 2,
+    dims: "Con fundas",
+    name: { es: "Veneciana con Fundas", en: "Venetian with Shades", pt: "Veneziana com Cúpulas" },
+    desc: {
+      es: "Araña veneciana con caireles de cristal y fundas blancas.",
+      en: "Venetian chandelier with crystal drops and white shades.",
+      pt: "Lustre veneziano com pingentes de cristal e cúpulas brancas."
+    }
+  },
+  {
+    id: "veneciana-cromo", cat: "iluminacion", sub: "cristal",
+    imgs: ["assets/img/products/veneciana-cromo-1.webp", "assets/img/products/veneciana-cromo-2.webp"], price: 0, montaje: 0, stock: 2,
+    dims: "Tubos cromados",
+    name: { es: "Veneciana Cromada", en: "Chrome Venetian", pt: "Veneziana Cromada" },
+    desc: {
+      es: "Araña veneciana con tubos cromados y caireles de cristal.",
+      en: "Venetian chandelier with chrome tubes and crystal drops.",
+      pt: "Lustre veneziano com tubos cromados e pingentes de cristal."
+    }
+  },
+  {
+    id: "veneciana-vidrio", cat: "iluminacion", sub: "cristal",
+    imgs: ["assets/img/products/veneciana-vidrio.webp"], price: 0, montaje: 0, stock: 2,
+    dims: "Vidrio clásico",
+    name: { es: "Veneciana de Vidrio", en: "Glass Venetian", pt: "Veneziana de Vidro" },
+    desc: {
+      es: "Araña veneciana clásica en vidrio con caireles de cristal.",
+      en: "Classic glass Venetian chandelier with crystal drops.",
+      pt: "Lustre veneziano clássico em vidro com pingentes de cristal."
+    }
+  },
+  {
+    id: "candelabro-cristal", cat: "iluminacion", sub: "cristal",
+    imgs: ["assets/img/products/candelabro-cristal.webp"], price: 0, montaje: 0, stock: 2,
+    dims: "De pie · cristal",
+    name: { es: "Candelabro de Cristal", en: "Crystal Candelabra", pt: "Candelabro de Cristal" },
+    desc: {
+      es: "Candelabro de pie en cristal veneciano con tulipas.",
+      en: "Floor candelabra in Venetian glass with tulip cups.",
+      pt: "Candelabro de piso em vidro veneziano com tulipas."
+    }
+  },
+  {
+    id: "cadenas-cascada", cat: "iluminacion", sub: "cadenas",
+    imgs: ["assets/img/products/cadenas-cascada.webp"], price: 0, montaje: 0, stock: 4,
+    dims: "En cascada",
+    name: { es: "Cadenas en Cascada", en: "Cascade Chains", pt: "Correntes em Cascata" },
+    desc: {
+      es: "Araña de cadenas de aluminio en cascada, diseño contemporáneo.",
+      en: "Cascading aluminium chain chandelier, contemporary design.",
+      pt: "Lustre de correntes de alumínio em cascata, design contemporâneo."
+    }
+  },
+  {
+    id: "jaula-chica", cat: "iluminacion", sub: "rusticas",
+    imgs: ["assets/img/products/jaula-chica.webp"], price: 0, montaje: 0, stock: 6,
+    dims: "Jaula · chica",
+    name: { es: "Jaula Chica", en: "Small Cage", pt: "Gaiola Pequena" },
+    desc: {
+      es: "Araña jaula de estructura metálica, líneas modernas.",
+      en: "Cage chandelier with a modern metal structure.",
+      pt: "Lustre gaiola com estrutura metálica de linhas modernas."
+    }
+  },
+  {
+    id: "jaula-grande", cat: "iluminacion", sub: "rusticas",
+    imgs: ["assets/img/products/jaula-grande.webp"], price: 0, montaje: 0, stock: 6,
+    dims: "Jaula · grande",
+    name: { es: "Jaula Grande", en: "Large Cage", pt: "Gaiola Grande" },
+    desc: {
+      es: "Araña jaula grande de estructura metálica, líneas modernas.",
+      en: "Large cage chandelier with a modern metal structure.",
+      pt: "Lustre gaiola grande com estrutura metálica de linhas modernas."
+    }
+  },
+
   /* ------------------------ ENERGÍA · Generadores CAT® ------------------- */
   {
     id: "generador-de165", cat: "energia", sub: "generadores",
