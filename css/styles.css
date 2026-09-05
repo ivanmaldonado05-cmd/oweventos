@@ -262,7 +262,8 @@ h1, h2, h3 { font-family: var(--serif); font-weight: 600; line-height: 1.08; let
 .highlight .cat-ico { background: var(--celeste); color: var(--navy); }
 
 /* dibujitos tranquilos (sparkles celeste, con flote suave) */
-.deco-sparkle { position: absolute; z-index: 1; color: var(--celeste-deco); pointer-events: none; opacity: 0; }
+.deco-sparkle { position: absolute; z-index: 0; color: var(--celeste-deco); pointer-events: none; opacity: 0; }
+.manifesto .container, .pledge .container, #equipos .container, .closing-inner { position: relative; z-index: 2; }
 .deco-sparkle svg { width: 100%; height: 100%; display: block; }
 .deco-sparkle.in { opacity: 0.9; animation: floatY 6s ease-in-out infinite; }
 .deco-sparkle.d2.in { animation: floatY 7.5s ease-in-out infinite reverse; }
@@ -378,7 +379,7 @@ h1, h2, h3 { font-family: var(--serif); font-weight: 600; line-height: 1.08; let
 .catalog-empty { text-align: center; color: var(--on-cream-muted); padding: 80px 0; font-size: 1.05rem; }
 
 /* ----------------------------- Cotización bar ----------------------------- */
-.cart-bar { position: fixed; left: 0; right: 0; bottom: calc(var(--bottom-nav-h) + 12px); z-index: 85;
+.cart-bar { position: fixed; left: 0; right: 0; bottom: 16px; z-index: 85;
   transform: translateY(200%); opacity: 0; visibility: hidden; pointer-events: none;
   transition: transform 0.45s var(--ease), opacity 0.4s var(--ease), visibility 0.45s; }
 .cart-bar.show { transform: none; opacity: 1; visibility: visible; pointer-events: auto; }
@@ -403,6 +404,7 @@ h1, h2, h3 { font-family: var(--serif); font-weight: 600; line-height: 1.08; let
 .wa-float { position: fixed; right: 20px; bottom: 24px; z-index: 95; width: 56px; height: 56px; border-radius: 50%; display: grid; place-items: center; background: var(--wa-green); color: #fff; box-shadow: 0 12px 28px rgba(37,211,102,0.4); transition: transform 0.3s var(--ease); }
 .wa-float:hover { transform: scale(1.08); }
 .wa-float svg { width: 30px; height: 30px; }
+body.has-cart .wa-float { bottom: 92px; }
 
 /* ----------------------------- Contact ----------------------------- */
 .contact-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: start; }
@@ -506,10 +508,6 @@ h1, h2, h3 { font-family: var(--serif); font-weight: 600; line-height: 1.08; let
 @media (max-width: 1024px) {
   .hdr-nav { display: none; }
   .hdr-menu { display: flex; }
-  .bottom-nav { display: block; }
-  body { padding-bottom: var(--bottom-nav-h); }
-  .wa-float { bottom: calc(var(--bottom-nav-h) + 16px); }
-  body.has-cart .wa-float { bottom: calc(var(--bottom-nav-h) + 88px); }
   .footer-inner { grid-template-columns: 1fr 1fr; }
   .footer-brand { grid-column: 1 / -1; }
 }
@@ -525,21 +523,24 @@ h1, h2, h3 { font-family: var(--serif); font-weight: 600; line-height: 1.08; let
   .hero-visual { height: 42vh; order: -1; }
   .hero-visual::after { background: linear-gradient(0deg, var(--cream), transparent 18%); }
   .hero-copy2 { padding: 34px 24px 52px; }
-  .spotlight-inner { grid-template-columns: 1fr; }
-  .spotlight-media { max-width: 300px; margin: 0 auto; }
+  .spotlight { padding: 40px 0; }
+  .spotlight-inner { grid-template-columns: 1fr; gap: 20px; }
+  .spotlight-media { max-width: 200px; margin: 0 auto; }
+  .spotlight-body { text-align: center; align-items: center; }
+  .spotlight-body p { text-align: center; }
   .story-inner { grid-template-columns: 1fr; min-height: 0; height: auto; }
   .story--reverse .story-media { order: 0; }
   .story-media { aspect-ratio: 16 / 11; height: auto; }
   .story-media.contain { aspect-ratio: 4 / 3; }
-  .equip-rows { gap: 22px; margin-top: 36px; }
+  .equip-rows { gap: 20px; margin-top: 30px; }
   .equip-row { grid-template-columns: 1fr; width: 100%; margin: 0 !important; }
   .equip-row--reverse .equip-row-media { order: 0; }
-  .equip-row-media { min-height: 0; aspect-ratio: 4 / 3; }
+  .equip-row-media { min-height: 0; height: 200px; aspect-ratio: auto; }
   .highlights { grid-template-columns: repeat(2, 1fr); gap: 30px 20px; }
   .contact-inner { grid-template-columns: 1fr; gap: 30px; }
-  .spaces-grid { grid-template-columns: repeat(2, 1fr); grid-auto-rows: 160px; }
+  .spaces-grid { grid-template-columns: repeat(2, 1fr); grid-auto-rows: 150px; gap: 10px; }
   .spaces-grid figure:nth-child(n) { grid-column: span 1; grid-row: span 1; }
-  .spaces-grid figure:nth-child(1) { grid-column: span 2; grid-row: span 2; }
+  .deco-sparkle { display: none; }
   .hdr-actions .lang-switch { display: none; }
   .hdr-actions .hdr-cta { display: none; }
 }
