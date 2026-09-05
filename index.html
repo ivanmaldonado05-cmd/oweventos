@@ -19,7 +19,7 @@
 <body data-page="home">
 
   <!-- ===================== HEADER ===================== -->
-  <header class="hdr" id="hdr">
+  <header class="hdr hdr--solid" id="hdr">
     <div class="container hdr-inner">
       <a href="index.html" class="hdr-logo" aria-label="OW Eventos"><img src="assets/img/logo-nocircle.png" alt="OW Eventos" /></a>
       <nav class="hdr-nav" aria-label="Principal">
@@ -69,22 +69,19 @@
     </div>
   </div>
 
-  <!-- ===================== HERO ===================== -->
-  <section class="hero" id="top">
-    <video class="hero-bg" autoplay loop muted playsinline preload="auto"
-           poster="assets/img/gallery/evento-2.webp" aria-hidden="true" tabindex="-1">
-      <source src="assets/video/hero-arana.mp4" type="video/mp4" />
-      <source src="assets/video/hero-arana.webm" type="video/webm" />
-    </video>
-    <div class="hero-scrim"></div>
-    <div class="container hero-content">
+  <!-- ===================== HERO (split editorial) ===================== -->
+  <section class="hero-split" id="top">
+    <div class="hero-copy2">
       <span class="eyebrow" data-i18n="hero.tag">Alquiler premium para eventos</span>
       <h1 class="hero-title" data-i18n="home.hero.title">Transformamos espacios en experiencias inolvidables</h1>
       <p class="hero-sub" data-i18n="home.hero.sub">Iluminación, climatización y energía para eventos, con montaje profesional.</p>
       <div class="hero-cta">
         <a href="catalogo.html" class="btn btn-primary" data-i18n="hero.cta">Ver catálogo</a>
-        <a id="heroWa" class="btn btn-outline" target="_blank" rel="noopener" data-i18n="hero.cta2">Cotizar por WhatsApp</a>
+        <a id="heroWa" class="btn btn-outline--dark" target="_blank" rel="noopener" data-i18n="hero.cta2">Cotizar por WhatsApp</a>
       </div>
+    </div>
+    <div class="hero-visual media-reveal">
+      <img src="assets/img/gallery/evento-1.webp" alt="Evento iluminado por OW Eventos" />
     </div>
   </section>
 
@@ -120,7 +117,7 @@
   </section>
 
   <!-- ===================== STORY · ILUMINACIÓN ===================== -->
-  <section class="story story--dark" id="equipos">
+  <section class="story story--cream" id="equipos">
     <div class="story-inner">
       <div class="story-media media-reveal"><img src="assets/img/gallery/evento-2.webp" alt="Araña de cristal en un evento" loading="lazy" /></div>
       <div class="story-body reveal">
@@ -146,7 +143,7 @@
   </section>
 
   <!-- ===================== STORY · ENERGÍA ===================== -->
-  <section class="story story--dark">
+  <section class="story story--cream">
     <div class="story-inner">
       <div class="story-media energy"><svg class="bolt" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L4 14h7l-1 8 9-12h-7l1-8z"/></svg></div>
       <div class="story-body reveal">
@@ -174,7 +171,7 @@
   </section>
 
   <!-- ===================== ESPACIOS (galería) ===================== -->
-  <section class="section section--dark" id="espacios">
+  <section class="section on-cream" id="espacios">
     <div class="container">
       <div class="section-head reveal">
         <span class="eyebrow" data-i18n="home.spaces.eyebrow">Galería</span>
@@ -196,14 +193,12 @@
 
   <!-- ===================== CIERRE ===================== -->
   <section class="closing">
-    <img class="closing-bg" src="assets/img/gallery/evento-6.webp" alt="" loading="lazy" />
-    <div class="closing-scrim"></div>
     <div class="container closing-inner reveal">
       <h2 data-i18n="home.closing.title">Creamos momentos. Vos los disfrutás.</h2>
       <p data-i18n="home.closing.sub">Contanos de tu evento y armamos todo por vos.</p>
       <div class="hero-cta">
         <a href="catalogo.html" class="btn btn-primary" data-i18n="hero.cta">Ver catálogo</a>
-        <a id="closingWa" class="btn btn-outline" target="_blank" rel="noopener" data-i18n="hero.cta2">Cotizar por WhatsApp</a>
+        <a id="closingWa" class="btn btn-outline--dark" target="_blank" rel="noopener" data-i18n="hero.cta2">Cotizar por WhatsApp</a>
       </div>
     </div>
   </section>
