@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Catálogo · OW Eventos</title>
+  <meta name="description" content="Catálogo de OW Eventos — arañas de cristal, climatización y más para tu evento. Armá tu cotización por WhatsApp." />
+  <link rel="icon" type="image/png" href="assets/img/logo.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+  <script defer src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body data-page="catalog">
+
+  <!-- ===================== HEADER ===================== -->
+  <header class="hdr hdr--solid" id="hdr">
+    <div class="container hdr-inner">
+      <a href="index.html" class="hdr-logo" aria-label="OW Eventos"><img src="assets/img/logo-nocircle.png" alt="OW Eventos" /></a>
+      <nav class="hdr-nav" aria-label="Principal">
+        <a href="index.html" data-i18n="nav.home">Inicio</a>
+        <a href="catalogo.html" class="active" data-i18n="nav.catalog">Catálogo</a>
+        <a href="index.html#espacios" data-i18n="nav.gallery">Eventos</a>
+        <a href="index.html#porque" data-i18n="nav.about">Nosotros</a>
+        <a href="index.html#contacto" data-i18n="nav.contact">Contacto</a>
+      </nav>
+      <div class="hdr-actions">
+        <div class="lang-switch" role="group" aria-label="Idioma">
+          <button data-lang="es" class="active">ES</button>
+          <button data-lang="en">EN</button>
+          <button data-lang="pt">PT</button>
+        </div>
+        <a id="headerWa" class="btn btn-primary btn-sm hdr-cta" target="_blank" rel="noopener" data-i18n="hero.cta2">Cotizar por WhatsApp</a>
+        <button class="hdr-menu" id="menuBtn" aria-label="Abrir menú" aria-expanded="false"><span></span></button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===================== MENU OVERLAY ===================== -->
+  <div class="menu-overlay" id="menuOverlay">
+    <div class="container menu-panel">
+      <div class="menu-top">
+        <img src="assets/img/logo-nocircle.png" alt="OW Eventos" />
+        <button class="menu-close" id="menuClose"><span data-i18n="nav.close">Cerrar</span><span class="x" aria-hidden="true">&times;</span></button>
+      </div>
+      <div class="menu-body">
+        <nav class="menu-nav" aria-label="Principal">
+          <a href="index.html" data-i18n="nav.home">Inicio</a>
+          <a href="catalogo.html" data-i18n="nav.catalog">Catálogo</a>
+          <a href="index.html#espacios" data-i18n="nav.gallery">Eventos</a>
+          <a href="index.html#porque" data-i18n="nav.about">Nosotros</a>
+          <a href="index.html#contacto" class="menu-cta" data-i18n="nav.contact">Contacto</a>
+        </nav>
+        <div class="menu-meta">
+          <a id="menuWa" target="_blank" rel="noopener">WhatsApp · 0985 100 206</a>
+          <a href="https://instagram.com/oweventos" target="_blank" rel="noopener">Instagram · @oweventos</a>
+          <div class="lang-switch menu-lang" role="group" aria-label="Idioma">
+            <button data-lang="es" class="active">ES</button>
+            <button data-lang="en">EN</button>
+            <button data-lang="pt">PT</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== CATALOG ===================== -->
+  <main class="catalog-page">
+    <section class="catalog-hero">
+      <div class="container">
+        <span class="eyebrow" data-i18n="home.cat.eyebrow">Equipamiento premium para tu evento</span>
+        <h1 data-i18n="catalog.title">Nuestro catálogo</h1>
+        <p data-i18n="catalog.subtitle">Elegí tus equipos y armá tu cotización.</p>
+      </div>
+    </section>
+
+    <section class="catalog-main">
+      <div class="container">
+        <div class="catalog-controls">
+          <div class="search-box">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 21l-4.3-4.3M11 19a8 8 0 100-16 8 8 0 000 16z" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+            <input type="search" id="searchInput" data-i18n-ph="catalog.search" placeholder="Buscar producto…" autocomplete="off" />
+          </div>
+          <div class="chips" id="filterChips"></div>
+        </div>
+        <div class="product-grid" id="productGrid"></div>
+        <p class="catalog-empty" id="catalogEmpty" hidden data-i18n="catalog.empty">No encontramos productos con ese filtro.</p>
+      </div>
+    </section>
+  </main>
+
+  <!-- ===================== FOOTER ===================== -->
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <img src="assets/img/logo-nocircle.png" alt="OW Eventos" />
+        <p data-i18n="footer.tagline">Alquiler de iluminación y climatización para eventos.</p>
+        <div class="footer-social">
+          <a id="footWa" target="_blank" rel="noopener" aria-label="WhatsApp"><svg viewBox="0 0 24 24"><use href="#waIcon"></use></svg></a>
+          <a href="https://instagram.com/oweventos" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="1.7"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.7"/><circle cx="17.6" cy="6.4" r="1.1" fill="currentColor"/></svg></a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4 data-i18n="footer.explore">Explorar</h4>
+        <a href="index.html" data-i18n="nav.home">Inicio</a>
+        <a href="catalogo.html" data-i18n="nav.catalog">Catálogo</a>
+        <a href="index.html#espacios" data-i18n="nav.gallery">Eventos</a>
+        <a href="index.html#contacto" data-i18n="nav.contact">Contacto</a>
+      </div>
+      <div class="footer-col">
+        <h4 data-i18n="footer.contact">Contacto</h4>
+        <a id="footWaText" target="_blank" rel="noopener">WhatsApp · 0985 100 206</a>
+        <a href="https://instagram.com/oweventos" target="_blank" rel="noopener">Instagram · @oweventos</a>
+      </div>
+    </div>
+    <div class="footer-bottom container">
+      <span>© <span id="year"></span> OW Eventos. <span data-i18n="footer.rights">Todos los derechos reservados.</span></span>
+      <span class="footer-credit"><span data-i18n="footer.dev">desarrollado por</span> <a href="https://instagram.com/ivma.dv" target="_blank" rel="noopener">@ivma.dv</a></span>
+    </div>
+  </footer>
+
+  <!-- ===================== SHARED ===================== -->
+  <div class="cart-bar" id="cartBar">
+    <div class="cart-inner">
+      <button class="cart-clear" id="clearSelection" data-i18n="bar.clear">Vaciar</button>
+      <div class="cart-info"><b data-i18n="bar.mycart">Mi cotización</b><span><span id="selectCount">0</span> <span id="selectWord" data-i18n="bar.products">productos</span></span></div>
+      <button class="btn btn-primary btn-sm" id="openQuote"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#waIcon"></use></svg><span data-i18n="bar.view">Ver</span></button>
+    </div>
+  </div>
+
+  <nav class="bottom-nav" aria-label="Navegación">
+    <ul>
+      <li><a href="index.html" data-nav="home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h5v-6h4v6h5V10"/></svg><span data-i18n="nav.home">Inicio</span></a></li>
+      <li><a href="catalogo.html" data-nav="catalog"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg><span data-i18n="nav.catalog">Catálogo</span></a></li>
+      <li><a href="index.html#espacios" data-nav="events"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M8 4v5"/></svg><span data-i18n="nav.gallery">Eventos</span></a></li>
+      <li><a href="index.html#contacto" data-nav="contact"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v12H7l-3 3V4z"/></svg><span data-i18n="nav.contact">Contacto</span></a></li>
+    </ul>
+  </nav>
+
+  <a class="wa-float" id="waFloat" target="_blank" rel="noopener" aria-label="WhatsApp"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#waIcon"></use></svg></a>
+
+  <!-- Quote modal -->
+  <div class="modal-overlay" id="quoteModal" hidden>
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <button class="modal-close" id="modalClose" aria-label="Cerrar">&times;</button>
+      <div class="modal-head">
+        <h3 id="modalTitle" data-i18n="modal.title">Solicitá tu cotización</h3>
+        <p data-i18n="modal.subtitle">Contanos del evento y las cantidades.</p>
+      </div>
+      <div class="modal-body">
+        <div class="modal-section">
+          <h4 data-i18n="modal.step_event">Datos del evento</h4>
+          <div class="field-row">
+            <label class="field"><span data-i18n="modal.name">Tu nombre</span><input type="text" id="qName" data-i18n-ph="modal.name_ph" /></label>
+            <label class="field"><span data-i18n="modal.location">Ubicación del evento</span><input type="text" id="qLocation" data-i18n-ph="modal.location_ph" /></label>
+          </div>
+          <div class="field-row">
+            <label class="field"><span data-i18n="modal.days">Cantidad de días</span><input type="number" id="qDays" min="1" value="1" /></label>
+            <label class="field"><span data-i18n="modal.date">Fecha del evento (opcional)</span><input type="date" id="qDate" /></label>
+          </div>
+          <div class="map-block">
+            <div class="map-actions">
+              <button type="button" class="map-btn" id="mapToggle"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-5.5-7-11a7 7 0 0114 0c0 5.5-7 11-7 11z" fill="none" stroke="currentColor" stroke-width="1.7"/><circle cx="12" cy="10" r="2.4" fill="none" stroke="currentColor" stroke-width="1.7"/></svg><span data-i18n="modal.map_pick">Marcar en el mapa</span></button>
+              <button type="button" class="map-btn" id="mapGeo"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2v3M12 19v3M2 12h3M19 12h3" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><circle cx="12" cy="12" r="6" fill="none" stroke="currentColor" stroke-width="1.7"/></svg><span data-i18n="modal.map_geo">Usar mi ubicación</span></button>
+            </div>
+            <div id="mapWrap" hidden><div id="pickMap"></div><p class="map-picked" id="mapPicked" hidden></p></div>
+          </div>
+        </div>
+        <div class="modal-section">
+          <h4 data-i18n="modal.step_items">Productos y cantidades</h4>
+          <div id="quoteItems" class="quote-items"></div>
+          <p id="quoteEmpty" class="quote-empty" hidden data-i18n="modal.empty"></p>
+        </div>
+        <div class="estimate" id="estimateBox"><p class="estimate-note" data-i18n="modal.quote_note">Un representante te enviará la cotización por WhatsApp.</p></div>
+      </div>
+      <div class="modal-foot">
+        <button class="btn btn-outline" id="modalCancel" data-i18n="modal.close">Cerrar</button>
+        <button class="btn btn-primary" id="sendQuote"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#waIcon"></use></svg><span data-i18n="modal.send">Enviar por WhatsApp</span></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Product detail modal -->
+  <div class="modal-overlay" id="prodModal" hidden>
+    <div class="modal prod-modal" role="dialog" aria-modal="true">
+      <button class="modal-close" id="prodClose" aria-label="Cerrar">&times;</button>
+      <div class="prod-modal-media"><img id="prodImg" src="" alt="" /></div>
+      <div class="prod-modal-body">
+        <span class="prod-modal-badge" id="prodBadge"></span>
+        <h3 id="prodName"></h3>
+        <span class="pcard-dims" id="prodDims"></span>
+        <p class="pcard-desc" id="prodDesc"></p>
+        <div class="prod-modal-foot"><button class="btn btn-primary" id="prodSelect" data-add=""></button></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Lightbox -->
+  <div class="lightbox" id="lightbox" hidden><button class="lightbox-close" aria-label="Cerrar">&times;</button><img id="lightboxImg" src="" alt="" /></div>
+
+  <!-- SVG sprite -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <symbol id="fanIcon" viewBox="0 0 100 100"><g fill="currentColor"><path d="M50 50 C46 32 55 16 68 20 C77 23 74 41 57 48 Z"/><path d="M50 50 C46 32 55 16 68 20 C77 23 74 41 57 48 Z" transform="rotate(120 50 50)"/><path d="M50 50 C46 32 55 16 68 20 C77 23 74 41 57 48 Z" transform="rotate(240 50 50)"/><circle cx="50" cy="50" r="6.5"/></g></symbol>
+    <symbol id="waIcon" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2a10 10 0 00-8.6 15.1L2 22l5.05-1.32A10 10 0 1012 2zm0 18.2c-1.5 0-2.98-.4-4.27-1.16l-.3-.18-2.99.78.8-2.92-.2-.31A8.2 8.2 0 1112 20.2z"/><path fill="currentColor" d="M9.5 7.2c-.18-.42-.37-.42-.55-.43h-.47c-.16 0-.43.06-.66.31-.22.25-.86.85-.86 2.06 0 1.22.88 2.39 1 2.56.13.16 1.72 2.76 4.25 3.76 2.1.83 2.53.66 2.98.62.46-.04 1.47-.6 1.68-1.18.2-.58.2-1.08.15-1.18-.06-.1-.22-.16-.46-.28-.24-.12-1.43-.7-1.65-.78-.22-.08-.38-.12-.55.12-.16.25-.63.79-.77.95-.14.16-.28.18-.52.06-.24-.12-1.02-.38-1.94-1.2-.72-.64-1.2-1.43-1.34-1.67-.14-.24-.02-.37.1-.49.11-.11.24-.28.37-.42.12-.14.16-.24.24-.4.08-.16.04-.3-.02-.42-.06-.12-.53-1.32-.74-1.8z"/></symbol>
+  </svg>
+
+  <script src="js/i18n.js"></script>
+  <script src="js/products.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

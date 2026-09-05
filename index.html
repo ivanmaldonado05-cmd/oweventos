@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>OW Eventos · Alquiler para eventos</title>
-  <meta name="description" content="OW Eventos — alquiler premium de arañas y candelabros de lujo, ventiladores, climatizadores y estufas para eventos. Montaje profesional." />
-  <meta property="og:title" content="OW Eventos · Alquiler para eventos" />
-  <meta property="og:description" content="Iluminación y climatización de lujo para tu evento." />
-  <meta property="og:image" content="assets/img/products/cristal-con-velas-1.webp" />
+  <title>OW Eventos · Iluminación, climatización y energía para eventos</title>
+  <meta name="description" content="OW Eventos — alquiler premium de arañas de cristal, climatización y energía para eventos en Paraguay. Montaje profesional." />
+  <meta property="og:title" content="OW Eventos · Alquiler premium para eventos" />
+  <meta property="og:description" content="Transformamos espacios en experiencias inolvidables." />
+  <meta property="og:image" content="assets/img/gallery/evento-2.webp" />
   <link rel="icon" type="image/png" href="assets/img/logo.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -16,186 +16,236 @@
   <script defer src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
   <link rel="stylesheet" href="css/styles.css" />
 </head>
-<body>
+<body data-page="home">
 
   <!-- ===================== HEADER ===================== -->
-  <header class="site-header" id="header">
-    <div class="container header-inner">
-      <a href="#top" class="brand" aria-label="OW Eventos">
-        <img src="assets/img/logo-nocircle.png" alt="OW Eventos" class="brand-logo" />
-      </a>
-      <p class="header-tagline" data-i18n="header.tagline">Alquiler de equipos premium para eventos</p>
-      <button class="menu-btn" id="menuBtn" aria-label="Abrir menú" aria-expanded="false" aria-controls="menuOverlay">
-        <span class="menu-btn-label" data-i18n="nav.menu">Menú</span>
-        <span class="menu-lines"><span></span><span></span></span>
-      </button>
+  <header class="hdr" id="hdr">
+    <div class="container hdr-inner">
+      <a href="index.html" class="hdr-logo" aria-label="OW Eventos"><img src="assets/img/logo-nocircle.png" alt="OW Eventos" /></a>
+      <nav class="hdr-nav" aria-label="Principal">
+        <a href="index.html" class="active" data-i18n="nav.home">Inicio</a>
+        <a href="catalogo.html" data-i18n="nav.catalog">Catálogo</a>
+        <a href="index.html#espacios" data-i18n="nav.gallery">Eventos</a>
+        <a href="index.html#porque" data-i18n="nav.about">Nosotros</a>
+        <a href="index.html#contacto" data-i18n="nav.contact">Contacto</a>
+      </nav>
+      <div class="hdr-actions">
+        <div class="lang-switch" role="group" aria-label="Idioma">
+          <button data-lang="es" class="active">ES</button>
+          <button data-lang="en">EN</button>
+          <button data-lang="pt">PT</button>
+        </div>
+        <a href="catalogo.html" class="btn btn-primary btn-sm hdr-cta" data-i18n="hero.cta">Ver catálogo</a>
+        <button class="hdr-menu" id="menuBtn" aria-label="Abrir menú" aria-expanded="false"><span></span></button>
+      </div>
     </div>
   </header>
 
   <!-- ===================== MENU OVERLAY ===================== -->
-  <div class="menu-overlay" id="menuOverlay" hidden>
-    <div class="menu-panel">
-      <div class="container menu-top">
-        <img src="assets/img/logo-nocircle.png" alt="OW Eventos" class="menu-logo" />
-        <button class="menu-close" id="menuClose" aria-label="Cerrar menú">
-          <span data-i18n="nav.close">Cerrar</span>
-          <span class="x" aria-hidden="true">&times;</span>
-        </button>
+  <div class="menu-overlay" id="menuOverlay">
+    <div class="container menu-panel">
+      <div class="menu-top">
+        <img src="assets/img/logo-nocircle.png" alt="OW Eventos" />
+        <button class="menu-close" id="menuClose"><span data-i18n="nav.close">Cerrar</span><span class="x" aria-hidden="true">&times;</span></button>
       </div>
-      <div class="container menu-body">
-        <div class="menu-info">
-          <p class="menu-tagline" data-i18n="header.tagline">Alquiler de equipos premium para eventos</p>
-          <div class="menu-contact">
-            <a id="menuWa" target="_blank" rel="noopener">WhatsApp · 0985 100 206</a>
-            <a href="https://instagram.com/oweventos" target="_blank" rel="noopener">Instagram · @oweventos</a>
-          </div>
-          <div class="menu-social">
-            <a id="menuWaIcon" target="_blank" rel="noopener" aria-label="WhatsApp"><svg viewBox="0 0 24 24"><use href="#waIcon"></use></svg></a>
-            <a href="https://instagram.com/oweventos" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="1.7"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.7"/><circle cx="17.6" cy="6.4" r="1.1" fill="currentColor"/></svg></a>
-          </div>
+      <div class="menu-body">
+        <nav class="menu-nav" aria-label="Principal">
+          <a href="index.html" data-i18n="nav.home">Inicio</a>
+          <a href="catalogo.html" data-i18n="nav.catalog">Catálogo</a>
+          <a href="index.html#espacios" data-i18n="nav.gallery">Eventos</a>
+          <a href="index.html#porque" data-i18n="nav.about">Nosotros</a>
+          <a href="index.html#contacto" class="menu-cta" data-i18n="nav.contact">Contacto</a>
+        </nav>
+        <div class="menu-meta">
+          <a id="menuWa" target="_blank" rel="noopener">WhatsApp · 0985 100 206</a>
+          <a href="https://instagram.com/oweventos" target="_blank" rel="noopener">Instagram · @oweventos</a>
           <div class="lang-switch menu-lang" role="group" aria-label="Idioma">
             <button data-lang="es" class="active">ES</button>
             <button data-lang="en">EN</button>
             <button data-lang="pt">PT</button>
           </div>
         </div>
-        <nav class="menu-nav" aria-label="Principal">
-          <a href="#catalog" data-i18n="nav.catalog">Catálogo</a>
-          <a href="#gallery" data-i18n="nav.gallery">Eventos</a>
-          <a href="#about" data-i18n="nav.about">Nosotros</a>
-          <a href="#contact" data-i18n="nav.contact">Contacto</a>
-          <a href="#catalog" class="menu-cta" data-i18n="nav.quote">Cotizar</a>
-        </nav>
       </div>
     </div>
   </div>
 
-  <span id="top"></span>
-
   <!-- ===================== HERO ===================== -->
-  <section class="hero" id="hero">
-    <div class="hero-glow"></div>
-    <div class="container hero-inner">
-      <div class="hero-copy">
-        <p class="eyebrow" data-i18n="hero.tag">Alquiler premium para eventos</p>
-        <h1 class="hero-title" data-i18n="hero.title">Iluminamos y climatizamos tu evento</h1>
-        <p class="hero-sub" data-i18n="hero.subtitle">Arañas y candelabros de lujo, ventiladores, climatizadores y estufas.</p>
-        <div class="hero-cta">
-          <a href="#catalog" class="btn btn-gold" data-i18n="hero.cta">Ver catálogo</a>
-          <a href="#contact" class="btn btn-ghost" data-i18n="hero.cta2">Cotizar por WhatsApp</a>
-        </div>
-        <div class="hero-stats">
-          <div><strong>7</strong><span data-i18n="hero.stat2">categorías</span></div>
-          <div><strong>100%</strong><span data-i18n="hero.stat3">montaje profesional</span></div>
-        </div>
-      </div>
-      <div class="hero-art">
-        <video class="hero-chandelier" autoplay loop muted playsinline preload="auto"
-               disablepictureinpicture disableremoteplayback controlslist="nodownload noplaybackrate noremoteplayback"
-               poster="assets/video/hero-arana-poster.webp" aria-hidden="true" tabindex="-1">
-          <source src="assets/video/hero-arana.mp4" type="video/mp4" />
-          <source src="assets/video/hero-arana.webm" type="video/webm" />
-        </video>
-      </div>
-    </div>
-    <div class="hero-fade"></div>
-  </section>
-
-  <!-- ===================== CATALOG ===================== -->
-  <section class="section catalog" id="catalog">
-    <div class="container">
-      <div class="section-head reveal">
-        <p class="eyebrow" data-i18n="hero.tag">Alquiler premium para eventos</p>
-        <h2 class="section-title" data-i18n="catalog.title">Nuestro catálogo</h2>
-        <p class="section-sub" data-i18n="catalog.subtitle">Explorá y seleccioná todo lo que te interese.</p>
-      </div>
-
-      <div class="catalog-controls" id="catalogControls" hidden>
-        <div class="search-box">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 21l-4.3-4.3M11 19a8 8 0 100-16 8 8 0 000 16z" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-          <input type="search" id="searchInput" data-i18n-ph="catalog.search" placeholder="Buscar producto…" autocomplete="off" />
-        </div>
-        <div class="chips" id="filterChips"></div>
-      </div>
-
-      <div class="product-grid featured-grid" id="featuredGrid"></div>
-      <div class="product-grid" id="productGrid" hidden></div>
-      <p class="catalog-empty" id="catalogEmpty" hidden data-i18n="catalog.empty">No encontramos productos con ese filtro.</p>
-
-      <div class="catalog-reveal" id="catalogReveal">
-        <button class="btn btn-gold catalog-toggle" id="catalogToggle" aria-expanded="false" aria-controls="productGrid">
-          <span data-i18n="catalog.show">Ver productos</span>
-          <svg viewBox="0 0 24 24" aria-hidden="true" class="chev"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </button>
+  <section class="hero" id="top">
+    <video class="hero-bg" autoplay loop muted playsinline preload="auto"
+           poster="assets/img/gallery/evento-2.webp" aria-hidden="true" tabindex="-1">
+      <source src="assets/video/hero-arana.mp4" type="video/mp4" />
+      <source src="assets/video/hero-arana.webm" type="video/webm" />
+    </video>
+    <div class="hero-scrim"></div>
+    <div class="container hero-content">
+      <span class="eyebrow" data-i18n="hero.tag">Alquiler premium para eventos</span>
+      <h1 class="hero-title" data-i18n="home.hero.title">Transformamos espacios en experiencias inolvidables</h1>
+      <p class="hero-sub" data-i18n="home.hero.sub">Iluminación, climatización y energía para eventos, con montaje profesional.</p>
+      <div class="hero-cta">
+        <a href="catalogo.html" class="btn btn-primary" data-i18n="hero.cta">Ver catálogo</a>
+        <a id="heroWa" class="btn btn-outline" target="_blank" rel="noopener" data-i18n="hero.cta2">Cotizar por WhatsApp</a>
       </div>
     </div>
   </section>
 
-  <!-- ===================== ABOUT ===================== -->
-  <section class="section about" id="about">
+  <!-- ===================== CATEGORÍAS ===================== -->
+  <section class="section on-cream" id="categorias">
     <div class="container">
       <div class="section-head reveal">
+        <span class="eyebrow" data-i18n="home.cat.eyebrow">Equipamiento premium para tu evento</span>
+      </div>
+      <div class="cat-grid">
+        <a href="catalogo.html?cat=aranas" class="cat-tile reveal">
+          <span class="cat-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v6"/><path d="M5 8h14l-1.5 4H6.5L5 8z"/><path d="M8 12v2a4 4 0 008 0v-2"/><path d="M12 18v3"/><circle cx="12" cy="22" r="1"/></svg></span>
+          <h3 data-i18n="home.cat.lighting.title">Iluminación</h3>
+          <p data-i18n="home.cat.lighting.desc">Arañas y candelabros de cristal, bronce y cadenas.</p>
+          <span class="cat-more"><span data-i18n="home.cat.more">Ver más</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+        </a>
+        <a href="catalogo.html?cat=climatizacion" class="cat-tile reveal">
+          <span class="cat-ico"><svg viewBox="0 0 100 100" fill="currentColor"><use href="#fanIcon"></use></svg></span>
+          <h3 data-i18n="home.cat.climate.title">Climatización</h3>
+          <p data-i18n="home.cat.climate.desc">Climatizadores, ventiladores y estufas para cualquier clima.</p>
+          <span class="cat-more"><span data-i18n="home.cat.more">Ver más</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+        </a>
+        <a id="energyTile" class="cat-tile reveal" target="_blank" rel="noopener">
+          <span class="cat-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L4 14h7l-1 8 9-12h-7l1-8z"/></svg></span>
+          <h3 data-i18n="home.cat.energy.title">Energía</h3>
+          <p data-i18n="home.cat.energy.desc">Generadores eléctricos que dan autonomía a tu evento.</p>
+          <span class="cat-more"><span data-i18n="home.cat.more">Ver más</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== EQUIPOS QUE MARCAN LA DIFERENCIA ===================== -->
+  <section class="section on-cream" id="equipos" style="padding-top:0;">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="eyebrow" data-i18n="home.diff.eyebrow">Equipos que marcan la diferencia</span>
+        <h2 class="section-title" data-i18n="home.diff.title">Cada detalle, pensado para tu evento</h2>
+      </div>
+      <div class="diff-rows">
+        <article class="diff-row reveal">
+          <div class="diff-media"><img src="assets/img/gallery/evento-2.webp" alt="Araña de cristal en un evento" loading="lazy" /></div>
+          <div class="diff-content">
+            <span class="eyebrow" data-i18n="home.cat.lighting.title">Iluminación</span>
+            <h3 data-i18n="home.diff.aranas.title">Arañas de cristal</h3>
+            <p data-i18n="home.diff.aranas.desc">Piezas imponentes que suman elegancia y brillo a salones, jardines y ceremonias.</p>
+            <a href="catalogo.html?cat=aranas" class="btn btn-outline--dark btn-sm" data-i18n="home.diff.more">Ver más</a>
+          </div>
+        </article>
+        <article class="diff-row reveal">
+          <div class="diff-media contain"><img src="assets/img/products/climatizador-cabezal-grande.webp" alt="Climatizador" loading="lazy" /></div>
+          <div class="diff-content">
+            <span class="eyebrow" data-i18n="home.cat.climate.title">Climatización</span>
+            <h3 data-i18n="home.diff.clima.title">Aires acondicionados y ventiladores</h3>
+            <p data-i18n="home.diff.clima.desc">Confort térmico garantizado para que la temperatura nunca sea un problema.</p>
+            <a href="catalogo.html?cat=climatizacion" class="btn btn-outline--dark btn-sm" data-i18n="home.diff.more">Ver más</a>
+          </div>
+        </article>
+        <article class="diff-row reveal">
+          <div class="diff-media diff-energy"><svg class="bolt" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L4 14h7l-1 8 9-12h-7l1-8z"/></svg></div>
+          <div class="diff-content">
+            <span class="eyebrow" data-i18n="home.cat.energy.title">Energía</span>
+            <h3 data-i18n="home.diff.energia.title">Generadores eléctricos</h3>
+            <p data-i18n="home.diff.energia.desc">Energía segura y estable para eventos al aire libre o sin acceso a la red.</p>
+            <a id="energyBtn" class="btn btn-outline--dark btn-sm" target="_blank" rel="noopener" data-i18n="hero.cta2">Cotizar por WhatsApp</a>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== PRODUCTO DESTACADO ===================== -->
+  <section class="spotlight" id="destacado">
+    <div class="container spotlight-inner">
+      <div class="spotlight-media reveal"><img id="spotImg" src="assets/img/products/isabel-1.webp" alt="" /></div>
+      <div class="spotlight-body reveal">
+        <span class="eyebrow" data-i18n="home.spotlight.eyebrow">Producto destacado</span>
+        <h2 id="spotName">Isabel</h2>
+        <span class="spotlight-tag" id="spotTag"></span>
+        <p id="spotDesc"></p>
+        <p class="spotlight-dims" id="spotDims"></p>
+        <a href="catalogo.html" class="btn btn-primary" data-i18n="home.spotlight.cta">Ver detalles</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== POR QUÉ OW ===================== -->
+  <section class="section on-cream" id="porque">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="eyebrow" data-i18n="hero.tag">Alquiler premium para eventos</span>
         <h2 class="section-title" data-i18n="about.title">Por qué OW Eventos</h2>
-        <p class="section-sub" data-i18n="about.subtitle">Detrás de cada evento hay logística, cuidado y detalle.</p>
+        <p class="section-sub" data-i18n="about.subtitle">Detrás de cada evento hay logística, cuidado y una obsesión por los detalles.</p>
       </div>
-      <div class="about-grid">
-        <div class="feature-grid">
-        <article class="feature reveal">
-          <div class="feature-ico"><svg viewBox="0 0 24 24"><path d="M12 2l2.4 4.9 5.4.8-3.9 3.8.9 5.4L12 19l-4.8 2.5.9-5.4L4.2 8.7l5.4-.8L12 2z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg></div>
-          <h3 data-i18n="about.f1.title">Montaje profesional</h3>
+      <div class="cat-grid" style="grid-template-columns:repeat(4,1fr);">
+        <article class="cat-tile reveal">
+          <span class="cat-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><path d="M12 2l2.4 4.9 5.4.8-3.9 3.8.9 5.4L12 19l-4.8 2.5.9-5.4L4.2 8.7l5.4-.8L12 2z"/></svg></span>
+          <h3 style="font-size:1.25rem;" data-i18n="about.f1.title">Montaje profesional</h3>
           <p data-i18n="about.f1.text"></p>
         </article>
-        <article class="feature reveal">
-          <div class="feature-ico"><svg viewBox="0 0 24 24"><path d="M12 3v18M5 8l7-5 7 5M5 8v9l7 4 7-4V8" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg></div>
-          <h3 data-i18n="about.f2.title">Catálogo de lujo</h3>
+        <article class="cat-tile reveal">
+          <span class="cat-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><path d="M12 3v18M5 8l7-5 7 5M5 8v9l7 4 7-4V8"/></svg></span>
+          <h3 style="font-size:1.25rem;" data-i18n="about.f2.title">Catálogo de lujo</h3>
           <p data-i18n="about.f2.text"></p>
         </article>
-        <article class="feature reveal">
-          <div class="feature-ico"><svg viewBox="0 0 24 24"><path d="M4 12a8 8 0 1116 0c0 4-3 5-3 7H7c0-2-3-3-3-7z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg></div>
-          <h3 data-i18n="about.f3.title">Asistencia en el evento</h3>
+        <article class="cat-tile reveal">
+          <span class="cat-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><path d="M4 12a8 8 0 1116 0c0 4-3 5-3 7H7c0-2-3-3-3-7z"/></svg></span>
+          <h3 style="font-size:1.25rem;" data-i18n="about.f3.title">Asistencia en el evento</h3>
           <p data-i18n="about.f3.text"></p>
         </article>
-        <article class="feature reveal">
-          <div class="feature-ico"><svg viewBox="0 0 24 24"><path d="M12 21s-7-5.5-7-11a7 7 0 1114 0c0 5.5-7 11-7 11z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><circle cx="12" cy="10" r="2.5" fill="none" stroke="currentColor" stroke-width="1.6"/></svg></div>
-          <h3 data-i18n="about.f4.title">Cobertura flexible</h3>
+        <article class="cat-tile reveal">
+          <span class="cat-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><path d="M12 21s-7-5.5-7-11a7 7 0 1114 0c0 5.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg></span>
+          <h3 style="font-size:1.25rem;" data-i18n="about.f4.title">Cobertura flexible</h3>
           <p data-i18n="about.f4.text"></p>
         </article>
-        </div>
-        <div class="about-video reveal">
-          <video class="about-vid" autoplay loop muted playsinline preload="auto"
-                 disablepictureinpicture disableremoteplayback controlslist="nodownload noplaybackrate noremoteplayback"
-                 poster="assets/video/hero-estufa-poster.webp" aria-hidden="true" tabindex="-1">
-            <source src="assets/video/hero-estufa.mp4" type="video/mp4" />
-            <source src="assets/video/hero-estufa.webm" type="video/webm" />
-          </video>
-        </div>
       </div>
     </div>
   </section>
 
-  <!-- ===================== GALLERY ===================== -->
-  <section class="section gallery" id="gallery">
-    <svg class="deco-fan deco-fan--gallery" viewBox="0 0 100 100" aria-hidden="true"><use href="#fanIcon"></use></svg>
+  <!-- ===================== ESPACIOS (galería) ===================== -->
+  <section class="section section--dark" id="espacios">
     <div class="container">
-      <div class="gallery-inner">
-        <div class="gallery-copy reveal">
-          <h2 class="section-title" data-i18n="gallery.title">Eventos que iluminamos</h2>
-          <p class="section-sub" data-i18n="gallery.subtitle">Una muestra de nuestras piezas en acción.</p>
-        </div>
-        <div class="gallery-marquee reveal" id="galleryMarquee">
-          <div class="gm-track" id="gmTrack"></div>
-        </div>
+      <div class="section-head reveal">
+        <span class="eyebrow" data-i18n="home.spaces.eyebrow">Galería</span>
+        <h2 class="section-title" data-i18n="home.spaces.title">Espacios transformados por OW</h2>
+      </div>
+      <div class="spaces-grid" id="spacesGrid"></div>
+    </div>
+  </section>
+
+  <!-- ===================== COMPROMISO (burdeos) ===================== -->
+  <section class="pledge">
+    <div class="container reveal">
+      <span class="eyebrow" data-i18n="home.pledge.eyebrow">Nuestro compromiso</span>
+      <div class="pledge-stars" aria-hidden="true">★★★★★</div>
+      <blockquote data-i18n="home.pledge.quote">Detrás de cada evento hay logística, cuidado y una obsesión por los detalles.</blockquote>
+      <span class="pledge-author" data-i18n="home.pledge.author">OW Eventos</span>
+    </div>
+  </section>
+
+  <!-- ===================== CIERRE ===================== -->
+  <section class="closing">
+    <img class="closing-bg" src="assets/img/gallery/evento-6.webp" alt="" loading="lazy" />
+    <div class="closing-scrim"></div>
+    <div class="container closing-inner reveal">
+      <h2 data-i18n="home.closing.title">Creamos momentos. Vos los disfrutás.</h2>
+      <p data-i18n="home.closing.sub">Contanos de tu evento y armamos todo por vos.</p>
+      <div class="hero-cta">
+        <a href="catalogo.html" class="btn btn-primary" data-i18n="hero.cta">Ver catálogo</a>
+        <a id="closingWa" class="btn btn-outline" target="_blank" rel="noopener" data-i18n="hero.cta2">Cotizar por WhatsApp</a>
       </div>
     </div>
   </section>
 
-  <!-- ===================== CONTACT ===================== -->
-  <section class="section contact" id="contact">
+  <!-- ===================== CONTACTO ===================== -->
+  <section class="section on-cream contact" id="contacto">
     <div class="container contact-inner">
       <div class="contact-copy reveal">
+        <span class="eyebrow" data-i18n="nav.contact">Contacto</span>
         <h2 class="section-title" data-i18n="contact.title">Hablemos de tu evento</h2>
         <p class="section-sub" data-i18n="contact.subtitle">Escribinos por WhatsApp o dejanos tus datos.</p>
-        <p class="contact-note" data-i18n="contact.note"></p>
         <div class="contact-direct">
           <a class="contact-pill" id="waLink" target="_blank" rel="noopener">
             <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#waIcon"></use></svg>
@@ -207,21 +257,11 @@
           </a>
         </div>
       </div>
-
       <form class="contact-form reveal" id="contactForm">
-        <label>
-          <span data-i18n="contact.name">Nombre</span>
-          <input type="text" name="name" required data-i18n-ph="contact.name_ph" />
-        </label>
-        <label>
-          <span data-i18n="contact.phone">Teléfono</span>
-          <input type="tel" name="phone" data-i18n-ph="contact.phone_ph" />
-        </label>
-        <label>
-          <span data-i18n="contact.message">Mensaje</span>
-          <textarea name="message" rows="4" required data-i18n-ph="contact.message_ph"></textarea>
-        </label>
-        <button type="submit" class="btn btn-gold btn-block" data-i18n="contact.send">Enviar por WhatsApp</button>
+        <label><span data-i18n="contact.name">Nombre</span><input type="text" name="name" required data-i18n-ph="contact.name_ph" /></label>
+        <label><span data-i18n="contact.phone">Teléfono</span><input type="tel" name="phone" data-i18n-ph="contact.phone_ph" /></label>
+        <label><span data-i18n="contact.message">Mensaje</span><textarea name="message" rows="4" required data-i18n-ph="contact.message_ph"></textarea></label>
+        <button type="submit" class="btn btn-primary btn-block" data-i18n="contact.send">Enviar por WhatsApp</button>
       </form>
     </div>
   </section>
@@ -234,21 +274,20 @@
         <p data-i18n="footer.tagline">Alquiler de iluminación y climatización para eventos.</p>
         <div class="footer-social">
           <a id="footWa" target="_blank" rel="noopener" aria-label="WhatsApp"><svg viewBox="0 0 24 24"><use href="#waIcon"></use></svg></a>
-          <a id="footIg" href="https://instagram.com/oweventos" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="1.7"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.7"/><circle cx="17.6" cy="6.4" r="1.1" fill="currentColor"/></svg></a>
+          <a href="https://instagram.com/oweventos" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="1.7"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.7"/><circle cx="17.6" cy="6.4" r="1.1" fill="currentColor"/></svg></a>
         </div>
       </div>
       <div class="footer-col">
         <h4 data-i18n="footer.explore">Explorar</h4>
-        <a href="#catalog" data-i18n="nav.catalog">Catálogo</a>
-        <a href="#gallery" data-i18n="nav.gallery">Eventos</a>
-        <a href="#about" data-i18n="nav.about">Nosotros</a>
-        <a href="#contact" data-i18n="nav.contact">Contacto</a>
+        <a href="catalogo.html" data-i18n="nav.catalog">Catálogo</a>
+        <a href="index.html#espacios" data-i18n="nav.gallery">Eventos</a>
+        <a href="index.html#porque" data-i18n="nav.about">Nosotros</a>
+        <a href="index.html#contacto" data-i18n="nav.contact">Contacto</a>
       </div>
-      <div class="footer-col footer-contact">
+      <div class="footer-col">
         <h4 data-i18n="footer.contact">Contacto</h4>
         <a id="footWaText" target="_blank" rel="noopener">WhatsApp · 0985 100 206</a>
         <a href="https://instagram.com/oweventos" target="_blank" rel="noopener">Instagram · @oweventos</a>
-        <p class="footer-note" data-i18n="contact.note"></p>
       </div>
     </div>
     <div class="footer-bottom container">
@@ -257,19 +296,27 @@
     </div>
   </footer>
 
-  <!-- ===================== SELECTION BAR ===================== -->
-  <div class="select-bar" id="selectBar" hidden>
-    <div class="container select-bar-inner">
-      <button class="select-clear" id="clearSelection"><span data-i18n="bar.clear">Vaciar</span></button>
-      <div class="select-count"><strong id="selectCount">0</strong> <span data-i18n="bar.selected">seleccionados</span></div>
-      <button class="btn btn-gold" id="openQuote">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#waIcon"></use></svg>
-        <span data-i18n="bar.quote">Solicitar cotización</span>
-      </button>
+  <!-- ===================== SHARED: cart bar, bottom nav, wa float, modals ===================== -->
+  <div class="cart-bar" id="cartBar">
+    <div class="cart-inner">
+      <button class="cart-clear" id="clearSelection" data-i18n="bar.clear">Vaciar</button>
+      <div class="cart-info"><b data-i18n="bar.mycart">Mi cotización</b><span><span id="selectCount">0</span> <span id="selectWord" data-i18n="bar.products">productos</span></span></div>
+      <button class="btn btn-primary btn-sm" id="openQuote"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#waIcon"></use></svg><span data-i18n="bar.view">Ver</span></button>
     </div>
   </div>
 
-  <!-- ===================== QUOTE MODAL ===================== -->
+  <nav class="bottom-nav" aria-label="Navegación">
+    <ul>
+      <li><a href="index.html" data-nav="home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h5v-6h4v6h5V10"/></svg><span data-i18n="nav.home">Inicio</span></a></li>
+      <li><a href="catalogo.html" data-nav="catalog"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg><span data-i18n="nav.catalog">Catálogo</span></a></li>
+      <li><a href="index.html#espacios" data-nav="events"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M8 4v5"/></svg><span data-i18n="nav.gallery">Eventos</span></a></li>
+      <li><a href="index.html#contacto" data-nav="contact"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v12H7l-3 3V4z"/></svg><span data-i18n="nav.contact">Contacto</span></a></li>
+    </ul>
+  </nav>
+
+  <a class="wa-float" id="waFloat" target="_blank" rel="noopener" aria-label="WhatsApp"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#waIcon"></use></svg></a>
+
+  <!-- Quote modal -->
   <div class="modal-overlay" id="quoteModal" hidden>
     <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
       <button class="modal-close" id="modalClose" aria-label="Cerrar">&times;</button>
@@ -281,64 +328,36 @@
         <div class="modal-section">
           <h4 data-i18n="modal.step_event">Datos del evento</h4>
           <div class="field-row">
-            <label class="field">
-              <span data-i18n="modal.name">Tu nombre</span>
-              <input type="text" id="qName" data-i18n-ph="modal.name_ph" />
-            </label>
-            <label class="field">
-              <span data-i18n="modal.location">Ubicación del evento</span>
-              <input type="text" id="qLocation" data-i18n-ph="modal.location_ph" />
-            </label>
+            <label class="field"><span data-i18n="modal.name">Tu nombre</span><input type="text" id="qName" data-i18n-ph="modal.name_ph" /></label>
+            <label class="field"><span data-i18n="modal.location">Ubicación del evento</span><input type="text" id="qLocation" data-i18n-ph="modal.location_ph" /></label>
           </div>
           <div class="field-row">
-            <label class="field">
-              <span data-i18n="modal.days">Cantidad de días</span>
-              <input type="number" id="qDays" min="1" value="1" />
-            </label>
-            <label class="field">
-              <span data-i18n="modal.date">Fecha del evento (opcional)</span>
-              <input type="date" id="qDate" />
-            </label>
+            <label class="field"><span data-i18n="modal.days">Cantidad de días</span><input type="number" id="qDays" min="1" value="1" /></label>
+            <label class="field"><span data-i18n="modal.date">Fecha del evento (opcional)</span><input type="date" id="qDate" /></label>
           </div>
           <div class="map-block">
             <div class="map-actions">
-              <button type="button" class="map-btn" id="mapToggle">
-                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-5.5-7-11a7 7 0 0114 0c0 5.5-7 11-7 11z" fill="none" stroke="currentColor" stroke-width="1.7"/><circle cx="12" cy="10" r="2.4" fill="none" stroke="currentColor" stroke-width="1.7"/></svg>
-                <span data-i18n="modal.map_pick">Marcar en el mapa</span>
-              </button>
-              <button type="button" class="map-btn" id="mapGeo">
-                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2v3M12 19v3M2 12h3M19 12h3" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><circle cx="12" cy="12" r="6" fill="none" stroke="currentColor" stroke-width="1.7"/></svg>
-                <span data-i18n="modal.map_geo">Usar mi ubicación</span>
-              </button>
+              <button type="button" class="map-btn" id="mapToggle"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-5.5-7-11a7 7 0 0114 0c0 5.5-7 11-7 11z" fill="none" stroke="currentColor" stroke-width="1.7"/><circle cx="12" cy="10" r="2.4" fill="none" stroke="currentColor" stroke-width="1.7"/></svg><span data-i18n="modal.map_pick">Marcar en el mapa</span></button>
+              <button type="button" class="map-btn" id="mapGeo"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2v3M12 19v3M2 12h3M19 12h3" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><circle cx="12" cy="12" r="6" fill="none" stroke="currentColor" stroke-width="1.7"/></svg><span data-i18n="modal.map_geo">Usar mi ubicación</span></button>
             </div>
-            <div id="mapWrap" hidden>
-              <div id="pickMap"></div>
-              <p class="map-picked" id="mapPicked" hidden></p>
-            </div>
+            <div id="mapWrap" hidden><div id="pickMap"></div><p class="map-picked" id="mapPicked" hidden></p></div>
           </div>
         </div>
-
         <div class="modal-section">
           <h4 data-i18n="modal.step_items">Productos y cantidades</h4>
           <div id="quoteItems" class="quote-items"></div>
           <p id="quoteEmpty" class="quote-empty" hidden data-i18n="modal.empty"></p>
         </div>
-
-        <div class="estimate" id="estimateBox">
-          <p class="estimate-note" data-i18n="modal.quote_note">Un representante te enviará el presupuesto por WhatsApp.</p>
-        </div>
+        <div class="estimate" id="estimateBox"><p class="estimate-note" data-i18n="modal.quote_note">Un representante te enviará la cotización por WhatsApp.</p></div>
       </div>
       <div class="modal-foot">
-        <button class="btn btn-ghost" id="modalCancel" data-i18n="modal.close">Cerrar</button>
-        <button class="btn btn-gold" id="sendQuote">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#waIcon"></use></svg>
-          <span data-i18n="modal.send">Enviar por WhatsApp</span>
-        </button>
+        <button class="btn btn-outline" id="modalCancel" data-i18n="modal.close">Cerrar</button>
+        <button class="btn btn-primary" id="sendQuote"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#waIcon"></use></svg><span data-i18n="modal.send">Enviar por WhatsApp</span></button>
       </div>
     </div>
   </div>
 
-  <!-- ===================== PRODUCT MODAL (mobile) ===================== -->
+  <!-- Product detail modal -->
   <div class="modal-overlay" id="prodModal" hidden>
     <div class="modal prod-modal" role="dialog" aria-modal="true">
       <button class="modal-close" id="prodClose" aria-label="Cerrar">&times;</button>
@@ -346,40 +365,20 @@
       <div class="prod-modal-body">
         <span class="prod-modal-badge" id="prodBadge"></span>
         <h3 id="prodName"></h3>
-        <span class="card-dims" id="prodDims"></span>
-        <p class="card-desc" id="prodDesc"></p>
-        <div class="prod-modal-foot prod-modal-foot--noprice">
-          <button class="card-add" id="prodSelect" data-add=""></button>
-        </div>
+        <span class="pcard-dims" id="prodDims"></span>
+        <p class="pcard-desc" id="prodDesc"></p>
+        <div class="prod-modal-foot"><button class="btn btn-primary" id="prodSelect" data-add=""></button></div>
       </div>
     </div>
   </div>
 
-  <!-- ===================== LIGHTBOX ===================== -->
-  <div class="lightbox" id="lightbox" hidden>
-    <button class="lightbox-close" aria-label="Cerrar">&times;</button>
-    <img id="lightboxImg" src="" alt="" />
-  </div>
+  <!-- Lightbox -->
+  <div class="lightbox" id="lightbox" hidden><button class="lightbox-close" aria-label="Cerrar">&times;</button><img id="lightboxImg" src="" alt="" /></div>
 
-  <!-- floating WhatsApp button -->
-  <a class="wa-float" id="waFloat" target="_blank" rel="noopener" aria-label="WhatsApp">
-    <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#waIcon"></use></svg>
-  </a>
-
-  <!-- SVG sprite: fan icon (three-blade like the logo) -->
+  <!-- SVG sprite -->
   <svg width="0" height="0" style="position:absolute" aria-hidden="true">
-    <symbol id="fanIcon" viewBox="0 0 100 100">
-      <g fill="currentColor">
-        <path d="M50 50 C46 32 55 16 68 20 C77 23 74 41 57 48 Z"/>
-        <path d="M50 50 C46 32 55 16 68 20 C77 23 74 41 57 48 Z" transform="rotate(120 50 50)"/>
-        <path d="M50 50 C46 32 55 16 68 20 C77 23 74 41 57 48 Z" transform="rotate(240 50 50)"/>
-        <circle cx="50" cy="50" r="6.5"/>
-      </g>
-    </symbol>
-    <symbol id="waIcon" viewBox="0 0 24 24">
-      <path fill="currentColor" d="M12 2a10 10 0 00-8.6 15.1L2 22l5.05-1.32A10 10 0 1012 2zm0 18.2c-1.5 0-2.98-.4-4.27-1.16l-.3-.18-2.99.78.8-2.92-.2-.31A8.2 8.2 0 1112 20.2z"/>
-      <path fill="currentColor" d="M9.5 7.2c-.18-.42-.37-.42-.55-.43h-.47c-.16 0-.43.06-.66.31-.22.25-.86.85-.86 2.06 0 1.22.88 2.39 1 2.56.13.16 1.72 2.76 4.25 3.76 2.1.83 2.53.66 2.98.62.46-.04 1.47-.6 1.68-1.18.2-.58.2-1.08.15-1.18-.06-.1-.22-.16-.46-.28-.24-.12-1.43-.7-1.65-.78-.22-.08-.38-.12-.55.12-.16.25-.63.79-.77.95-.14.16-.28.18-.52.06-.24-.12-1.02-.38-1.94-1.2-.72-.64-1.2-1.43-1.34-1.67-.14-.24-.02-.37.1-.49.11-.11.24-.28.37-.42.12-.14.16-.24.24-.4.08-.16.04-.3-.02-.42-.06-.12-.53-1.32-.74-1.8z"/>
-    </symbol>
+    <symbol id="fanIcon" viewBox="0 0 100 100"><g fill="currentColor"><path d="M50 50 C46 32 55 16 68 20 C77 23 74 41 57 48 Z"/><path d="M50 50 C46 32 55 16 68 20 C77 23 74 41 57 48 Z" transform="rotate(120 50 50)"/><path d="M50 50 C46 32 55 16 68 20 C77 23 74 41 57 48 Z" transform="rotate(240 50 50)"/><circle cx="50" cy="50" r="6.5"/></g></symbol>
+    <symbol id="waIcon" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2a10 10 0 00-8.6 15.1L2 22l5.05-1.32A10 10 0 1012 2zm0 18.2c-1.5 0-2.98-.4-4.27-1.16l-.3-.18-2.99.78.8-2.92-.2-.31A8.2 8.2 0 1112 20.2z"/><path fill="currentColor" d="M9.5 7.2c-.18-.42-.37-.42-.55-.43h-.47c-.16 0-.43.06-.66.31-.22.25-.86.85-.86 2.06 0 1.22.88 2.39 1 2.56.13.16 1.72 2.76 4.25 3.76 2.1.83 2.53.66 2.98.62.46-.04 1.47-.6 1.68-1.18.2-.58.2-1.08.15-1.18-.06-.1-.22-.16-.46-.28-.24-.12-1.43-.7-1.65-.78-.22-.08-.38-.12-.55.12-.16.25-.63.79-.77.95-.14.16-.28.18-.52.06-.24-.12-1.02-.38-1.94-1.2-.72-.64-1.2-1.43-1.34-1.67-.14-.24-.02-.37.1-.49.11-.11.24-.28.37-.42.12-.14.16-.24.24-.4.08-.16.04-.3-.02-.42-.06-.12-.53-1.32-.74-1.8z"/></symbol>
   </svg>
 
   <script src="js/i18n.js"></script>

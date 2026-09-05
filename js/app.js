@@ -1,67 +1,114 @@
 /* ==========================================================================
-   OW EVENTOS — App
+   OW EVENTOS — App (rediseño premium, multi-página)
    ========================================================================== */
 (function () {
   "use strict";
 
-  /* ---------------- State ---------------- */
-  const LANGS = ["es", "en", "pt"];
-  let lang = (localStorage.getItem("ow_lang") ||
-    (LANGS.includes((navigator.language || "es").slice(0, 2)) ? navigator.language.slice(0, 2) : "es"));
-  if (!LANGS.includes(lang)) lang = "es";
-
-  const selected = new Map();        // id -> qty
-  let activeFilter = "all";
-  let searchTerm = "";
-  let quoteCoords = null;            // {lat, lng} from map picker
-  let pickMap = null, pickMarker = null;
-
   const $ = (s, c = document) => c.querySelector(s);
   const $$ = (s, c = document) => Array.from(c.querySelectorAll(s));
 
-  const t = (key) => (I18N[lang] && I18N[lang][key]) || (I18N.es[key]) || key;
-  const fmtGs = (n) => "₲ " + Math.round(n).toLocaleString("es-PY").replace(/,/g, ".");
+  const LANGS = ["es", "en", "pt"];
+  let lang = localStorage.getItem("ow_lang");
+  if (!LANGS.includes(lang)) {
+    const nav = (navigator.language || "es").slice(0, 2);
+    lang = LANGS.includes(nav) ? nav : "es";
+  }
+  const t = (k) => (I18N[lang] && I18N[lang][k]) || I18N.es[k] || k;
+
+  const PAGE = document.body.dataset.page || "home";
+  let activeFilter = "all";
+  let searchTerm = "";
+  let quoteCoords = null, pickMap = null, pickMarker = null;
+
+  /* ---------------- Selección (persistida) ---------------- */
+  function loadCart() {
+    try {
+      const a = JSON.parse(localStorage.getItem("ow_cart") || "[]");
+      return new Map(a.filter(x => PRODUCTS.some(p => p.id === x.id)).map(x => [x.id, Math.max(1, x.qty | 0)]));
+    } catch (e) { return new Map(); }
+  }
+  function saveCart() {
+    try { localStorage.setItem("ow_cart", JSON.stringify(Array.from(selected, ([id, qty]) => ({ id, qty })))); } catch (e) {}
+  }
+  const selected = loadCart();
 
   /* ---------------- i18n ---------------- */
   function applyI18n() {
     document.documentElement.lang = lang;
-    document.title = t("meta.title");
+    if (I18N[lang]["meta.title"] && PAGE === "home") document.title = t("meta.title");
     $$("[data-i18n]").forEach(el => { el.textContent = t(el.getAttribute("data-i18n")); });
     $$("[data-i18n-ph]").forEach(el => { el.setAttribute("placeholder", t(el.getAttribute("data-i18n-ph"))); });
     $$(".lang-switch button").forEach(b => b.classList.toggle("active", b.dataset.lang === lang));
   }
-
   function setLang(l) {
     if (!LANGS.includes(l)) return;
     lang = l; localStorage.setItem("ow_lang", l);
     applyI18n();
-    renderChips();
-    renderCatalog();
-    updateSelectBar();
-    const ct = $("#catalogToggle");
-    if (ct) ct.querySelector("span").textContent = catalogOpen() ? t("catalog.hide") : t("catalog.show");
-    updateRevealHint();
+    if (PAGE === "catalog") { renderChips(); renderCatalog(); }
+    if (PAGE === "home") fillSpotlight();
+    updateCart();
+    setWaLinks();
     if (!$("#quoteModal").hidden) renderQuoteItems();
+    updateCatalogAddButtons();
   }
 
-  /* ---------------- Filter chips ---------------- */
+  /* ---------------- WhatsApp ---------------- */
+  function waUrl(text) { return "https://wa.me/" + CONTACT.whatsapp + "?text=" + encodeURIComponent(text); }
+  function setWaLinks() {
+    const general = waUrl(t("wa.greeting"));
+    const energy = waUrl(t("wa.energy_consult"));
+    ["#heroWa", "#closingWa", "#waFloat", "#waLink", "#footWa", "#menuWa", "#footWaText", "#headerWa"].forEach(sel => {
+      const el = $(sel); if (el) el.href = general;
+    });
+    ["#energyTile", "#energyBtn"].forEach(sel => { const el = $(sel); if (el) el.href = energy; });
+    const waNum = $("#waNumber"); if (waNum) waNum.textContent = CONTACT.whatsappDisplay;
+    const menuWa = $("#menuWa"); if (menuWa) menuWa.textContent = "WhatsApp · " + CONTACT.whatsappDisplay;
+    const footWaText = $("#footWaText"); if (footWaText) footWaText.textContent = "WhatsApp · " + CONTACT.whatsappDisplay;
+    const ig = $("#igLink"); if (ig) ig.href = CONTACT.instagramUrl;
+  }
+
+  /* ---------------- Cart bar ---------------- */
+  function updateCart() {
+    const n = selected.size;
+    const c = $("#selectCount"); if (c) c.textContent = n;
+    const w = $("#selectWord"); if (w) w.textContent = t(n === 1 ? "bar.product" : "bar.products");
+    const bar = $("#cartBar"); if (bar) bar.classList.toggle("show", n > 0);
+    document.body.classList.toggle("has-cart", n > 0);
+  }
+
+  function toggleSelect(id) {
+    if (selected.has(id)) selected.delete(id); else selected.set(id, 1);
+    saveCart();
+    const card = $(`.pcard[data-id="${id}"]`);
+    if (card) {
+      const isSel = selected.has(id);
+      card.classList.toggle("selected", isSel);
+      const b = $(".pcard-add", card);
+      if (b) b.querySelector("span").textContent = isSel ? t("catalog.inquote") : t("catalog.addquote");
+    }
+    if (prodModalId === id) syncProdSelect();
+    updateCart();
+  }
+  function updateCatalogAddButtons() {
+    $$(".pcard").forEach(card => {
+      const id = card.dataset.id, isSel = selected.has(id);
+      card.classList.toggle("selected", isSel);
+      const b = $(".pcard-add", card);
+      if (b) b.querySelector("span").textContent = isSel ? t("catalog.inquote") : t("catalog.addquote");
+    });
+  }
+
+  /* ---------------- Catálogo ---------------- */
   function renderChips() {
-    const chips = $("#filterChips");
+    const chips = $("#filterChips"); if (!chips) return;
     const filters = [
       { key: "all", label: t("catalog.all") },
       { key: "aranas", label: t("filter.aranas") },
       { key: "climatizacion", label: t("filter.climatizacion") }
     ];
-    chips.innerHTML = filters.map(f =>
-      `<button class="chip ${activeFilter === f.key ? "active" : ""}" data-filter="${f.key}">${f.label}</button>`
-    ).join("");
-    $$(".chip", chips).forEach(c => c.addEventListener("click", () => {
-      activeFilter = c.dataset.filter;
-      renderChips(); renderCatalog();
-    }));
+    chips.innerHTML = filters.map(f => `<button class="chip ${activeFilter === f.key ? "active" : ""}" data-filter="${f.key}">${f.label}</button>`).join("");
+    $$(".chip", chips).forEach(c => c.addEventListener("click", () => { activeFilter = c.dataset.filter; renderChips(); renderCatalog(); }));
   }
-
-  /* ---------------- Catalog ---------------- */
   function matches(p) {
     if (activeFilter === "aranas" && p.cat !== "iluminacion") return false;
     if (activeFilter === "climatizacion" && p.cat !== "climatizacion") return false;
@@ -71,141 +118,95 @@
     }
     return true;
   }
+  const catRank = (c) => (c === "iluminacion" ? 0 : 1);
+  function subLabel(p) { return (CATEGORIES[p.cat].subs[p.sub] || {})[lang] || ""; }
 
-  function cardHtml(p) {
+  function pcardHtml(p) {
     const isSel = selected.has(p.id);
-    const subLabel = (CATEGORIES[p.cat].subs[p.sub] || {})[lang] || "";
     const imgs = p.imgs || [p.img];
     const multi = imgs.length > 1;
-    const slides = imgs.map((src, i) =>
-      `<img src="${src}" alt="${p.name[lang]}" loading="lazy" class="slide${i === 0 ? " active" : ""}" />`
-    ).join("");
+    const slides = imgs.map((src, i) => `<img src="${src}" alt="${p.name[lang]}" loading="lazy" class="slide${i === 0 ? " active" : ""}" />`).join("");
     const nav = multi ? `
-          <button class="slide-btn prev" data-dir="-1" aria-label="anterior">‹</button>
-          <button class="slide-btn next" data-dir="1" aria-label="siguiente">›</button>
-          <div class="slide-dots">${imgs.map((_, i) => `<span class="dot${i === 0 ? " active" : ""}"></span>`).join("")}</div>` : "";
+        <button class="slide-btn prev" data-dir="-1" aria-label="anterior">‹</button>
+        <button class="slide-btn next" data-dir="1" aria-label="siguiente">›</button>
+        <div class="slide-dots">${imgs.map((_, i) => `<span class="dot${i === 0 ? " active" : ""}"></span>`).join("")}</div>` : "";
     return `
-      <article class="card ${isSel ? "selected" : ""}" data-id="${p.id}">
-        <div class="card-media ${p.light ? "is-light" : ""}">
-          <span class="card-badge">${subLabel}</span>
-          <span class="card-check"><svg viewBox="0 0 24 24"><path d="M5 12l4 4L19 6" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      <article class="pcard ${isSel ? "selected" : ""}" data-id="${p.id}">
+        <div class="pcard-media">
+          <span class="pcard-tag">${subLabel(p)}</span>
+          <span class="pcard-check"><svg viewBox="0 0 24 24"><path d="M5 12l4 4L19 6" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
           <div class="slides">${slides}</div>${nav}
         </div>
-        <div class="card-body">
-          <h3 class="card-name">${p.name[lang]}</h3>
-          <button class="card-more" data-more="${p.id}">
-            <span>${t("catalog.more")}</span>
-            <svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </button>
-          <span class="card-dims">${p.dims || ""}</span>
-          <p class="card-desc">${p.desc[lang]}</p>
-          <div class="card-foot card-foot--noprice">
-            <button class="card-add" data-add="${p.id}">
-              <svg viewBox="0 0 24 24"><path d="${isSel ? "M5 12l4 4L19 6" : "M12 5v14M5 12h14"}" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              <span>${isSel ? t("catalog.added") : t("catalog.add")}</span>
-            </button>
+        <div class="pcard-body">
+          <h3 class="pcard-name">${p.name[lang]}</h3>
+          <span class="pcard-dims">${p.dims || ""}</span>
+          <div class="pcard-actions">
+            <button class="btn btn-outline--dark btn-sm pcard-more" data-more="${p.id}">${t("catalog.details")}</button>
+            <button class="btn btn-primary btn-sm pcard-add" data-add="${p.id}"><span>${isSel ? t("catalog.inquote") : t("catalog.addquote")}</span></button>
           </div>
         </div>
       </article>`;
   }
-
-  // wire add-buttons + sliders + lightbox for any card grid
-  function wireCards(grid) {
-    $$(".card-add", grid).forEach(b => b.addEventListener("click", (e) => {
-      e.stopPropagation(); toggleSelect(b.dataset.add);
-    }));
-    $$(".card-more", grid).forEach(b => b.addEventListener("click", (e) => {
-      e.stopPropagation(); openProductModal(b.dataset.more);
-    }));
-    $$(".card-media", grid).forEach(media => {
-      const slides = $$(".slide", media);
-      const dots = $$(".dot", media);
+  function renderCatalog() {
+    const grid = $("#productGrid"); if (!grid) return;
+    const list = PRODUCTS.filter(matches).sort((a, b) => catRank(a.cat) - catRank(b.cat));
+    const empty = $("#catalogEmpty"); if (empty) empty.hidden = list.length > 0;
+    grid.innerHTML = list.map(pcardHtml).join("");
+    wireCards(grid);
+    observeReveal(grid);
+  }
+  function wireCards(scope) {
+    $$(".pcard-add", scope).forEach(b => b.addEventListener("click", (e) => { e.stopPropagation(); toggleSelect(b.dataset.add); }));
+    $$(".pcard-more", scope).forEach(b => b.addEventListener("click", (e) => { e.stopPropagation(); openProductModal(b.dataset.more); }));
+    $$(".pcard-media", scope).forEach(media => {
+      const slides = $$(".slide", media), dots = $$(".dot", media);
       let idx = 0;
-      const go = (n) => {
-        idx = (n + slides.length) % slides.length;
-        slides.forEach((s, i) => s.classList.toggle("active", i === idx));
-        dots.forEach((d, i) => d.classList.toggle("active", i === idx));
-      };
-      $$(".slide-btn", media).forEach(b => b.addEventListener("click", (e) => {
-        e.stopPropagation(); go(idx + parseInt(b.dataset.dir, 10));
-      }));
+      const go = (n) => { idx = (n + slides.length) % slides.length; slides.forEach((s, i) => s.classList.toggle("active", i === idx)); dots.forEach((d, i) => d.classList.toggle("active", i === idx)); };
+      $$(".slide-btn", media).forEach(b => b.addEventListener("click", (e) => { e.stopPropagation(); go(idx + parseInt(b.dataset.dir, 10)); }));
       dots.forEach((d, i) => d.addEventListener("click", (e) => { e.stopPropagation(); go(i); }));
       media.addEventListener("click", () => openLightbox(slides[idx].getAttribute("src")));
     });
   }
 
-  // "Todos": arañas (iluminación) primero, climatización debajo
-  const catRank = (c) => (c === "iluminacion" ? 0 : 1);
-  function featuredVisible() { return activeFilter === "all" && !searchTerm; }
+  /* ---------------- Producto destacado (home) ---------------- */
+  function fillSpotlight() {
+    if (!$("#spotName")) return;
+    const p = PRODUCTS.find(x => x.id === "isabel") || PRODUCTS.find(x => x.cat === "iluminacion");
+    if (!p) return;
+    $("#spotImg").src = (p.imgs && p.imgs[0]) || p.img;
+    $("#spotImg").alt = p.name[lang];
+    $("#spotName").textContent = p.name[lang];
+    $("#spotTag").textContent = subLabel(p);
+    $("#spotDesc").textContent = p.desc[lang];
+    $("#spotDims").textContent = p.dims || "";
+  }
 
-  function renderCatalog() {
-    const grid = $("#productGrid");
-    let list = PRODUCTS.filter(matches).sort((a, b) => catRank(a.cat) - catRank(b.cat));
-    // los productos que ya se ven arriba (destacados) no se repiten en la grilla
-    if (featuredVisible()) list = list.filter(p => !FEATURED.includes(p.id));
-    $("#catalogEmpty").hidden = list.length > 0;
-    grid.innerHTML = list.map(cardHtml).join("");
-    wireCards(grid);
+  /* ---------------- Espacios (galería home) ---------------- */
+  function renderSpaces() {
+    const grid = $("#spacesGrid"); if (!grid) return;
+    const imgs = ["evento-1", "evento-2", "evento-3", "evento-4", "evento-5", "evento-6"];
+    grid.innerHTML = imgs.map(n => {
+      const src = `assets/img/gallery/${n}.webp`;
+      return `<figure data-zoom="${src}"><img src="${src}" alt="Evento OW" loading="lazy" /></figure>`;
+    }).join("");
+    $$("figure", grid).forEach(f => f.addEventListener("click", () => openLightbox(f.dataset.zoom)));
     observeReveal(grid);
-    renderFeatured();
-  }
-
-  function toggleSelect(id) {
-    if (selected.has(id)) selected.delete(id);
-    else selected.set(id, 1);
-    // update just that card
-    const card = $(`.card[data-id="${id}"]`);
-    if (card) {
-      const p = PRODUCTS.find(x => x.id === id);
-      const isSel = selected.has(id);
-      card.classList.toggle("selected", isSel);
-      const btn = $(".card-add", card);
-      btn.querySelector("span").textContent = isSel ? t("catalog.added") : t("catalog.add");
-      btn.querySelector("path").setAttribute("d", isSel ? "M5 12l4 4L19 6" : "M12 5v14M5 12h14");
-    }
-    updateSelectBar();
-  }
-
-  /* ---------------- Selection bar ---------------- */
-  function updateSelectBar() {
-    const bar = $("#selectBar");
-    const count = selected.size;
-    $("#selectCount").textContent = count;
-    bar.hidden = count === 0;
-    document.body.classList.toggle("bar-visible", count > 0);
   }
 
   /* ---------------- Quote modal ---------------- */
-  function openModal() {
-    renderQuoteItems();
-    $("#quoteModal").hidden = false;
-    document.body.style.overflow = "hidden";
-  }
-  function closeModal() {
-    $("#quoteModal").hidden = true;
-    document.body.style.overflow = "";
-  }
-
+  function openModal() { renderQuoteItems(); $("#quoteModal").hidden = false; document.body.style.overflow = "hidden"; }
+  function closeModal() { $("#quoteModal").hidden = true; document.body.style.overflow = ""; }
   function renderQuoteItems() {
-    const wrap = $("#quoteItems");
-    const empty = $("#quoteEmpty");
-    if (selected.size === 0) {
-      wrap.innerHTML = ""; empty.hidden = false;
-      $("#estimateBox").style.display = "none";
-      return;
-    }
-    empty.hidden = true;
-    $("#estimateBox").style.display = "";
+    const wrap = $("#quoteItems"), empty = $("#quoteEmpty"), box = $("#estimateBox");
+    if (selected.size === 0) { wrap.innerHTML = ""; empty.hidden = false; if (box) box.style.display = "none"; return; }
+    empty.hidden = true; if (box) box.style.display = "";
     wrap.innerHTML = Array.from(selected.keys()).map(id => {
-      const p = PRODUCTS.find(x => x.id === id);
+      const p = PRODUCTS.find(x => x.id === id); if (!p) return "";
       const qty = selected.get(id);
       return `
         <div class="quote-item" data-id="${id}">
           <img src="${(p.imgs && p.imgs[0]) || p.img}" alt="" />
-          <div class="quote-item-info">
-            <b>${p.name[lang]}</b>
-            <span>${p.dims || ""}</span>
-          </div>
+          <div class="quote-item-info"><b>${p.name[lang]}</b><span>${p.dims || ""}</span></div>
           <div class="stepper">
             <button data-step="-1" aria-label="-">&minus;</button>
             <input type="number" min="1" value="${qty}" data-qty="${id}" />
@@ -214,155 +215,68 @@
           <button class="quote-item-remove" data-remove="${id}">${t("modal.remove")}</button>
         </div>`;
     }).join("");
-
-    // wire steppers
     $$(".quote-item", wrap).forEach(row => {
-      const id = row.dataset.id;
-      const input = $("input", row);
+      const id = row.dataset.id, input = $("input", row);
       $$("[data-step]", row).forEach(btn => btn.addEventListener("click", () => {
         let v = Math.max(1, (parseInt(input.value, 10) || 1) + parseInt(btn.dataset.step, 10));
-        input.value = v; selected.set(id, v);
+        input.value = v; selected.set(id, v); saveCart();
       }));
-      input.addEventListener("input", () => {
-        let v = Math.max(1, parseInt(input.value, 10) || 1);
-        selected.set(id, v);
-      });
+      input.addEventListener("input", () => { let v = Math.max(1, parseInt(input.value, 10) || 1); selected.set(id, v); saveCart(); });
       $("[data-remove]", row).addEventListener("click", () => {
-        selected.delete(id); renderQuoteItems(); updateSelectBar();
-        const card = $(`.card[data-id="${id}"]`);
-        if (card) { card.classList.remove("selected");
-          const b = $(".card-add", card); b.querySelector("span").textContent = t("catalog.add");
-          b.querySelector("path").setAttribute("d", "M12 5v14M5 12h14"); }
+        selected.delete(id); saveCart(); renderQuoteItems(); updateCart();
+        const card = $(`.pcard[data-id="${id}"]`);
+        if (card) { card.classList.remove("selected"); const b = $(".pcard-add", card); if (b) b.querySelector("span").textContent = t("catalog.addquote"); }
       });
     });
   }
-
-  /* ---------------- WhatsApp ---------------- */
-  function waUrl(text) {
-    return "https://wa.me/" + CONTACT.whatsapp + "?text=" + encodeURIComponent(text);
-  }
-
   function buildQuoteMessage() {
-    const name = $("#qName").value.trim();
-    const loc = $("#qLocation").value.trim();
-    const days = Math.max(1, parseInt($("#qDays").value, 10) || 1);
-    const date = $("#qDate").value;
+    const name = $("#qName").value.trim(), loc = $("#qLocation").value.trim();
+    const days = Math.max(1, parseInt($("#qDays").value, 10) || 1), date = $("#qDate").value;
     const dayWord = days === 1 ? t("wa.day") : t("wa.days_plural");
-
-    let msg = t("wa.greeting") + "\n\n";
-    msg += "*" + t("wa.event") + "*\n";
+    let msg = t("wa.greeting") + "\n\n*" + t("wa.event") + "*\n";
     if (name) msg += "• " + t("modal.name") + ": " + name + "\n";
     if (loc) msg += "• " + t("wa.location") + ": " + loc + "\n";
     if (quoteCoords) msg += "• " + t("wa.map") + ": https://www.google.com/maps?q=" + quoteCoords.lat.toFixed(6) + "," + quoteCoords.lng.toFixed(6) + "\n";
     msg += "• " + t("wa.days") + ": " + days + " " + dayWord + "\n";
     if (date) msg += "• " + t("wa.date") + ": " + date + "\n";
-
     msg += "\n*" + t("wa.items") + "*\n";
-    selected.forEach((qty, id) => {
-      const p = PRODUCTS.find(x => x.id === id);
-      msg += "• " + qty + "× " + p.name[lang] + "\n";
-    });
-    msg += "\n" + t("wa.quote_request") + "\n\n";
-    msg += t("wa.thanks");
+    selected.forEach((qty, id) => { const p = PRODUCTS.find(x => x.id === id); if (p) msg += "• " + qty + "× " + p.name[lang] + "\n"; });
+    msg += "\n" + t("wa.quote_request") + "\n\n" + t("wa.thanks");
     return msg;
   }
+  function sendQuote() { if (selected.size === 0) return; window.open(waUrl(buildQuoteMessage()), "_blank"); }
 
-  function sendQuote() {
-    if (selected.size === 0) return;
-    window.open(waUrl(buildQuoteMessage()), "_blank");
-  }
-
-  /* ---------------- Gallery marquee (movimiento continuo) ---------------- */
-  function renderGallery() {
-    const track = $("#gmTrack");
-    if (!track) return;
-    const imgs = ["evento-1", "evento-2", "evento-3", "evento-4", "evento-5", "evento-6"];
-    // se duplica la lista para que el desplazamiento vertical sea un loop sin saltos
-    const seq = imgs.concat(imgs);
-    track.innerHTML = seq.map((n, i) => {
-      const src = `assets/img/gallery/${n}.webp`;
-      return `<img src="${src}" alt="OW Eventos" loading="lazy" data-zoom="${src}"${i >= imgs.length ? ' aria-hidden="true"' : ""} />`;
-    }).join("");
-    $$("img", track).forEach(im => im.addEventListener("click", () => openLightbox(im.dataset.zoom)));
-  }
-
-  /* ---------------- Lightbox ---------------- */
-  function openLightbox(src) {
-    const lb = $("#lightbox"); $("#lightboxImg").src = src; lb.hidden = false;
-    document.body.style.overflow = "hidden";
-  }
-  function closeLightbox() { $("#lightbox").hidden = true; if ($("#quoteModal").hidden && $("#prodModal").hidden) document.body.style.overflow = ""; }
-
-  /* ---------------- Product modal (más info · mobile) ---------------- */
+  /* ---------------- Product modal ---------------- */
   let prodModalId = null;
   function openProductModal(id) {
-    const p = PRODUCTS.find(x => x.id === id);
-    if (!p) return;
+    const p = PRODUCTS.find(x => x.id === id); if (!p) return;
     prodModalId = id;
     const imgs = p.imgs || [p.img];
-    $("#prodImg").src = imgs[0];
-    $("#prodImg").alt = p.name[lang];
-    $("#prodBadge").textContent = (CATEGORIES[p.cat].subs[p.sub] || {})[lang] || "";
+    $("#prodImg").src = imgs[0]; $("#prodImg").alt = p.name[lang];
+    $("#prodBadge").textContent = subLabel(p);
     $("#prodName").textContent = p.name[lang];
     $("#prodDims").textContent = p.dims || "";
     $("#prodDesc").textContent = p.desc[lang];
     syncProdSelect();
-    $("#prodModal").hidden = false;
-    document.body.style.overflow = "hidden";
+    $("#prodModal").hidden = false; document.body.style.overflow = "hidden";
   }
   function syncProdSelect() {
-    const btn = $("#prodSelect");
-    if (!btn || !prodModalId) return;
+    const btn = $("#prodSelect"); if (!btn || !prodModalId) return;
     const isSel = selected.has(prodModalId);
     btn.dataset.add = prodModalId;
-    btn.classList.toggle("is-sel", isSel);
-    btn.innerHTML = `<svg viewBox="0 0 24 24"><path d="${isSel ? "M5 12l4 4L19 6" : "M12 5v14M5 12h14"}" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>${isSel ? t("catalog.added") : t("catalog.add")}</span>`;
+    btn.innerHTML = `<svg viewBox="0 0 24 24"><path d="${isSel ? "M5 12l4 4L19 6" : "M12 5v14M5 12h14"}" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>${isSel ? t("catalog.inquote") : t("catalog.addquote")}</span>`;
   }
-  function closeProductModal() {
-    $("#prodModal").hidden = true;
-    prodModalId = null;
-    if ($("#quoteModal").hidden && $("#lightbox").hidden) document.body.style.overflow = "";
-  }
+  function closeProductModal() { $("#prodModal").hidden = true; prodModalId = null; if ($("#quoteModal").hidden && $("#lightbox").hidden) document.body.style.overflow = ""; }
 
-  /* ---------------- Reveal on scroll ---------------- */
-  let ioOnce, ioRepeat;
-  function observeReveal(scope) {
-    if (!("IntersectionObserver" in window)) { $$(".reveal, .card, .gallery-item", scope).forEach(e => e.classList.add("in")); return; }
-    // cards & gallery: animate once
-    if (!ioOnce) ioOnce = new IntersectionObserver((entries) => {
-      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add("in"); ioOnce.unobserve(e.target); } });
-    }, { threshold: 0.12 });
-    $$(".card, .gallery-item", scope).forEach((el, i) => { el.style.transitionDelay = (i % 8) * 45 + "ms"; ioOnce.observe(el); });
-    // section blocks: re-animate every time they enter the viewport
-    if (!ioRepeat) ioRepeat = new IntersectionObserver((entries) => {
-      entries.forEach(e => e.target.classList.toggle("in", e.isIntersecting));
-    }, { threshold: 0.16 });
-    $$(".reveal", scope).forEach(el => ioRepeat.observe(el));
-  }
-
-  /* ---------------- Contact form ---------------- */
-  function contactSubmit(e) {
-    e.preventDefault();
-    const f = e.target;
-    const name = f.name.value.trim();
-    const phone = f.phone.value.trim();
-    const message = f.message.value.trim();
-    let msg = t("wa.greeting") + "\n\n";
-    if (name) msg += "• " + t("contact.name") + ": " + name + "\n";
-    if (phone) msg += "• " + t("contact.phone") + ": " + phone + "\n";
-    if (message) msg += "\n" + message;
-    window.open(waUrl(msg), "_blank");
-  }
+  /* ---------------- Lightbox ---------------- */
+  function openLightbox(src) { $("#lightboxImg").src = src; $("#lightbox").hidden = false; document.body.style.overflow = "hidden"; }
+  function closeLightbox() { $("#lightbox").hidden = true; if ($("#quoteModal").hidden && $("#prodModal").hidden) document.body.style.overflow = ""; }
 
   /* ---------------- Map picker ---------------- */
   function setPicked(lat, lng) {
     quoteCoords = { lat, lng };
-    const el = $("#mapPicked");
-    if (el) { el.hidden = false; el.textContent = t("modal.map_picked"); }
-    if (pickMap && window.L) {
-      if (!pickMarker) pickMarker = L.marker([lat, lng]).addTo(pickMap);
-      else pickMarker.setLatLng([lat, lng]);
-    }
+    const el = $("#mapPicked"); if (el) { el.hidden = false; el.textContent = t("modal.map_picked"); }
+    if (pickMap && window.L) { if (!pickMarker) pickMarker = L.marker([lat, lng]).addTo(pickMap); else pickMarker.setLatLng([lat, lng]); }
   }
   function initPickMap() {
     if (pickMap || !window.L) return;
@@ -371,188 +285,113 @@
     pickMap.on("click", (e) => setPicked(e.latlng.lat, e.latlng.lng));
   }
 
-  /* ---------------- Catalog collapse ---------------- */
-  const ACC_MS = 640;
-  function catalogOpen() { return !$("#productGrid").hidden; }
-  function openCatalog() {
-    const grid = $("#productGrid"), ctrls = $("#catalogControls"), tog = $("#catalogToggle");
-    if (!grid.hidden) return;
-    // controles (buscador + filtros) aparecen arriba de las destacadas
-    ctrls.hidden = false;
-    void ctrls.offsetHeight;
-    ctrls.classList.add("cc-in");
-    // resto de productos: acordeón suave (0 -> alto real) sin depender de rAF
-    grid.hidden = false;
-    grid.style.maxHeight = "0px"; grid.style.opacity = "0";
-    void grid.offsetHeight;
-    grid.classList.add("animating");
-    grid.style.maxHeight = grid.scrollHeight + "px";
-    grid.style.opacity = "1";
-    clearTimeout(grid._accT);
-    grid._accT = setTimeout(() => {
-      grid.classList.remove("animating");
-      grid.style.maxHeight = "none"; grid.style.opacity = "";
-    }, ACC_MS);
-    tog.setAttribute("aria-expanded", "true");
-    tog.querySelector("span").textContent = t("catalog.hide");
-    $("#catalogReveal").classList.add("open");
-  }
-  function toggleCatalog() {
-    const grid = $("#productGrid"), ctrls = $("#catalogControls"), tog = $("#catalogToggle");
-    if (grid.hidden) { openCatalog(); return; }
-    // colapso suave
-    ctrls.classList.remove("cc-in");
-    grid.style.maxHeight = grid.scrollHeight + "px";
-    void grid.offsetHeight;
-    grid.classList.add("animating");
-    grid.style.maxHeight = "0px"; grid.style.opacity = "0";
-    clearTimeout(grid._accT);
-    grid._accT = setTimeout(() => {
-      grid.hidden = true; grid.classList.remove("animating");
-      grid.style.maxHeight = ""; grid.style.opacity = "";
-      ctrls.hidden = true;
-    }, ACC_MS);
-    tog.setAttribute("aria-expanded", "false");
-    tog.querySelector("span").textContent = t("catalog.show");
-    $("#catalogReveal").classList.remove("open");
+  /* ---------------- Reveal ---------------- */
+  let io;
+  function observeReveal(scope) {
+    if (!("IntersectionObserver" in window)) { $$(".reveal", scope).forEach(e => e.classList.add("in")); return; }
+    if (!io) io = new IntersectionObserver((ents) => ents.forEach(e => { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } }), { threshold: 0.12 });
+    $$(".reveal", scope).forEach((el, i) => { el.style.transitionDelay = (i % 6) * 60 + "ms"; io.observe(el); });
   }
 
-  function updateRevealHint() {
-    const el = $("#revealHint");
-    if (el) el.textContent = PRODUCTS.length + " · " + t("filter.aranas") + " · " + t("filter.climatizacion") + " · " + t("filter.ventiladores");
-  }
-
-  /* ---------------- Featured (4 arañas destacadas) ---------------- */
-  const FEATURED = ["cristal-con-velas", "isabel", "crystal-black", "clementina"];
-  function renderFeatured() {
-    const grid = $("#featuredGrid");
-    if (!grid) return;
-    const show = featuredVisible();
-    grid.hidden = !show;
-    if (!show) { grid.innerHTML = ""; return; }
-    grid.innerHTML = FEATURED.map(id => {
-      const p = PRODUCTS.find(x => x.id === id);
-      return p ? cardHtml(p) : "";
-    }).join("");
-    wireCards(grid);
-    observeReveal(grid);
+  /* ---------------- Contact form ---------------- */
+  function contactSubmit(e) {
+    e.preventDefault();
+    const f = e.target;
+    let msg = t("wa.greeting") + "\n\n";
+    if (f.name.value.trim()) msg += "• " + t("contact.name") + ": " + f.name.value.trim() + "\n";
+    if (f.phone.value.trim()) msg += "• " + t("contact.phone") + ": " + f.phone.value.trim() + "\n";
+    if (f.message.value.trim()) msg += "\n" + f.message.value.trim();
+    window.open(waUrl(msg), "_blank");
   }
 
   /* ---------------- Init ---------------- */
   function init() {
     applyI18n();
-    renderChips();
-    renderCatalog();
-    renderGallery();
-    updateSelectBar();
+    setWaLinks();
+    updateCart();
 
-    // language buttons
+    // language buttons (header + menu)
     $$(".lang-switch button").forEach(b => b.addEventListener("click", () => setLang(b.dataset.lang)));
 
-    // search
-    let deb;
-    $("#searchInput").addEventListener("input", (e) => {
-      clearTimeout(deb);
-      deb = setTimeout(() => { searchTerm = e.target.value.trim().toLowerCase(); renderCatalog(); }, 160);
-    });
+    // header scroll
+    const hdr = $("#hdr");
+    if (hdr && !hdr.classList.contains("hdr--solid")) {
+      const onScroll = () => hdr.classList.toggle("scrolled", window.scrollY > 24);
+      onScroll(); window.addEventListener("scroll", onScroll, { passive: true });
+    }
 
-    // selection bar
+    // menu overlay
+    const overlay = $("#menuOverlay"), menuBtn = $("#menuBtn");
+    if (overlay && menuBtn) {
+      const open = () => { overlay.classList.add("open"); menuBtn.setAttribute("aria-expanded", "true"); document.body.style.overflow = "hidden"; };
+      const close = () => { overlay.classList.remove("open"); menuBtn.setAttribute("aria-expanded", "false"); document.body.style.overflow = ""; };
+      menuBtn.addEventListener("click", open);
+      $("#menuClose").addEventListener("click", close);
+      $$(".menu-nav a", overlay).forEach(a => a.addEventListener("click", close));
+      window.__closeMenu = close;
+    }
+
+    // bottom nav active
+    const navKey = PAGE === "catalog" ? "catalog" : "home";
+    $$(".bottom-nav a").forEach(a => a.classList.toggle("active", a.dataset.nav === navKey));
+
+    // cart bar / quote modal
     $("#openQuote").addEventListener("click", openModal);
-    $("#clearSelection").addEventListener("click", () => {
-      selected.clear(); renderCatalog(); updateSelectBar();
-    });
-
-    // modal
+    $("#clearSelection").addEventListener("click", () => { selected.clear(); saveCart(); updateCart(); updateCatalogAddButtons(); if (!$("#quoteModal").hidden) renderQuoteItems(); });
     $("#modalClose").addEventListener("click", closeModal);
     $("#modalCancel").addEventListener("click", closeModal);
     $("#sendQuote").addEventListener("click", sendQuote);
     $("#quoteModal").addEventListener("click", (e) => { if (e.target.id === "quoteModal") closeModal(); });
 
+    // product modal
+    $("#prodClose").addEventListener("click", closeProductModal);
+    $("#prodModal").addEventListener("click", (e) => { if (e.target.id === "prodModal") closeProductModal(); });
+    $("#prodSelect").addEventListener("click", () => { if (prodModalId) { toggleSelect(prodModalId); closeProductModal(); } });
+
     // lightbox
     $(".lightbox-close").addEventListener("click", closeLightbox);
     $("#lightbox").addEventListener("click", (e) => { if (e.target.id === "lightbox") closeLightbox(); });
 
-    // product modal (más info · mobile)
-    $("#prodClose").addEventListener("click", closeProductModal);
-    $("#prodModal").addEventListener("click", (e) => { if (e.target.id === "prodModal") closeProductModal(); });
-    $("#prodSelect").addEventListener("click", () => {
-      if (prodModalId) { toggleSelect(prodModalId); closeProductModal(); }
-    });
-
-    // esc key
+    // esc
     document.addEventListener("keydown", (e) => {
-      if (e.key === "Escape") {
-        if (!$("#lightbox").hidden) closeLightbox();
-        else if (!$("#prodModal").hidden) closeProductModal();
-        else if (!$("#quoteModal").hidden) closeModal();
-        else if (!$("#menuOverlay").hidden && window.__closeMenu) window.__closeMenu();
-      }
+      if (e.key !== "Escape") return;
+      if (!$("#lightbox").hidden) closeLightbox();
+      else if (!$("#prodModal").hidden) closeProductModal();
+      else if (!$("#quoteModal").hidden) closeModal();
+      else if (overlay && overlay.classList.contains("open") && window.__closeMenu) window.__closeMenu();
     });
-
-    // contact form
-    $("#contactForm").addEventListener("submit", contactSubmit);
-
-    // catalog collapse
-    updateRevealHint();
-    $("#catalogToggle").addEventListener("click", toggleCatalog);
-    $$('a[href="#catalog"]').forEach(a => a.addEventListener("click", openCatalog));
 
     // map picker
-    $("#mapToggle").addEventListener("click", () => {
-      const wrap = $("#mapWrap");
-      wrap.hidden = !wrap.hidden;
-      if (!wrap.hidden) { initPickMap(); setTimeout(() => { if (pickMap) pickMap.invalidateSize(); }, 220); }
-    });
-    $("#mapGeo").addEventListener("click", () => {
-      if (!navigator.geolocation) return;
-      $("#mapWrap").hidden = false; initPickMap();
-      navigator.geolocation.getCurrentPosition((pos) => {
-        const { latitude, longitude } = pos.coords;
-        setTimeout(() => { if (pickMap) { pickMap.setView([latitude, longitude], 15); pickMap.invalidateSize(); } setPicked(latitude, longitude); }, 220);
+    const mapToggle = $("#mapToggle");
+    if (mapToggle) {
+      mapToggle.addEventListener("click", () => { const w = $("#mapWrap"); w.hidden = !w.hidden; if (!w.hidden) { initPickMap(); setTimeout(() => { if (pickMap) pickMap.invalidateSize(); }, 220); } });
+      $("#mapGeo").addEventListener("click", () => {
+        if (!navigator.geolocation) return;
+        $("#mapWrap").hidden = false; initPickMap();
+        navigator.geolocation.getCurrentPosition((pos) => { const { latitude, longitude } = pos.coords; setTimeout(() => { if (pickMap) { pickMap.setView([latitude, longitude], 15); pickMap.invalidateSize(); } setPicked(latitude, longitude); }, 220); });
       });
-    });
-
-    // header scroll
-    const header = $("#header");
-    const onScroll = () => header.classList.toggle("scrolled", window.scrollY > 20);
-    onScroll(); window.addEventListener("scroll", onScroll, { passive: true });
-
-    // menu overlay
-    const menuOverlay = $("#menuOverlay"), menuBtn = $("#menuBtn");
-    let menuTimer;
-    function openMenu() {
-      clearTimeout(menuTimer);
-      menuOverlay.hidden = false;
-      requestAnimationFrame(() => menuOverlay.classList.add("open"));
-      menuBtn.setAttribute("aria-expanded", "true");
-      document.body.style.overflow = "hidden";
     }
-    function closeMenu() {
-      menuOverlay.classList.remove("open");
-      menuBtn.setAttribute("aria-expanded", "false");
-      document.body.style.overflow = "";
-      menuTimer = setTimeout(() => { menuOverlay.hidden = true; }, 500);
-    }
-    menuBtn.addEventListener("click", openMenu);
-    $("#menuClose").addEventListener("click", closeMenu);
-    $$(".menu-nav a").forEach(a => a.addEventListener("click", closeMenu));
-    window.__closeMenu = closeMenu;
 
-    // reveal for static sections
+    // contact form
+    const cf = $("#contactForm"); if (cf) cf.addEventListener("submit", contactSubmit);
+
+    // year
+    const yr = $("#year"); if (yr) yr.textContent = new Date().getFullYear();
+
+    // page-specific
+    if (PAGE === "catalog") {
+      const params = new URLSearchParams(location.search);
+      const cat = params.get("cat");
+      if (cat === "aranas" || cat === "climatizacion") activeFilter = cat;
+      renderChips(); renderCatalog();
+      let deb;
+      $("#searchInput").addEventListener("input", (e) => { clearTimeout(deb); deb = setTimeout(() => { searchTerm = e.target.value.trim().toLowerCase(); renderCatalog(); }, 160); });
+    } else {
+      fillSpotlight();
+      renderSpaces();
+    }
+
     observeReveal(document);
-
-    // contact links + year
-    const waHref = waUrl(t("wa.greeting"));
-    $("#waLink").href = waHref; $("#waFloat").href = waHref;
-    $("#waNumber").textContent = CONTACT.whatsappDisplay;
-    $("#igLink").href = CONTACT.instagramUrl;
-    const footWa = $("#footWa"), footWaText = $("#footWaText");
-    if (footWa) footWa.href = waHref;
-    if (footWaText) { footWaText.href = waHref; footWaText.textContent = "WhatsApp · " + CONTACT.whatsappDisplay; }
-    const menuWa = $("#menuWa"), menuWaIcon = $("#menuWaIcon");
-    if (menuWa) { menuWa.href = waHref; menuWa.textContent = "WhatsApp · " + CONTACT.whatsappDisplay; }
-    if (menuWaIcon) menuWaIcon.href = waHref;
-    $("#year").textContent = new Date().getFullYear();
   }
 
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init);
