@@ -56,11 +56,9 @@
   function waUrl(text) { return "https://wa.me/" + CONTACT.whatsapp + "?text=" + encodeURIComponent(text); }
   function setWaLinks() {
     const general = waUrl(t("wa.greeting"));
-    const energy = waUrl(t("wa.energy_consult"));
     ["#heroWa", "#closingWa", "#waFloat", "#waLink", "#footWa", "#menuWa", "#footWaText", "#headerWa"].forEach(sel => {
       const el = $(sel); if (el) el.href = general;
     });
-    ["#energyTile", "#energyBtn"].forEach(sel => { const el = $(sel); if (el) el.href = energy; });
     const waNum = $("#waNumber"); if (waNum) waNum.textContent = CONTACT.whatsappDisplay;
     const menuWa = $("#menuWa"); if (menuWa) menuWa.textContent = "WhatsApp · " + CONTACT.whatsappDisplay;
     const footWaText = $("#footWaText"); if (footWaText) footWaText.textContent = "WhatsApp · " + CONTACT.whatsappDisplay;
@@ -104,7 +102,8 @@
     const filters = [
       { key: "all", label: t("catalog.all") },
       { key: "aranas", label: t("filter.aranas") },
-      { key: "climatizacion", label: t("filter.climatizacion") }
+      { key: "climatizacion", label: t("filter.climatizacion") },
+      { key: "generadores", label: t("filter.generadores") }
     ];
     chips.innerHTML = filters.map(f => `<button class="chip ${activeFilter === f.key ? "active" : ""}" data-filter="${f.key}">${f.label}</button>`).join("");
     $$(".chip", chips).forEach(c => c.addEventListener("click", () => { activeFilter = c.dataset.filter; renderChips(); renderCatalog(); }));
@@ -112,13 +111,14 @@
   function matches(p) {
     if (activeFilter === "aranas" && p.cat !== "iluminacion") return false;
     if (activeFilter === "climatizacion" && p.cat !== "climatizacion") return false;
+    if (activeFilter === "generadores" && p.cat !== "energia") return false;
     if (searchTerm) {
       const hay = (p.name[lang] + " " + p.desc[lang] + " " + (p.dims || "")).toLowerCase();
       if (!hay.includes(searchTerm)) return false;
     }
     return true;
   }
-  const catRank = (c) => (c === "iluminacion" ? 0 : 1);
+  const catRank = (c) => (c === "iluminacion" ? 0 : c === "climatizacion" ? 1 : 2);
   function subLabel(p) { return (CATEGORIES[p.cat].subs[p.sub] || {})[lang] || ""; }
 
   function pcardHtml(p) {
@@ -383,7 +383,7 @@
     if (PAGE === "catalog") {
       const params = new URLSearchParams(location.search);
       const cat = params.get("cat");
-      if (cat === "aranas" || cat === "climatizacion") activeFilter = cat;
+      if (["aranas", "climatizacion", "generadores"].includes(cat)) activeFilter = cat;
       renderChips(); renderCatalog();
       let deb;
       $("#searchInput").addEventListener("input", (e) => { clearTimeout(deb); deb = setTimeout(() => { searchTerm = e.target.value.trim().toLowerCase(); renderCatalog(); }, 160); });

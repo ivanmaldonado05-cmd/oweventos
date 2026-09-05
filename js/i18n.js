@@ -97,6 +97,7 @@ const I18N = {
 
     "filter.aranas": "Arañas",
     "filter.climatizacion": "Climatización",
+    "filter.generadores": "Generadores",
     "filter.ventiladores": "Ventiladores",
 
     "catalog.show": "Ver productos",
@@ -255,6 +256,7 @@ const I18N = {
 
     "filter.aranas": "Chandeliers",
     "filter.climatizacion": "Climate control",
+    "filter.generadores": "Generators",
     "filter.ventiladores": "Fans",
 
     "catalog.show": "View products",
@@ -413,6 +415,7 @@ const I18N = {
 
     "filter.aranas": "Lustres",
     "filter.climatizacion": "Climatização",
+    "filter.generadores": "Geradores",
     "filter.ventiladores": "Ventiladores",
 
     "catalog.show": "Ver produtos",

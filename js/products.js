@@ -20,6 +20,12 @@ const CATEGORIES = {
       rusticas: { es: "Rústicas & Industriales", en: "Rustic & Industrial", pt: "Rústicas & Industriais" },
       cadenas: { es: "Cadenas", en: "Chains", pt: "Correntes" }
     }
+  },
+  energia: {
+    label: { es: "Energía", en: "Power", pt: "Energia" },
+    subs: {
+      generadores: { es: "Generadores CAT®", en: "CAT® Generators", pt: "Geradores CAT®" }
+    }
   }
 };
 
@@ -352,6 +358,32 @@ const PRODUCTS = [
       es: "Araña de cadenas de aluminio con 8 luces dirigidas hacia arriba.",
       en: "Aluminium chain chandelier with 8 upward-facing lights.",
       pt: "Lustre de correntes de alumínio com 8 luzes voltadas para cima."
+    }
+  },
+
+  /* ------------------------ ENERGÍA · Generadores CAT® ------------------- */
+  {
+    id: "generador-de165", cat: "energia", sub: "generadores",
+    imgs: ["assets/img/products/generador-de165-1.webp", "assets/img/products/generador-de165-2.webp"],
+    price: 0, montaje: 0, stock: 1,
+    dims: "165 kVA · diésel · insonorizado",
+    name: { es: "Generador CAT® DE165 GC", en: "CAT® DE165 GC Generator", pt: "Gerador CAT® DE165 GC" },
+    desc: {
+      es: "Potencia y confiabilidad para eventos de gran escala y alta demanda. 165 kVA / 132 kW, diésel, cabina insonorizada, montado sobre remolque y conexiones industriales.",
+      en: "Power and reliability for large-scale, high-demand events. 165 kVA / 132 kW, diesel, soundproof canopy, trailer-mounted with industrial connections.",
+      pt: "Potência e confiabilidade para eventos de grande porte e alta demanda. 165 kVA / 132 kW, diesel, cabine à prova de som, montado sobre reboque e conexões industriais."
+    }
+  },
+  {
+    id: "generador-de65", cat: "energia", sub: "generadores",
+    imgs: ["assets/img/products/generador-de65-1.webp"],
+    price: 0, montaje: 0, stock: 1,
+    dims: "65 kVA · diésel · insonorizado",
+    name: { es: "Generador CAT® DE65 GC", en: "CAT® DE65 GC Generator", pt: "Gerador CAT® DE65 GC" },
+    desc: {
+      es: "Solución compacta y eficiente para eventos medianos. 65 kVA, diésel, cabina insonorizada, montado sobre remolque y conexiones industriales.",
+      en: "Compact, efficient solution for mid-size events. 65 kVA, diesel, soundproof canopy, trailer-mounted with industrial connections.",
+      pt: "Solução compacta e eficiente para eventos médios. 65 kVA, diesel, cabine à prova de som, montado sobre reboque e conexões industriais."
     }
   }
 ];
