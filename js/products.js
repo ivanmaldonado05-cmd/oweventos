@@ -269,17 +269,6 @@ const PRODUCTS = [
     }
   },
   {
-    id: "bronce-24-brazos", cat: "iluminacion", sub: "bronce",
-    imgs: ["assets/img/products/bronce-24-brazos-1.webp"], price: 1000000, montaje: 200000, stock: 8,
-    dims: "1,60 × 0,80 m · 30 kg",
-    name: { es: "Bronce 24 Brazos", en: "Bronze 24 Arms", pt: "Bronze 24 Braços" },
-    desc: {
-      es: "Araña de bronce con caireles de cristal y 24 brazos.",
-      en: "Bronze chandelier with crystal drops and 24 arms.",
-      pt: "Lustre de bronze com pingentes de cristal e 24 braços."
-    }
-  },
-  {
     id: "candelabro-de-pie", cat: "iluminacion", sub: "bronce",
     imgs: ["assets/img/products/candelabro-de-pie-1.webp"], price: 700000, montaje: 100000, stock: 2,
     dims: "1,70 × 0,80 m · 15 brazos",
