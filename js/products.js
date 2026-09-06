@@ -44,6 +44,17 @@ const PRODUCTS = [
   },
   /* ------------------------ CLIMATIZACIÓN · Climatizadores ---------------- */
   {
+    id: "climatizador-nebulizador", cat: "climatizacion", sub: "climatizadores",
+    imgs: ["assets/img/products/climatizador-nebulizador.webp"], price: 0, montaje: 0, stock: 6,
+    dims: "Nebulizador · tanque con ruedas",
+    name: { es: "Climatizador Nebulizador", en: "Misting Fan", pt: "Climatizador Nebulizador" },
+    desc: {
+      es: "Ventilador industrial con nebulización de agua y tanque con ruedas. Refresca grandes espacios al aire libre.",
+      en: "Industrial fan with water misting and a wheeled tank. Cools large outdoor spaces.",
+      pt: "Ventilador industrial com nebulização de água e tanque com rodas. Refresca grandes espaços ao ar livre."
+    }
+  },
+  {
     id: "climatizador-de-piso", cat: "climatizacion", sub: "climatizadores",
     imgs: ["assets/img/products/climatizador-de-piso.webp"], price: 660000, montaje: 0, stock: 10,
     dims: "50 m · evaporativo",
