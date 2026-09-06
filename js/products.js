@@ -247,17 +247,6 @@ const PRODUCTS = [
     }
   },
   {
-    id: "bronce-pajaros", cat: "iluminacion", sub: "bronce",
-    imgs: ["assets/img/products/bronce-pajaros-1.webp"], price: 550000, montaje: 100000, stock: 1,
-    dims: "0,75 × 1 m · 18 brazos",
-    name: { es: "Bronce con Pájaros", en: "Bronze with Birds", pt: "Bronze com Pássaros" },
-    desc: {
-      es: "Araña de bronce con pajaritos y 18 brazos. Pieza única.",
-      en: "Bronze chandelier with little birds and 18 arms. One-of-a-kind piece.",
-      pt: "Lustre de bronze com passarinhos e 18 braços. Peça única."
-    }
-  },
-  {
     id: "clementina", cat: "iluminacion", sub: "bronce",
     imgs: ["assets/img/products/clementina-1.webp"], price: 1100000, montaje: 150000, stock: 4,
     dims: "1,30 × 1,30 m · 5 pisos",
