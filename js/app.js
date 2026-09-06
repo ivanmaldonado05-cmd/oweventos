@@ -214,8 +214,8 @@
     const track = $("#tickerTrack"); if (!track) return;
     const items = TICKER[lang] || TICKER.es;
     const seq = items.map(txt => `<span class="ticker-item">${txt}</span><span class="ticker-star" aria-hidden="true">&#10022;</span>`).join("");
-    // triple para asegurar ancho > viewport y loop sin costura
-    track.innerHTML = seq + seq + seq;
+    // doble para loop sin costura (translateX -50%), manteniendo la capa angosta para mobile
+    track.innerHTML = seq + seq;
   }
 
   /* ---------------- Espacios (galería home) ---------------- */
