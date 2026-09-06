@@ -45,7 +45,7 @@
     lang = l; localStorage.setItem("ow_lang", l);
     applyI18n();
     if (PAGE === "catalog") { renderChips(); renderCatalog(); }
-    if (PAGE === "home") fillSpotlight();
+    if (PAGE === "home") { renderFeatured(); renderTicker(); }
     updateCart();
     setWaLinks();
     if (!$("#quoteModal").hidden) renderQuoteItems();
@@ -202,6 +202,20 @@
     track.innerHTML = html + html;
     // duración proporcional a la cantidad para velocidad constante
     track.style.animationDuration = (list.length * 6) + "s";
+  }
+
+  /* ---------------- Cinta de texto (ticker home) ---------------- */
+  const TICKER = {
+    es: ["Arañas de cristal premium", "Climatización para tu evento", "Generadores eléctricos CAT", "Montaje profesional", "Cotización por WhatsApp", "Eventos inolvidables"],
+    en: ["Premium crystal chandeliers", "Climate control for your event", "CAT electric generators", "Professional setup", "Quote via WhatsApp", "Unforgettable events"],
+    pt: ["Lustres de cristal premium", "Climatização para seu evento", "Geradores elétricos CAT", "Montagem profissional", "Orçamento por WhatsApp", "Eventos inesquecíveis"]
+  };
+  function renderTicker() {
+    const track = $("#tickerTrack"); if (!track) return;
+    const items = TICKER[lang] || TICKER.es;
+    const seq = items.map(txt => `<span class="ticker-item">${txt}</span><span class="ticker-star" aria-hidden="true">&#10022;</span>`).join("");
+    // triple para asegurar ancho > viewport y loop sin costura
+    track.innerHTML = seq + seq + seq;
   }
 
   /* ---------------- Espacios (galería home) ---------------- */
@@ -412,6 +426,7 @@
       $("#searchInput").addEventListener("input", (e) => { clearTimeout(deb); deb = setTimeout(() => { searchTerm = e.target.value.trim().toLowerCase(); renderCatalog(); }, 160); });
     } else {
       renderFeatured();
+      renderTicker();
       renderSpaces();
     }
 
