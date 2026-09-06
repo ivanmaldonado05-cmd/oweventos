@@ -181,6 +181,29 @@
     $("#spotDims").textContent = p.dims || "";
   }
 
+  /* ---------------- Productos destacados (carrusel home) ---------------- */
+  function renderFeatured() {
+    const track = $("#featuredTrack"); if (!track) return;
+    const ids = ["isabel", "clementina", "cristal-mediana", "arana-4-pisos", "veneciana-cromo", "bronce-16-brazos", "candelabro-cristal", "generador-de165"];
+    const list = ids.map(id => PRODUCTS.find(p => p.id === id)).filter(Boolean);
+    if (!list.length) return;
+    const catParam = p => p.cat === "energia" ? "generadores" : p.cat === "climatizacion" ? "climatizacion" : "aranas";
+    const card = p => `
+      <a class="fcard" href="catalogo.html?cat=${catParam(p)}" aria-label="${p.name[lang]}">
+        <div class="fcard-media"><span class="fcard-chip">${subLabel(p)}</span><img src="${(p.imgs && p.imgs[0]) || p.img}" alt="${p.name[lang]}" loading="lazy" /></div>
+        <div class="fcard-body">
+          <h3>${p.name[lang]}</h3>
+          <p class="fcard-dims">${p.dims || ""}</p>
+          <span class="fcard-arrow" aria-hidden="true">→</span>
+        </div>
+      </a>`;
+    // duplicado para marquee continuo (translateX -50%)
+    const html = list.map(card).join("");
+    track.innerHTML = html + html;
+    // duración proporcional a la cantidad para velocidad constante
+    track.style.animationDuration = (list.length * 6) + "s";
+  }
+
   /* ---------------- Espacios (galería home) ---------------- */
   function renderSpaces() {
     const grid = $("#spacesGrid"); if (!grid) return;
@@ -388,7 +411,7 @@
       let deb;
       $("#searchInput").addEventListener("input", (e) => { clearTimeout(deb); deb = setTimeout(() => { searchTerm = e.target.value.trim().toLowerCase(); renderCatalog(); }, 160); });
     } else {
-      fillSpotlight();
+      renderFeatured();
       renderSpaces();
     }
 

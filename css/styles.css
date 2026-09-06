@@ -208,14 +208,37 @@ h1, h2, h3 { font-family: var(--serif); font-weight: 600; line-height: 1.08; let
 .diff-content .btn { margin-top: 10px; }
 
 /* ----------------------------- Spotlight (dark) ----------------------------- */
-.spotlight { background: var(--cream-2); color: var(--on-cream); padding: 72px 0; }
-.spotlight-body h2 { color: var(--on-cream); }
-.spotlight-body .eyebrow, .spotlight-tag { color: #9c7d1e; }
-.spotlight-body p { color: var(--on-cream-muted); }
-.spotlight-dims { color: var(--on-cream-muted); }
-.spotlight-inner { display: grid; grid-template-columns: 0.85fr 1fr; gap: clamp(28px, 5vw, 64px); align-items: center; }
-.spotlight-media { aspect-ratio: 4 / 5; width: 100%; max-width: 340px; margin: 0 auto; background: #ffffff; border-radius: var(--radius-lg); overflow: hidden; border: 1px solid var(--line-cream); box-shadow: var(--shadow-cream); }
-.spotlight-media img { width: 100%; height: 100%; object-fit: cover; }
+/* ---------------- Productos destacados (carrusel continuo) ---------------- */
+.featured { background: var(--cream-2); overflow: hidden; }
+.featured-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; max-width: none; margin-bottom: 34px; }
+.featured-head .eyebrow { color: #9c7d1e; }
+.featured-all { font-size: 0.9rem; letter-spacing: 0.04em; color: var(--on-cream); border-bottom: 1px solid transparent; white-space: nowrap; transition: color 0.25s var(--ease), border-color 0.25s var(--ease); }
+.featured-all:hover { color: var(--gold); border-color: var(--gold); }
+
+.featured-carousel { position: relative; overflow: hidden;
+  -webkit-mask-image: linear-gradient(to right, transparent 0, #000 5%, #000 95%, transparent 100%);
+          mask-image: linear-gradient(to right, transparent 0, #000 5%, #000 95%, transparent 100%); }
+.featured-track { display: flex; gap: 22px; width: max-content; padding: 6px 0 4px; will-change: transform;
+  animation: fmarquee 48s linear infinite; }
+@keyframes fmarquee { from { transform: translateX(0); } to { transform: translateX(calc(-50% - 11px)); } }
+
+.fcard { flex: 0 0 auto; width: 268px; background: var(--cream-card); border: 1px solid var(--line-cream);
+  border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-cream);
+  display: flex; flex-direction: column; transition: transform 0.4s var(--ease), box-shadow 0.4s var(--ease); }
+.fcard:hover { transform: translateY(-6px); box-shadow: 0 26px 50px rgba(30,20,10,0.16); }
+.fcard-media { position: relative; aspect-ratio: 4 / 5; background: #ffffff; overflow: hidden; }
+.fcard-media img { width: 100%; height: 100%; object-fit: contain; padding: 10%; transition: transform 0.6s var(--ease); }
+.fcard:hover .fcard-media img { transform: scale(1.05); }
+.fcard-chip { position: absolute; top: 12px; left: 12px; z-index: 2; font-size: 0.62rem; font-weight: 600;
+  letter-spacing: 0.14em; text-transform: uppercase; color: var(--on-cream); background: rgba(255,255,255,0.85);
+  backdrop-filter: blur(4px); border: 1px solid var(--line-cream); border-radius: 999px; padding: 5px 12px; }
+.fcard-body { position: relative; padding: 16px 18px 18px; }
+.fcard-body h3 { font-size: 1.2rem; line-height: 1.15; color: var(--on-cream); }
+.fcard-dims { color: var(--on-cream-muted); font-size: 0.82rem; margin-top: 4px; padding-right: 40px; }
+.fcard-arrow { position: absolute; right: 16px; bottom: 18px; width: 34px; height: 34px; display: grid; place-items: center;
+  border-radius: 999px; background: var(--gold-grad); color: #201704; font-size: 1rem;
+  box-shadow: 0 6px 16px rgba(201,162,39,0.3); transition: transform 0.3s var(--ease); }
+.fcard:hover .fcard-arrow { transform: translateX(3px); }
 
 /* ---------------- Editorial story sections (estilo vanderhotel) ---------------- */
 .story { overflow: hidden; }
@@ -536,9 +559,8 @@ body.has-cart .wa-float { bottom: 92px; }
   .hero-visual { height: 42vh; order: -1; }
   .hero-visual::after { background: linear-gradient(0deg, var(--cream), transparent 18%); }
   .hero-copy2 { padding: 34px 24px 52px; }
-  .spotlight { padding: 40px 0; }
-  .spotlight-inner { grid-template-columns: 1fr; gap: 20px; }
-  .spotlight-media { max-width: 200px; margin: 0 auto; }
+  .featured-head { flex-direction: column; align-items: flex-start; gap: 14px; margin-bottom: 24px; }
+  .fcard { width: 232px; }
   .spotlight-body { text-align: center; align-items: center; }
   .spotlight-body p { text-align: center; }
   .story-inner { grid-template-columns: 1fr; min-height: 0; height: auto; }
