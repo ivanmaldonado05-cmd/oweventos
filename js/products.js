@@ -192,6 +192,17 @@ const PRODUCTS = [
     }
   },
   {
+    id: "redondas-medianas", cat: "iluminacion", sub: "bronce",
+    imgs: ["assets/img/products/redondas-medianas-1.webp"], price: 380000, montaje: 50000, stock: 20,
+    dims: "Ø 40 cm",
+    name: { es: "Redonda Mediana", en: "Medium Round", pt: "Redonda Média" },
+    desc: {
+      es: "Araña redonda mediana color bronce con caireles transparentes.",
+      en: "Medium round bronze chandelier with clear crystal drops.",
+      pt: "Lustre redondo médio cor bronze com pingentes transparentes."
+    }
+  },
+  {
     id: "imperial", cat: "iluminacion", sub: "bronce",
     imgs: ["assets/img/products/imperial-1.webp"], price: 1100000, montaje: 200000, stock: 6,
     dims: "2,10 m alto · 70 kg",
