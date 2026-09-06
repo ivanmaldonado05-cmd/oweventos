@@ -290,6 +290,19 @@ h1, h2, h3 { font-family: var(--serif); font-weight: 600; line-height: 1.08; let
 .equip-row-media { position: relative; min-height: 205px; background: #ffffff; overflow: hidden; }
 .equip-row-media img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center; }
 .equip-row-media--contain img { object-fit: contain; padding: 3%; }
+/* Producto centrado + bordes desvanecidos hacia el blanco (sin cuadrado visible) */
+.equip-row-media--fade { background: #ffffff; }
+.equip-row-media--fade img {
+  object-fit: contain; object-position: center; padding: 4%;
+  -webkit-mask-image:
+    linear-gradient(to right, transparent 0, #000 9%, #000 91%, transparent 100%),
+    linear-gradient(to bottom, transparent 0, #000 9%, #000 91%, transparent 100%);
+  -webkit-mask-composite: source-in;
+          mask-image:
+    linear-gradient(to right, transparent 0, #000 9%, #000 91%, transparent 100%),
+    linear-gradient(to bottom, transparent 0, #000 9%, #000 91%, transparent 100%);
+          mask-composite: intersect;
+}
 .equip-row-body { display: flex; flex-direction: column; justify-content: center; align-items: flex-start; gap: 7px; padding: clamp(16px, 2.2vw, 28px); }
 .equip-eyebrow { font-size: 0.66rem; letter-spacing: 0.2em; text-transform: uppercase; color: #9c7d1e; font-weight: 500; }
 .equip-row-body h3 { font-size: clamp(1.2rem, 1.9vw, 1.55rem); line-height: 1.12; color: var(--on-cream); }
